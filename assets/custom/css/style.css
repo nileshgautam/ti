@@ -1,0 +1,121 @@
+.pd-33 {
+    padding: 33px 0px;
+}
+
+.tbl-btn {
+    display: inline-flex;
+    justify-items: center;
+}
+
+.tbl-btn .fas {
+    margin: 0 10px !important;
+    cursor: pointer;
+}
+
+.hide {
+    display: none !important;
+}
+
+.remove-btn {
+    margin: 39px 15px !important;
+    font-size: 28px;
+}
+
+.time-box {
+    border-bottom: 1px solid gray !important;
+    cursor: pointer;
+    padding: 2px 0;
+    color: gray;
+}
+
+.time-box:hover {
+    color: #f8cbcb;
+}
+
+.task-title {
+    border: none !important;
+    border-bottom: 1px solid gray !important;
+}
+
+#dailyTimesheetModalLong a {
+    font-size: 12px;
+    padding: 0 20px;
+}
+
+.taks-title {
+    display: inline !important;
+    border-radius: 5px;
+    width: 100%;
+    padding: 2px 5px;
+    margin: 5px;
+}
+
+.daily-date {
+    background: #f8cbcb;
+    padding: 10px 8px;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+
+/* .swal-modal {
+    height: 157px !important;
+}
+
+.swal-icon {
+    height: 31px;
+    width: 31px;
+}
+
+.swal-icon--warning {
+    height: 10px;
+} */
+
+.edit-btn {
+    padding: 3px;
+    margin-right: 5px;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: start;
+    justify-items: center;
+}
+
+.d-flex a {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#file-row .br-b {
+    border: 0;
+    border-bottom: 1px solid;
+    font-size: 13px;
+}
+
+.fs-13 {
+    font-size: 13px !important;
+}
+
+#file-row .file {
+    overflow: hidden;
+}
+
+.cursor {
+    cursor: pointer !important;
+}
+
+.w-72 {
+    width: 72% !important;
+}
+
+.nav-treeview>.nav-item>.nav-link.active,
+[class*=sidebar-light-] .nav-treeview>.nav-item>.nav-link.active:hover {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+
+.h-200 {
+    height: 100px !important;
+}
