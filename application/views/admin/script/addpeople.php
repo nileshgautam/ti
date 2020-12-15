@@ -209,30 +209,25 @@
                 document.doc = peopleData == true ? doc : '';
                 userInfo.push(document);
                 saveLsData('userInfo', userInfo);
-                console.log(userInfo);
+                // console.log(userInfo);
 
                 $('#nav-contact-tab').click();
             } else {
-                let document = JSON.parse($('#document-available').val());
-
+                let document = $('#document-available').val();
+                // console.log(document);
                 if (document != '') {
-
+                    document = JSON.parse(document);
                     userInfo.push(document);
                     saveLsData('userInfo', userInfo);
-                } else {
+                    $('#nav-contact-tab').click();
+                } else if (document === '') {
                     let document = {
                         doc: ''
                     };
                     userInfo.push(document);
                     saveLsData('userInfo', userInfo);
+                    $('#nav-contact-tab').click();
                 }
-
-                $('#nav-contact-tab').click();
-
-                // errorAlert("no-data-available");
-
-
-
             }
         });
 
@@ -475,7 +470,7 @@
         // $('#nav-contact-tab').click(function() {
         //     $('#document-form').submit();
         // });
-        
+
         // $('#nav-cost').click(function() {
         //     $('#document-form').submit();
         // });

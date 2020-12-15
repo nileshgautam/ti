@@ -117,11 +117,12 @@
          todayHighlight: true,
          format: 'dd/mm/yyyy',
          showButtonPanel: true,
-         localToday: localToday
+        //  localToday: localToday
        });
      });
 
    });
+   
  </script>
  </body>
 

@@ -68,7 +68,7 @@
                             <p>
                                 Masters
                                 <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">9</span>
+                                <span class="badge badge-info right"></span>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
