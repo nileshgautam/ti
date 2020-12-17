@@ -166,28 +166,31 @@ class CustomModel extends ci_model
 
     public function getAllocatedTask($userId)
     {
+
+
         // print_r($userId);
+        // die;
         // $query = "SELECT *,task.title,task.description FROM employee_task_relation LEFT JOIN  task on task.task_id=employee_task_relation.taskId WHERE employee_task_relation.employeeId='$userId'";
 
         $query = "SELECT employee_task_relation.taskId, master_tasks.title, master_tasks.description, employee_task_relation.budgetedHours, employee_task_relation.startDate, employee_task_relation.endDate, employee_task_relation.employeeId FROM `employee_task_relation` left JOIN master_tasks on master_tasks.task_id=employee_task_relation.taskId WHERE employee_task_relation.employeeId='$userId'";
-
         $q = $this->db->query($query)->result_array();
-        $result = $this->db->affected_rows() ? $q : FALSE;
+        // print_r($q);die;
+        return $this->db->affected_rows() ? $q : FALSE;
 
-        if ($result) {
-            foreach ($result as $key => $details) {
-                $selfAddedTasks = $this->MainModel->selectAllFromWhere("employee_task", array("employeeId" => $userId, "taskId" => $details['taskId']));
+        // if ($result) {
+        //     foreach ($result as $key => $details) {
+        //         $selfAddedTasks = $this->MainModel->selectAllFromWhere("employee_task", array("employeeId" => $userId, "taskId" => $details['taskId']));
 
-                if ($selfAddedTasks) {
-                    $result[$key]['employeeTaskId'] = $selfAddedTasks[0]['taskId'];
-                } else {
-                    $result[$key]['employeeTaskId'] = "NULL";
-                }
-            }
-            return $result;
-        } else {
-            return FALSE;
-        }
+        //         if ($selfAddedTasks) {
+        //             $result[$key]['employeeTaskId'] = $selfAddedTasks[0]['taskId'];
+        //         } else {
+        //             $result[$key]['employeeTaskId'] = "NULL";
+        //         }
+        //     }
+        //     return $result;
+        // } else {
+        //     return FALSE;
+        // }
     }
 
 
@@ -208,28 +211,69 @@ class CustomModel extends ci_model
         return $result = $this->db->affected_rows() ? $q : FALSE;
     }
 
-    function getDailyAllocatedTasks($userId = null, $date = null)
+    function getDailyAllocatedTasks($userId = null, $date = null, $project_id = null)
     {
         // $q = "SELECT * FROM assigntask WHERE end_date>='$date' and assigntask.employeeId='$userId'";
-        $q = "SELECT
-        employee_task_relation.taskId as task_id,
-        task_project_relation.project_id,
-        project.client_id,
-        master_tasks.category as service_id,
-        master_tasks.title, 
-        master_tasks.description,
-        employee_task_relation.budgetedHours, 
-        employee_task_relation.startDate, 
-        employee_task_relation.endDate, 
-        employee_task_relation.employeeId 
-        FROM `employee_task_relation` 
-        LEFT JOIN master_tasks on master_tasks.task_id=employee_task_relation.taskId
-        LEFT JOIN task_project_relation on task_project_relation.task_id=employee_task_relation.taskId
-        LEFT JOIN project on task_project_relation.project_id=project.project_Id
-        WHERE employee_task_relation.employeeId='$userId' AND employee_task_relation.endDate>='$date'";
+
+        // print_r($userId);
+        // print_r($date);
+        // die;
+        // $q = "SELECT
+        // employee_task_relation.taskId as task_id,
+        // task_project_relation.project_id,
+        // project.client_id,
+        // master_tasks.category as service_id,
+        // master_tasks.title, 
+        // master_tasks.description,
+        // employee_task_relation.budgetedHours, 
+        // employee_task_relation.startDate, 
+        // employee_task_relation.endDate, 
+        // employee_task_relation.employeeId 
+        // FROM `employee_task_relation` 
+        // LEFT JOIN master_tasks on master_tasks.task_id=employee_task_relation.taskId
+        // LEFT JOIN task_project_relation on task_project_relation.task_id=employee_task_relation.taskId
+        // LEFT JOIN project on task_project_relation.project_id=project.project_Id
+        // WHERE employee_task_relation.employeeId='$userId' AND employee_task_relation.endDate>='$date'";
+
+
+
+        $q = "SELECT employee_task_relation.taskId, master_tasks.title, project.project_Id,project.name, project.client_id, master_tasks.category,employee_task_relation.employeeId, employee_task_relation.budgetedHours as assignhrs, employee_task_relation.startDate, employee_task_relation.endDate
+        from employee_task_relation LEFT JOIN master_tasks ON employee_task_relation.taskId = master_tasks.task_id LEFT JOIN project on project.project_Id=employee_task_relation.project_id WHERE employeeId='$userId' AND employee_task_relation.endDate>='$date' AND project.project_Id='$project_id'";
+
         $result = $this->db->query($q)->result_array();
         return $this->db->affected_rows() ? $result : FALSE;
     }
+
+
+    public function getAssignproject($id = null)
+    {
+        // echo $id;
+        $q = "SELECT peopl_project_relationship.project_id,project.name, peopl_project_relationship.people_id FROM `peopl_project_relationship` left JOIN project on project.project_Id=peopl_project_relationship.project_id WHERE peopl_project_relationship.people_id='$id'";
+        $result = $this->db->query($q)->result_array();
+        // print_r($result);die;
+        return  $result != '' ? $result : FALSE;
+    }
+
+    public function getProjectByAssignTask($userId = null, $date = null)
+    {
+        $q = "SELECT  project.project_Id,project.name,employee_task_relation.employeeId, employee_task_relation.budgetedHours as assignhrs, employee_task_relation.startDate, employee_task_relation.endDate
+       from employee_task_relation LEFT JOIN master_tasks ON employee_task_relation.taskId = master_tasks.task_id LEFT JOIN project on project.project_Id=employee_task_relation.project_id WHERE employee_task_relation.employeeId='$userId' AND employee_task_relation.endDate>='$date' GROUP by project_id";
+       
+        $result = $this->db->query($q)->result_array();
+        return  $result != '' ? $result : FALSE;
+    }
+
+    // function to get task by project id for manager screen
+
+    public function taklistByProjectId($project_id = null)
+    {
+        $q = "SELECT * FROM `task_project_relation` LEFT JOIN master_tasks on task_project_relation.task_id=master_tasks.task_id WHERE task_project_relation.project_id='$project_id'";
+        $result =  $this->db->query($q)->result_array();
+        return $this->db->affected_rows() ? $result : FALSE;
+
+        # code...
+    }
+
 
     function getDailyTask($userId = null, $date = null)
     {
@@ -240,7 +284,10 @@ class CustomModel extends ci_model
          AND employeeId='$userId' 
          AND status!='saved' 
          ORDER BY `taskstatus`.`taskStTime`";
+
+        //  echo '<pre>';
         $result = $this->db->query($q)->result_array();
+        // print_r($result);die;
         return $this->db->affected_rows() ? $result : FALSE;
     }
 
@@ -272,7 +319,7 @@ class CustomModel extends ci_model
     //     return $this->db->affected_rows() ? $result : FALSE;
     // }    
 
-    function getTaskByid($id = null, $date=null)
+    function getTaskByid($id = null, $date = null)
     {
 
         $q = "SELECT 
@@ -299,7 +346,7 @@ class CustomModel extends ci_model
     // Function for get task list by project id
     public function getTaskListbyprojectId($id = null)
     {
-        $q = "SELECT master_tasks.task_id, master_tasks.title, master_tasks.description, task_project_relation.project_id, task_project_relation.assigned_hrs, task_project_relation.start_date,task_project_relation.end_date FROM `task_project_relation` LEFT JOIN master_tasks on task_project_relation.task_id=master_tasks.task_id WHERE project_id='$id'";
+        $q = "SELECT master_tasks.task_id, master_tasks.title, master_tasks.description, task_project_relation.project_id, task_project_relation.assigned_hrs, task_project_relation.start_date,task_project_relation.end_date,task_project_relation.project_id FROM `task_project_relation` LEFT JOIN master_tasks on task_project_relation.task_id=master_tasks.task_id WHERE task_project_relation.project_id='$id'";
         $result = $this->db->query($q)->result_array();
         return $this->db->affected_rows() ? $result : FALSE;
     }
@@ -313,7 +360,7 @@ class CustomModel extends ci_model
     }
 
     // Function for get consumed hrs by project
-    public function getProjectbyUserIdConsumendhrs($id = null,$date=null)
+    public function getProjectbyUserIdConsumendhrs($id = null, $date = null)
     {
         // $q = "SELECT project.project_Id, project.name, project.budget_hours as assignHrs,
         // IFNULL(sum(Format(TIME_TO_SEC(timediff(dailytimesheet.end_time, dailytimesheet.start_time))/60,0)),0)
@@ -323,7 +370,7 @@ class CustomModel extends ci_model
         // LEFT JOIN dailytimesheet on dailytimesheet.project_id=project.project_Id and task_project_relation.task_id=dailytimesheet.taks_id
         // WHERE peopl_project_relationship.people_id='$id'  and dailytimesheet.submit_date='$date'
         // GROUP by project.project_Id ORDER BY `project`.`project_Id` ASC"; 
-        
+
         $q = "SELECT project.project_Id, project.name, project.budget_hours as assignHrs,
         IFNULL(sum(Format(TIME_TO_SEC(timediff(dailytimesheet.end_time, dailytimesheet.start_time))/60,0)),0)
         as bookedTime FROM project

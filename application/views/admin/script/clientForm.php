@@ -125,7 +125,13 @@
                     contentType: false,
                     processData: false
                 });
-            } else {}
+            } else {
+                let docArr = {
+
+                }
+
+                documentArr.push(docArr);
+            }
         });
         // Function for updating document
 
@@ -145,7 +151,7 @@
                         data: doc,
                         docid: $("#doc-id").val()
                     }
-                    console.log(formData);
+                    // console.log(formData);
 
                     if (doc) {
                         let url = BASEURL + 'Admin/documentPost';
@@ -159,10 +165,18 @@
                         });
                     }
                 }
-            }else {
-                errorAlert('Go back and Fill Client details first.');
-                return false;
+            } else if(localData==='') {
+                successAlert('Client details are submitted successfuly.')
+                setTimeout(() => {
+                    window.location.href = BASEURL + 'people-dashboard';
+                }, 2000);
+                
+                // window.location.href = BASEURL + 'people-dashboard';
+                // errorAlert('Go back and Fill Client details first.');
+                // return false;
                 // console.log('no-data-available');
+            }else{
+                errorAlert('Please fill out the form accurately.')
             }
         });
         // Function for external people
@@ -174,7 +188,7 @@
 
             let clid = $('#client-id').val();
 
-            console.log(clid);
+            // console.log(clid);
 
             if (clid != '') {
                 url = BASEURL + 'Admin/update_people_post';

@@ -17,59 +17,55 @@
                     </div>
                     <div class="col-sm-6 row m-0">
                         <div class="col-sm-6">
-                            Booked Time: <?php echo $totalhrs?>
+                            Booked Time: <?php echo $totalhrs ?> hrs.
                         </div>
                         <div class="col-sm-6"> <a class="btn btn-warning btn-xs float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">Back</a></div>
-                   
-                
-                </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <!-- <div class="col-sm-3">Calender</div> -->
                         <div class="col-sm-12">
-                          
-                                
-                                <div class="card-body dailytimesheet">
-                                    <div class="row">
-                                       
-                                        <div class="col-sm-12">
-                                            <?php if (!empty($dailytimesheet)) {
-                                                foreach ($dailytimesheet as $key => $time) { ?>
-                                                    <div class="row bg-light mb-2 border-bottom">
-                                                        <div class="col-sm-2"><?php echo $key; ?></div>
-                                                        <div class="col-sm-10 ">
-                                                            <?php
-                                                            if (!empty($time)) {
-                                                                foreach ($time as $key1 => $bookedTime) {
-                                                                    foreach ($bookedTime as $time) {
-                                                            ?>
-                                                                        <div class="bg-info">
-                                                                            <p class="p-2 fs-14 showTask" dataTaskid="<?php echo base64_encode($time['task_id']) ?>">
-                                                                                <?php
-                                                                                // print_r($time);
-                                                                                echo $time['title'] . '   status: <span class="badge badge-success">  ' . $time['status'] . ' </span>';
-                                                                                echo '<br/>';
-                                                                                echo '<span>' . date('h:i a', strtotime($time['taskStTime'])) . '<span> -' .
-                                                                                    '</span> ' . date('h:i a', strtotime($time['taskedTime'])) . ' </span>' ?>
-                                                                            </p>
-                                                                        </div>
-
-                                                            <?php }
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                            <?php }
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-
-                                </div>
-                         
+                            <table class="table dataTable table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Time Range</th>
+                                        <th scope="col">Task</th>
+                                        <th scope="col">Project</th>
+                                        <th scope="col">Consumed hrs</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($dailytimesheet)) {
+                                        // echo '<pre>';
+                                        // print_r($dailytimesheet);
+                                        // die;
+                                        $count = 1;
+                                        foreach ($dailytimesheet as $item) {
+                                    ?>
+                                            <tr>
+                                                <th scope="row"><?php echo  $count++; ?></th>
+                                                <td><?php echo time_in_12_hour_format($item['taskStTime']).' to '.time_in_12_hour_format($item['taskedTime'])  ?></td>
+                                                <td><?php echo $item['title'] ?></td>
+                                                <td><?php echo $item['name'] ?></td>
+                                                <td><?php echo $item['consumedTime'] / 60 .' hrs' ?></td>
+                                                <td>
+                                                    <a class="btn btn-primary  btn-xs ml-2 showTask" href="#" title="show task" 
+                                                    dataTaskid="<?php echo base64_encode($item['task_id']) ?>"
+                                                    dataprojectid="<?php echo base64_encode($item['project_id'])?>"
+                                                    taskStTime="<?php echo base64_encode($item['taskStTime']) ?>"
+                                                    taskedTime="<?php echo base64_encode($item['taskedTime']) ?>"
+                                                    >show</a>
+                                                </td>
+                                            </tr>
+                                    <?php }
+                                    } ?>
+                                </tbody>
+                            </table>
                         </div>
+                        <!-- <div class="col-sm-3">Calender</div> -->
+
                     </div>
                 </div>
             </div>
@@ -107,7 +103,7 @@
                         <div class="modal-footer">
                             <a class="btn btn-xs btn-link float-right mr-2 hide" id="save-remark">
                                 Save remark</a>
-                                <a class="btn btn-xs btn-link float-right mr-2" id="accept-task">
+                            <a class="btn btn-xs btn-link float-right mr-2" id="accept-task">
                                 Mark as complete</a>
                         </div>
                     </form>

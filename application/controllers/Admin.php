@@ -666,8 +666,8 @@ class Admin extends CI_Controller
 		);
 
 		// creadential
-		$password=passwordGenerate(8);
-// 		$password = '123';
+		// $password=passwordGenerate(8);
+		$password = '123';
 		$credentials = array(
 			'username' => validateInput($user['email']),
 			'password' => hash('sha512', $password),

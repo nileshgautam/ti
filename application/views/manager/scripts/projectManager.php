@@ -19,8 +19,15 @@
             // alert('hi');
             let url = BASEURL + 'Manager/getTask';
             let id = $(this).attr('dataTaskid');
+            let projectid = $(this).attr('dataprojectid');
+            let taskStTime = $(this).attr('taskStTime');
+            let taskedTime = $(this).attr('taskedTime');
+
             $.post(url, {
-                id: id
+                id,
+                projectid,
+                taskStTime,
+                taskedTime
             }, function(data) {
                 let res = JSON.parse(data);
                 // console.log(res);
@@ -121,8 +128,6 @@
             } else {
                 errorAlert('selecte services and task');
             }
-
-
         });
 
         $('.assign-task').click(function(e) {
@@ -131,6 +136,7 @@
             $('#hr').val($(this).attr('data-hr'));
             $('#s-date').val($(this).attr('data-st'));
             $('#e-date').val($(this).attr('data-et'));
+            $('#projectid').val($(this).attr('data-projectid'));
         });
 
         $('#allocateTask').submit(function(e) {
@@ -199,7 +205,7 @@
                             break;
                     }
                 });
-            console.log(taskid);
+            // console.log(taskid);
         });
 
         $('#accept-task').click(function(e) {
@@ -220,7 +226,7 @@
                     setTimeout(() => {
                         window.location.reload();
                     }, 3000);
-                    // console.log(taskid);
+                    // console.log(task_id);
                 });
 
             }
@@ -238,6 +244,7 @@
                 endDate: $(this).attr('data-et'),
                 taskId: $(this).attr('data-id'),
                 Hours: $(this).attr('data-hr'),
+                projectid: $(this).attr('data-projectid'),
                 users: selfid,
             }
             console.log(ob);
@@ -278,7 +285,48 @@
                 errorAlert('Please check service and task title. empty not allowed');
                 return false;
             }
-        })
+        });
+
+        // $('#projectid').change(function() {
+        //     let pid = $(this).children(':selected').val();
+        //     alert(pid);
+        // });
+
+        $('#projectid').change(function() {
+
+            let projectid = $(this).children(':selected').val();
+
+            if (projectid == '') {
+                errorAlert('Project not found!');
+            } else {
+                let url = BASEURL + 'Manager/getTasklist';
+
+                $.post(url, {
+                    projectid
+                }, function(data) {
+
+                    if (data) {
+                        data = JSON.parse(data);
+
+                        let html = '<option value="">Select</option>';
+                        for (let i = 0; i < data.length; i++) {
+                            console.log(data[i]);
+                            html += `<option 
+                value="${data[i].task_id}" 
+                data-hrs="${data[i].assigned_hrs}"
+                data-st="${data[i].start_date}"
+                data-et="${data[i].end_date}"
+            
+                >${data[i].title}</option>`;
+                        }
+                        $('#taskid').html(html);
+                    } else {
+                        errorAlert('No task assigned');
+                    }
+                })
+            }
+
+        });
 
     });
 </script>

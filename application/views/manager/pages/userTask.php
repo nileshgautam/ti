@@ -62,23 +62,44 @@
                             <div class="modal-body">
                                 <form id="allocateTask" class="row m-0">
                                     <input type="hidden" name="users" id="taskId" value="<?php echo $users[0]['people_id'] ?>">
-                                    <div class="form-group col-sm-12">
-                                        <label for="taskId">Task</label>
-                                        <select name="taskId" id="taskid" class="form-control">
-                                            <option value="">Select</option>
-                                            <?php if (!empty($MasterTask)) {
 
+                                    <!-- <input type="hidden" name="projectid" id="projectid" > -->
+
+                                    <div class="form-group col-sm-12">
+
+                                        <label for="projectid">Project</label>
+                                        <select id="projectid" name="projectid" class="form-control">
+                                            <option value="">Select</option>
+                                            <?php if (!empty($projects_task)) {
                                                 $count = 1;
-                                                foreach ($MasterTask as $item) {
+                                                foreach ($projects_task as $item) {
                                                     // print_r($item);
                                             ?>
-                                                    <option value="<?php echo $item['task_id'] ?>" data-hrs='<?php echo  $item['assigned_hrs'] ?>' data-st='<?php echo ddmmyy($item['start_date']) ?>' data-et='<?php echo  ddmmyy($item['end_date']) ?>'>
-                                                        <?php echo $item['title'] ?>
+                                                    <option value="<?php echo $item['project_id'] ?>" data-projectid='<?php echo  $item['project_id'] ?>'>
+                                                        <?php echo $item['name'] ?>
                                                     </option>
                                             <?php }
                                             } ?>
                                         </select>
+                                        <label for="taskId">Task</label>
+                                        <select name="taskId" id="taskid" class="form-control">
+                                            <!-- <option value="">Select</option>
+                                            <?php if (!empty($MasterTask)) {
+                                                $count = 1;
+                                                foreach ($MasterTask as $item) {
+                                                    // print_r($item);
+                                            ?>
+                                                    <option 
+                                                    value="<?php echo $item['task_id'] ?>" 
+                                                    data-hrs='<?php echo  $item['assigned_hrs'] ?>' data-st='<?php echo ddmmyy($item['start_date']) ?>' data-projectid='<?php echo  $item['project_id'] ?>'
+                                                    data-et='<?php echo  ddmmyy($item['end_date']) ?>'>
+                                                        <?php echo $item['title'] ?>
+                                                    </option>
+                                            <?php }
+                                            } ?> -->
+                                        </select>
                                     </div>
+
                                     <div class="form-group col-sm-12">
                                         <label for="title">Hours</label>
                                         <input type="text" name="Hours" id="ashrs" class="form-control">
@@ -110,8 +131,17 @@
 
 <script>
     $('#taskid').change(function() {
+
         $('#ashrs').val($(this).children(':selected').attr('data-hrs'));
-        $('#s-date').val($(this).children(':selected').attr('data-st'));
-        $('#e-date').val($(this).children(':selected').attr('data-et'));
+        $('#s-date').val(ddmmyy($(this).children(':selected').attr('data-st')));
+        $('#e-date').val(ddmmyy($(this).children(':selected').attr('data-et')));
+
     });
+
+    const ddmmyy = (date) => {
+        let std = date.split('-');
+        let sdate = `${std[2]}/${std[1]}/${std[0]}`;
+        return sdate
+
+    }
 </script>

@@ -112,11 +112,12 @@
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <label for="mobile">Mobile</label>
-                                        <input type="number" class="form-control" name="mobile" id="mobile" placeholder="Enter mobile" value="<?php echo isset($employee) ? $employee[0]['phone'] : ''  ?>" required>
+                                        <input type="number" class="form-control check-mobile-number" name="mobile" id="mobile" placeholder="Enter mobile no: 9612345612" value="<?php echo isset($employee) ? $employee[0]['phone'] : ''  ?>" required>
+                                        <small aria-details="mobile" id='mobile-error'></small>
                                     </div>
                                     <div class="form-group col-sm-6">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value="<?php echo isset($employee) ? $employee[0]['email'] : ''  ?>" required>
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter email :email@mail.com" value="<?php echo isset($employee) ? $employee[0]['email'] : ''  ?>" required>
                                     </div>
 
                                     <!-- start Address -->
@@ -176,7 +177,7 @@
 
                                     <div class="form-group col-sm-6">
                                         <label for="designation">Designation</label>
-                                        <select name="designation" id="designation" class="form-control select2" data-placeholder="Select Designation">
+                                        <select name="designation" id="designation" class="form-control select2 " data-placeholder="Select Designation" disabled>
                                             <?php if (!empty($designation)) {
                                                 foreach ($designation as $item) { 
                                                     print_r($item);
