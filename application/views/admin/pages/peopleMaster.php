@@ -22,12 +22,11 @@
 
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-employees" role="tabpanel" aria-labelledby="pills-employees-tab">
-
                             <div class="card">
                                 <div class="card-header row m-0">
                                     <div class="col-sm-2">Employees</div>
                                     <div class="col-sm-10">
-                                        <a class="btn btn-primary float-right btn-xs" href="<?php echo base_url('Admin/people#int-people') ?>" title="Add more"><i class="fas fa-plus-square"></i></a></div>
+                                        <a class="btn btn-primary float-right btn-xs d-btn" id='employees' href="<?php echo base_url('Admin/people') ?>" title="Add more"><i class="fas fa-plus-square"></i></a></div>
 
                                 </div>
                                 <div class="card-body ">
@@ -90,7 +89,9 @@
                                 <div class="card-header row m-0">
                                     <div class="col-sm-2">Clients</div>
                                     <div class="col-sm-10">
-                                        <a class="btn btn-primary float-right btn-xs" href="<?php echo base_url('Admin/') ?>clinetForm"><i class="fas fa-plus-square"></i></a></div>
+                                        <a class="btn btn-primary float-right btn-xs d-btn" id='clients' href="<?php echo base_url('Admin/') ?>clinetForm">
+                                        <i class="fas fa-plus-square"></i></a>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <table class="table dataTable table-bordered table-striped">

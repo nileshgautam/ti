@@ -38,6 +38,7 @@
                             <?php if (!empty($task)) {
                                 // echo '<pre>';
                                 // print_r($task);
+                                // die;
                                 $count = 1;
                                 foreach ($task as $item) {
                             ?>
@@ -51,10 +52,20 @@
                                         <td><?php echo date_format(date_create($item['end_date']), "d/m/Y"); ?></td>
                                         <td>
                                             <a class="btn btn-primary  btn-xs ml-2 
-                                            assign-task" href="#" title="Assign" data-toggle="modal" data-target="#assignModal" data-id="<?php echo $item['task_id'] ?>" data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" data-hr="<?php echo $item['assigned_hrs'] ?>">Assign</a>
+                                            assign-task" href="#" title="Assign" data-toggle="modal" data-target="#assignModal" 
+                                            data-id="<?php echo $item['task_id'] ?>" 
+                                            data-projectid="<?php echo $item['project_id'] ?>" 
+                                            data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" 
+                                            data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" 
+                                            data-hr="<?php echo $item['assigned_hrs'] ?>">Assign</a>
 
                                             <a class="btn btn-primary btn-xs m-2 
-                                            self" title="Assign self" data-id="<?php echo $item['task_id'] ?>" data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" data-hr="<?php echo $item['assigned_hrs'] ?>"> Assign self</a>
+                                            self" title="Assign self" 
+                                            data-id="<?php echo $item['task_id'] ?>" 
+                                            data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" 
+                                            data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" 
+                                            data-projectid="<?php echo $item['project_id'] ?>" 
+                                            data-hr="<?php echo $item['assigned_hrs'] ?>"> Assign self</a>
 
                                         </td>
                                     </tr>
@@ -76,7 +87,7 @@
                             <div class="modal-body">
                                 <form id="allocateTask" class="row m-0">
                                     <input type="hidden" name="taskId" id="taskId">
-
+                                    <input type="hidden" name="projectid" id="projectid">
                                     <div class="form-group col-sm-12">
                                         <label for="users">Users</label>
                                         <select name="users" id="users" class="form-control">
@@ -109,11 +120,10 @@
                                     </div>
                                     <div class="form-group col-sm-12">
                                         <!-- <input type="hidden" name="mid" value="<?php echo isset($Mid) ? $Mid : '' ?>"> -->
-                                        <button type="submit" class="btn btn-primary float-right">Create Task</button>
+                                        <button type="submit" class="btn btn-primary float-right btn-xs">Save changes</button>
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>

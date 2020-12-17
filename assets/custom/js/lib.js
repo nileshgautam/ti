@@ -283,8 +283,6 @@ const calculateTime = (time) => {
 }
 
 const convertMinToHRS = (minutes) => {
-    // console.log(minutes);
-    let hrs = parseInt(minutes / 60);
-    let minute = minutes % 60;
-    return (`${hrs}.${minute}`);
+    let hrs = parseFloat(minutes / 60);
+    return (`${hrs}`);
 }

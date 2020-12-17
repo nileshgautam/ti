@@ -27,7 +27,7 @@ class Employee extends ci_controller
 		// $data['allocatedTask'] = $this->CustomModel->getAllocatedProjects(Employee::$userId);
 		$data['allocatedTask'] = $this->CustomModel->getAllocatedTask(Employee::$userId);
 		// print_r($data['allocatedTask']);die;
-		$data['class'] = __class__;
+		// $data['class'] = __class__;
 		$this->load->view('admin/layout/header');
 		$this->load->view('admin/layout/sidebar');
 		$this->load->view('template/AllocatedTask', $data);
@@ -41,7 +41,7 @@ class Employee extends ci_controller
 		$date = base64_decode($date);
 		// echo "<pre>";
 		$data['dateDetails'] = $this->common->getWeeklyTimesheetDetails(Employee::$userId, $day, $date);
-		$data['class'] = __class__;
+		// $data['class'] = __class__;
 		// 	echo "<pre>";
 		// 	print_r($data['dateDetails']);
 		// die;
@@ -71,19 +71,41 @@ class Employee extends ci_controller
 	function dailytimesheet()
 	{
 		$cdate = date('Y-m-d');
+
+
 		$data['allocatedTask'] = $this->CustomModel->getDailyAllocatedTasks(Employee::$userId, $cdate);
+		
+		$data['projects'] = $this->CustomModel->getProjectByAssignTask(Employee::$userId, $cdate);
+
+
+
+
+		// echo Employee::$userId;
+		// echo $cdate;
+
 
 		$data['task'] = $this->CustomModel->getDailyTask(Employee::$userId, $cdate);
 		$data['document'] = $this->CustomModel->getAllfromTable('master_document');
 
-		// print_r($data['allocatedTask']); die;
+		// echo '<pre>';
+		// print_r($data['projects']); die;
 
 		$this->load->view('admin/layout/header');
 		$this->load->view('admin/layout/sidebar');
-		$this->load->view('template/dailytimesheet3', $data);
+		$this->load->view('template/bookedtime', $data);
 		$this->load->view('admin/layout/footer');
-		$this->load->view('template/scripts/dailytimesheet3');
+		$this->load->view('template/scripts/bookedtime');
 	}
+
+
+	public function getAllocatedtask()
+	{
+		$cdate = date('Y-m-d');
+		$projectid=$_POST['projectid'];
+		$result=$this->CustomModel->getDailyAllocatedTasks(Employee::$userId, $cdate, $projectid);
+		echo json_encode($result);
+	}
+
 
 	function getBookedTime()
 	{
@@ -289,9 +311,22 @@ class Employee extends ci_controller
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			// print_r($_POST);
+			// die;
 			$id = base64_decode($_POST['row_id']);
 			$table = $_POST['table_name'];
-			$condition = array('taks_id' => $id, 'save_date' => date('Y-m-d'), 'start_time' => time_in_24_hour_format(base64_decode($_POST['st'])), 'end_time' => time_in_24_hour_format(base64_decode($_POST['et'])));
+			$condition = array(
+			'taks_id' => $id, 
+			'save_date' => date('Y-m-d'),
+			'start_time' => time_in_24_hour_format(base64_decode($_POST['st'])), 
+			'end_time' => time_in_24_hour_format(base64_decode($_POST['et'])),
+			'dailyts_id'=>base64_decode($_POST['dailyts_id'])
+
+		
+		);
+
+
+		// print_r($condition);die;
+
 			$res = $this->MainModel->deleteFromTable($table, $condition);
 			echo $res == true ? json_encode(array('message' => 'Task removed.', 'type' => 'success')) : json_encode(array('message' => 'Opps something wrong! Contact IT.', 'type' => 'error'));
 		}
@@ -328,11 +363,11 @@ class Employee extends ci_controller
 		}
 	}
 
-	public function removeTaskFromTimesheet()
-	{
+	// public function removeTaskFromTimesheet()
+	// {
 
-		$this->common->removeTaskFromTimesheet(Employee::$userId, __class__);
-	}
+	// 	$this->common->removeTaskFromTimesheet(Employee::$userId, __class__);
+	// }
 
 	public function getContract()
 	{

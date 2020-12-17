@@ -168,7 +168,7 @@ function time_in_24_hour_format($time = null)
 // Function to convert time from 24 hrs to 12hrs
 function time_in_12_hour_format($time = null)
 {
-	return date("g:i a", strtotime("13:30"));
+	return date("g:i a", strtotime($time));
 }
 
 function CalculateTime($time1, $time2)

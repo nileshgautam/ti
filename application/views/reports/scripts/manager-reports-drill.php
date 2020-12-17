@@ -342,7 +342,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Browser Projects assign and booked HRS.'
+                text: 'Time booked hrs / Project(Name)'
             },
          
             accessibility: {
@@ -355,7 +355,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Total Consumed HRS project wise'
+                    text: 'Total Consumed hrs'
                 }
 
             },
@@ -374,7 +374,7 @@
 
             tooltip: {
                 headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}hrs</b> of total<br/>'
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f} hrs</b> of total<br/>'
             },
 
             series: [{

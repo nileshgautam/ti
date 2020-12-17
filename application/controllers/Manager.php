@@ -52,7 +52,7 @@ class Manager extends CI_Controller
 		$page['header'] =  'Projects | ' . BRAND_NAME;
 		// $page['projects'] = $this->CustomModel->getAllfromWhere('project', array('resources' => $_SESSION['logged_in']['people_id']));
 		// $page['projects'] = $this->CustomModel->getProjects();
-		$page['projects'] = $this->CustomModel->getAssignedProject($_SESSION['logged_in']['people_id']);
+		$page['projects'] = $this->CustomModel->getAssignedProject(Manager::$userId);
 
 		// echo '<pre>';
 		// print_r($page['projects']);die;
@@ -79,12 +79,16 @@ class Manager extends CI_Controller
 	{
 		if ($id) {
 			$id = base64_decode($id);
-			$page['task'] = $this->CustomModel->getAllocatedTask($id);
+			// $cdate = date('Y-m-d');
+			$page['task'] = $this->CustomModel->getAllocatedTask(Manager::$userId);
+			$page['projects'] = $this->CustomModel->getAssignproject(Manager::$userId);
+			// $data['projects_task'] = $this->CustomModel->getProjectByAssignTask(Manager::$userId, $cdate);
 
-			$page['users'] = $this->CustomModel1->getemployee($id);
+			// print_r($page['projects']); die;
+			$page['users'] = $this->CustomModel1->getemployee(Manager::$userId);
 
-			$page['MasterTask'] = $this->CustomModel->getTaskByProjectAndManager(Manager::$userId);
-		
+			// $page['MasterTask'] = $this->CustomModel->getTaskByProjectAndManager(Manager::$userId);
+
 			$this->load->view('admin/layout/header', $page);
 			$this->load->view('admin/layout/sidebar');
 			$this->load->view('manager/pages/userTask');
@@ -92,6 +96,17 @@ class Manager extends CI_Controller
 			$this->load->view('admin/layout/footer');
 		}
 	}
+
+	public function getTasklist( $var = null)
+	{
+		$cdate = date('Y-m-d');
+		$projectid=$_POST['projectid'];
+		// $result=$this->CustomModel->CustomModel->getDailyAllocatedTasks(Manager::$userId, $cdate, $projectid);
+		$result=$this->CustomModel->taklistByProjectId($projectid);
+		echo json_encode($result);
+	}
+
+
 	public function task($var = null)
 	{
 		$page['header'] =  'Task | ' . BRAND_NAME;
@@ -109,15 +124,16 @@ class Manager extends CI_Controller
 	public function projectTask($id = null, $projectName = null)
 	{
 		if ($id) {
+
 			// $page['task'] = $this->CustomModel->getAllfromWhere('task', array('project_id' => base64_decode($id)));
-			
+
 			$page['task'] = $this->CustomModel->getTaskListbyprojectId(base64_decode($id));
 
 			$page['project'] = $this->CustomModel->getAllfromWhere('project', array('project_id' => base64_decode($id)));
 
-		// echo '<pre>';
+			// echo '<pre>';
 
-		// 	print_r($page['project']);die;
+			// 	print_r($page['task']);die;
 
 			$page['employee'] = $this->CustomModel->getAllfromWhere('employees', array('managerId' => Manager::$userId));
 
@@ -133,7 +149,7 @@ class Manager extends CI_Controller
 	}
 
 
-	
+
 
 
 
@@ -174,7 +190,7 @@ class Manager extends CI_Controller
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (isset($_POST)) {
-			
+
 				$serviceTask = array(
 					'task_id' => $_POST['selected-task'],
 					'service_category_id' => $_POST['service'],
@@ -192,7 +208,7 @@ class Manager extends CI_Controller
 					'project_id' => $_POST['project-id']
 				);
 
-		
+
 				$res = $this->MainModel->selectAllFromTableWhere('task_project_relation', $condition);
 
 				// print_r($_POST);
@@ -218,7 +234,7 @@ class Manager extends CI_Controller
 		$date = base64_decode($date);
 		$page['header'] =  'Timesheet | ' . BRAND_NAME;
 		$data['dateDetails'] = $this->common->getWeeklyTimesheetDetails(Manager::$userId, $day, $date);
-		$data['class'] = __class__;
+		// $data['class'] = __class__;
 
 		$this->load->view('admin/layout/header', $data);
 		$this->load->view('admin/layout/sidebar');
@@ -234,69 +250,66 @@ class Manager extends CI_Controller
 		$currentDate = date('Y-m-d');
 		$page['header'] =  'Daily Timesheet | ' . BRAND_NAME;
 		$taskArr = $this->CustomModel->getDailyTask($id, $currentDate);
+		// // echo '<pre>';
+		// // print_r($taskArr);
+		// // die;
 		$hrs = 0;
 		$minute = 0;
+
 		if ($taskArr) {
 			for ($i = 0; $i < count($taskArr); $i++) {
-				$t = time_deff_two($taskArr[$i]['taskStTime'], $taskArr[$i]['taskedTime']);
-				$deftime = explode(":", $t);
-				$hrs += (int)$deftime[0];
-				$minute += (int)$deftime[1];
+				$minute += (int)$taskArr[$i]['consumedTime'];
 			}
-
-			$hrs;
-			$min = ($minute) % 60;
-			$hrsm[0] =  explode('.', ($minute) / 60);
-			$totalhrs = ((int)$hrsm[0] + $hrs) . ' HH: ' . $min . ' MM';
+			$hrs = $minute / 60;
 		} else {
-			$totalhrs = '00 HH:00 MM';
+			$hrs = 0.0;
 		}
 
-		$timeArraySlt = [];
-		$taskList = [];
-		$timeArr = timeRange(7, 24);
+		// $timeArraySlt = [];
+		// $taskList = [];
+		// $timeArr = timeRange(7, 24);
 
-		for ($i = 0; $i < count($timeArr) - 1; $i++) {
-			$timeArraySlt[$timeArr[$i]] = array();
-		}
+		// for ($i = 0; $i < count($timeArr) - 1; $i++) {
+		// 	$timeArraySlt[$timeArr[$i]] = array();
+		// }
 
-		if ($taskArr) {
-			foreach ($timeArraySlt as $timeSlt => $task) {
-				for ($j = 0; $j < count($taskArr); $j++) {
+		// if ($taskArr) {
+		// 	foreach ($timeArraySlt as $timeSlt => $task) {
+		// 		for ($j = 0; $j < count($taskArr); $j++) {
 
-					$basetime = date("H:i:s", strtotime($timeSlt));
+		// 			$basetime = date("H:i:s", strtotime($timeSlt));
 
-					$bt = explode(':', $basetime);
-					$searchTime = explode(':', $taskArr[$j]['taskStTime']);
+		// 			$bt = explode(':', $basetime);
+		// 			$searchTime = explode(':', $taskArr[$j]['taskStTime']);
 
-					$sTtime =  $taskArr[$j]['taskStTime'];
+		// 			$sTtime =  $taskArr[$j]['taskStTime'];
 
-					$sTtime = date("H:i:s", strtotime($taskArr[$j]['taskStTime']));
+		// 			$sTtime = date("H:i:s", strtotime($taskArr[$j]['taskStTime']));
 
-					$sTtime = ($sTtime == 00) ? 12 : $sTtime;
-					// echo '<br/>';
-					// print_r($sTtime);
-					$sEdtime = explode(':', $taskArr[$j]['taskedTime']);
-					if ($bt[0] == $searchTime[0]) {
-						$baseNext = $bt[0] + 1;
-						if (($sEdtime[0] <= $baseNext)) {
-							$taskList[$sTtime] = $taskArr[$j];
-							array_push($timeArraySlt[$timeSlt], $taskList);
-							$taskList = [];
-						}
-					} else {
-						$page['dailytimesheet'] = $timeArraySlt[$timeSlt];
-					}
-				}
-			}
-		}
+		// 			$sTtime = ($sTtime == 00) ? 12 : $sTtime;
+		// 			// echo '<br/>';
+		// 			// print_r($sTtime);
+		// 			$sEdtime = explode(':', $taskArr[$j]['taskedTime']);
+		// 			if ($bt[0] == $searchTime[0]) {
+		// 				$baseNext = $bt[0] + 1;
+		// 				if (($sEdtime[0] <= $baseNext)) {
+		// 					$taskList[$sTtime] = $taskArr[$j];
+		// 					array_push($timeArraySlt[$timeSlt], $taskList);
+		// 					$taskList = [];
+		// 				}
+		// 			} else {
+		// 				$page['dailytimesheet'] = $timeArraySlt[$timeSlt];
+		// 			}
+		// 		}
+		// 	}
+		// }
 
-		$page['dailytimesheet'] = $timeArraySlt;
-		$page['totalhrs'] = $totalhrs;
+		$page['dailytimesheet'] = $taskArr;
+		$page['totalhrs'] = $hrs;
 		// my_print($timeArraySlt);die;
 		$this->load->view('admin/layout/header', $page);
 		$this->load->view('admin/layout/sidebar');
-		$this->load->view('template/daily-timesheet');
+		$this->load->view('template/daily-timesheet', $page);
 		$this->load->view('manager/scripts/projectManager');
 		$this->load->view('admin/layout/footer');
 	}
@@ -304,15 +317,19 @@ class Manager extends CI_Controller
 	function booketimes()
 	{
 		$cdate = date('Y-m-d');
-		$data['allocatedTask'] = $this->CustomModel->getDailyAllocatedTasks(Manager::$userId, $cdate);
+		// $data['allocatedTask'] = $this->CustomModel->getDailyAllocatedTasks(Manager::$userId, $cdate);
+		$data['projects'] = $this->CustomModel->getProjectByAssignTask(Manager::$userId, $cdate);
+
+		// echo '<pre>';
+		// print_r($data['projects']);die;
 
 		$data['task'] = $this->CustomModel->getDailyTask(Manager::$userId, $cdate);
 		$data['document'] = $this->CustomModel->getAllfromTable('master_document');
 		$this->load->view('admin/layout/header');
 		$this->load->view('admin/layout/sidebar');
-		$this->load->view('template/dailytimesheet3', $data);
+		$this->load->view('template/bookedtime', $data);
 		$this->load->view('admin/layout/footer');
-		$this->load->view('template/scripts/dailytimesheet3');
+		$this->load->view('template/scripts/bookedtime');
 	}
 	function showTask($id = null)
 	{
@@ -356,8 +373,19 @@ class Manager extends CI_Controller
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (isset($_POST)) {
 				// print_r($_POST);
-				$id = base64_decode($_POST['id']);
-				$task = $this->MainModel->selectAllFromTableWhere('taskstatus', array('task_id' => $id));
+				// die;
+			
+				$condistion = array(
+					'task_id' => base64_decode($_POST['id']),
+					'project_id' => base64_decode($_POST['projectid']),
+					'taskStTime' => base64_decode($_POST['taskStTime']),
+					'taskedTime' => base64_decode($_POST['taskedTime']),
+
+				);
+				// print_r($condistion);
+				// die;
+
+				$task = $this->MainModel->selectAllFromTableWhere('taskstatus', $condistion);
 				echo json_encode($task[0]);
 			}
 		}

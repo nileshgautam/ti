@@ -1,6 +1,56 @@
 <script>
     $(function() {
 
+        // Function to show data 
+        const select_tab = () => {
+            let selectedlink = JSON.parse(retriveLsData('d-link'));
+            if (selectedlink == '') {
+                return false;
+            } else if (selectedlink == 'clients') {
+                $('#pills-employees-tab').removeClass('active');
+                $('#pills-employees').removeClass('show').removeClass('active');
+                $('#pills-clients-tab').addClass('active');
+                $('#pills-clients-tab').addClass('active');
+                $('#pills-clients').addClass('show').addClass('active');
+
+            } else if (selectedlink == 'employee') {
+                $('#pills-clients-tab').removeClass('active');
+                $('#pills-employees-tab').addClass('active');
+                $('#pills-employees').addClass('show').addClass('active');
+            }
+        }
+
+        select_tab();
+
+        $('.d-btn').click(function() {
+            id = $(this).attr('id');
+            saveLsData('d-link', id);
+        })
+
+        let error = false;
+
+        $('.check-mobile-number').change(function() {
+            let status = validateMobileNumber($(this).val());
+            if (status == false) {
+                // alert(status);
+                $(this).css({
+                    'border': '1px solid red'
+                });
+                $('#mobile-error').text('mobile no should be 10 digits');
+                error = true;
+            }if(status == true){
+                $(this).css({
+                    'border': '1px solid #20c997'
+                });
+                $('#mobile-error').text('');
+                error = false;
+            }
+
+        });
+
+
+
+
         const loadData = (url, formdata, id) => {
 
             $.post(url, formdata, function(respose) {
@@ -29,30 +79,34 @@
                 if (ele[i].checked)
                     gender = ele[i].value;
             }
-
-            $('#skill').val();
-            let user = {
-                first_name: $('#first-name').val(),
-                last_name: $('#last-name').val(),
-                gender: gender,
-                dob: $('#dob').val(),
-                mobile: $('#mobile').val(),
-                email: $('#email').val(),
-                address: $('#address').val(),
-                country: $('#country').val(),
-                state: $('#state').val(),
-                city: $('#city').val(),
-                pin_zip: $('#pin-zip').val(),
-                join_date: $('#join-date').val(),
-                department: $('#department').val(),
-                designation: $('#designation').val(),
-                manager: $('#manager').val(),
-                role: $('#role').val(),
-                skills: $('#skill').val(),
+            if (!error) {
+                $('#skill').val();
+                let user = {
+                    first_name: $('#first-name').val(),
+                    last_name: $('#last-name').val(),
+                    gender: gender,
+                    dob: $('#dob').val(),
+                    mobile: $('#mobile').val(),
+                    email: $('#email').val(),
+                    address: $('#address').val(),
+                    country: $('#country').val(),
+                    state: $('#state').val(),
+                    city: $('#city').val(),
+                    pin_zip: $('#pin-zip').val(),
+                    join_date: $('#join-date').val(),
+                    department: $('#department').val(),
+                    designation: $('#designation').val(),
+                    manager: $('#manager').val(),
+                    role: $('#role').val(),
+                    skills: $('#skill').val(),
+                }
+                userInfo.push(user);
+                saveLsData('userInfo', userInfo);
+                $('#nav-document-tab').click();
+            }else{
+                errorAlert('Kindly fill all details correctly');
+                return false;
             }
-            userInfo.push(user);
-            saveLsData('userInfo', userInfo);
-            $('#nav-document-tab').click();
         });
 
         let counter = 0; //Global variable for rowid
@@ -443,26 +497,29 @@
         }
 
 
-        // $('#department').change(function() {
-        //     let id = $(this).children(':selected').attr('data-id');
-        //     console.log(id);
-        //     let url = BASEURL + 'Admin/get_designation';
-        //     $.post(url, {
-        //         depid: id
-        //     }, function(res) {
-        //         res = JSON.parse(res);
-        //         //    console.log(res);
-        //         let option = '';
+        $('#department').change(function() {
+            let id = $(this).children(':selected').attr('data-id');
+            console.log(id);
+            let url = BASEURL + 'Admin/get_designation';
+            $.post(url, {
+                depid: id
+            }, function(res) {
+                res = JSON.parse(res);
+                //    console.log(res);
+                let option = '';
 
-        //         for (let i = 0; i < res.length; i++) {
-        //             option += `<option value="${res[i]['title']}">${res[i]['title']}</option>`;
-        //         }
-        //         $('#designation').empty();
-        //         $('#designation').html(option);
+                for (let i = 0; i < res.length; i++) {
+                    option += `<option value="${res[i]['title']}">${res[i]['title']}</option>`;
+                }
+                $('#designation').empty();
+                $('#designation').html(option);
+                $('#designation').removeAttr('disabled');
 
 
-        //     });
-        // });
+
+            });
+        });
+
 
         // $('#nav-document-tab').click(function() {
         //     $('#people-form').submit();

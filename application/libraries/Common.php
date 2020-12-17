@@ -317,11 +317,15 @@ class Common
 				"startDate" => yymmdd($startDate),
 				"endDate" => yymmdd($endDate),
 				"budgetedHours" => $Hours,
-				"taskId" => $taskId,
+				"taskId" => $_POST['taskId'],
+				"project_id" => $_POST['projectid'],
 				"allocatedAt" =>timestamp()
 			);
 
-			$checkTask = $this->CI->MainModel->selectAllFromWhere("employee_task_relation", array("employeeId" => $users, 'taskId' => $taskId));
+		// print_r($data);die;
+
+
+			$checkTask = $this->CI->MainModel->selectAllFromWhere("employee_task_relation", array("employeeId" => $users, 'taskId' => $taskId,"project_id" => $_POST['projectid']));
 			// print_r($checkTask);die;
 
 			// print_r($data);die;
