@@ -234,7 +234,7 @@ class Manager extends CI_Controller
 		$date = base64_decode($date);
 		$page['header'] =  'Timesheet | ' . BRAND_NAME;
 		$data['dateDetails'] = $this->common->getWeeklyTimesheetDetails(Manager::$userId, $day, $date);
-		$data['class'] = __class__;
+		// $data['class'] = __class__;
 
 		$this->load->view('admin/layout/header', $data);
 		$this->load->view('admin/layout/sidebar');

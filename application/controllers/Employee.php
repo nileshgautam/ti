@@ -27,7 +27,7 @@ class Employee extends ci_controller
 		// $data['allocatedTask'] = $this->CustomModel->getAllocatedProjects(Employee::$userId);
 		$data['allocatedTask'] = $this->CustomModel->getAllocatedTask(Employee::$userId);
 		// print_r($data['allocatedTask']);die;
-		$data['class'] = __class__;
+		// $data['class'] = __class__;
 		$this->load->view('admin/layout/header');
 		$this->load->view('admin/layout/sidebar');
 		$this->load->view('template/AllocatedTask', $data);
@@ -41,7 +41,7 @@ class Employee extends ci_controller
 		$date = base64_decode($date);
 		// echo "<pre>";
 		$data['dateDetails'] = $this->common->getWeeklyTimesheetDetails(Employee::$userId, $day, $date);
-		$data['class'] = __class__;
+		// $data['class'] = __class__;
 		// 	echo "<pre>";
 		// 	print_r($data['dateDetails']);
 		// die;
@@ -363,11 +363,11 @@ class Employee extends ci_controller
 		}
 	}
 
-	public function removeTaskFromTimesheet()
-	{
+	// public function removeTaskFromTimesheet()
+	// {
 
-		$this->common->removeTaskFromTimesheet(Employee::$userId, __class__);
-	}
+	// 	$this->common->removeTaskFromTimesheet(Employee::$userId, __class__);
+	// }
 
 	public function getContract()
 	{
