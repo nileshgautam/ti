@@ -11,7 +11,7 @@
                         <?php echo ($this->session->flashdata('success') != null) ? '<h5 class="m-0 text-success">' . $this->session->flashdata('success') . '</h5>' : '<h5 class="m-0 text-danger">' . $this->session->flashdata('success') . '</h5>'; ?></h4>
                     </div>
                     <div class="col-sm-4">
-                        <a class="btn btn-primary btn-xs float-right ml-2" href="<?php echo base_url('Admin/projectForm') ?>" title="New Project"><i class="fas fa-plus-square"></i></a>
+                        <a class="btn btn-primary float-right ml-2" href="<?php echo base_url('Admin/projectForm') ?>" title="New Project"><i class="fas fa-plus-square"></i></a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -126,7 +126,7 @@
                     </div>
                     <input type="hidden" id="project" name="projects">
                     <div class="col-sm-12 pd-33">
-                        <button type="submit" class="btn btn-primary btn-xs float-right">Assign</button>
+                        <button type="submit" class="btn btn-primary  float-right">Assign</button>
                     </div>
                     <!-- /.card-body -->
                 </form>

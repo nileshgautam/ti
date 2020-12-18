@@ -17,7 +17,7 @@
                         <input type="hidden" name="type" value="EXT">
                         <div class="col-md-12">
                             <div class="nav nav-tabs" id="nav-tab" role="tablist" aria-orientation="vertical">
-                                <a class="nav-item nav-link active" id="nav-client-info-tab" data-toggle="tab" href="#nav-client-info" role="tab" aria-controls="nav--info" aria-selected="true">Client info</a>
+                                <a class="nav-item nav-link active" id="nav-client-info-tab" data-toggle="tab" href="#nav-client-info" role="tab" aria-controls="nav--info" aria-selected="true">Client info </a>
                                 <a class="nav-item nav-link" id="nav-documents-tab" data-toggle="tab" href="#nav-documents" role="tab" aria-controls="nav-cost" aria-selected="false">Documents</a>
                             </div>
                             <div class="tab-content" id="nav-tabContent">
@@ -25,15 +25,15 @@
                                     <form id="ext-people-form">
                                         <div class="card-body row">
                                             <div class="form-group col-sm-12">
-                                                <label for="org-name">Orgnization name</label>
+                                                <label for="org-name">Orgnization name <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="org-name" name="org-name" placeholder="Enter Orgnization name" value="<?php echo isset($client) ? $client[0]['client_name'] : '' ?>" required>
                                             </div>
                                             <div class="form-group col-sm-12">
-                                                <label for="gst-vat">GST/VAT No.</label>
+                                                <label for="gst-vat">GST/VAT No. <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="gst-vat" name="gst-vat" placeholder="Enter GST/VAT number" value="<?php echo isset($client) ? $client[0]['gst_vat_number'] : '' ?>" required>
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="gst-vat">Orgnization Type</label>
+                                                <label for="gst-vat">Orgnization Type <span class="text-danger">*</span></label>
                                                 <select name="og-type" id="og-type" class="form-control" required>
                                                     <?php if (!empty($ogtype)) {
                                                         foreach ($ogtype as $item) { ?>
@@ -45,21 +45,21 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="c-phone">Phone</label>
+                                                <label for="c-phone">Phone <span class="text-danger">*</span></label>
                                                 <input type="phone" max="10" class="form-control" name="c-phone" id="c-phone" value="<?php echo isset($client) ? $client[0]['phone'] : '' ?>" placeholder="Enter phone" required>
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="c-mobile">Mobile</label>
+                                                <label for="c-mobile">Mobile <span class="text-danger">*</span></label>
                                                 <input type="phone" max="10" class="form-control" name="c-mobile" id="c-mobile" value="<?php echo isset($client) ? $client[0]['phone'] : '' ?>" placeholder="Enter mobile" required>
                                             </div>
 
                                             <div class="form-group col-sm-6">
-                                                <label for="c-email">Email</label>
+                                                <label for="c-email">Email <span class="text-danger">*</span></label>
                                                 <input type="email" class="form-control" name="c-email" id="c-email" placeholder="Enter email" value="<?php echo isset($client) ? $client[0]['email'] : '' ?>" required>
                                             </div>
 
                                             <div class="form-group col-sm-6">
-                                                <label for="c-country">Country</label>
+                                                <label for="c-country">Country <span class="text-danger">*</span></label>
                                                 <select name="c-country" id="c-country" class="form-control">
                                                     <?php if (!empty($country)) {
                                                         foreach ($country as $item) {
@@ -75,7 +75,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-sm-6">
-                                                <label for="currency">Currency</label>
+                                                <label for="currency">Currency <span class="text-danger">*</span></label>
                                                 <select name="currency" id="currency" class="form-control" required>
                                                     <?php if (!empty($currency)) {
                                                         foreach ($currency as $item) {

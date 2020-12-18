@@ -41,7 +41,7 @@
                         <h6 class="text-header"> <?php echo isset($employee) ? 'Edit' : 'Add New' ?></h6>
                     </div>
                     <div class="col-sm-10">
-                        <a href="javascript:window.history.back(-1);" class="btn btn-xs btn-warning float-right"><i class="fas fa-arrow-left" title="Back"></i></a>
+                        <a href="javascript:window.history.back(-1);" class="btn btn-warning float-right"><i class="fas fa-arrow-left" title="Back"></i></a>
                     </div>
                 </div>
 
@@ -70,15 +70,15 @@
                                 <input type="hidden" name="type" value="INP">
                                 <div class="card-body row">
                                     <div class="form-group col-sm-6">
-                                        <label for="first-name">First Name</label>
+                                        <label for="first-name">First Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="first-name" name="first-name" placeholder="Enter first name" value="<?php echo isset($employee) ? $employee[0]['first_name'] : ''  ?>" required>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="last-name">Last Name</label>
+                                        <label for="last-name">Last Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Enter last name" value="<?php echo isset($employee) ? $employee[0]['last_name'] : ''  ?>" required>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="gender">Gender</label>
+                                        <label for="gender">Gender <span class="text-danger">*</span></label>
                                         <div class="form-group clearfix">
                                             <div class="icheck-primary d-inline">
                                                 <input type="radio" id="male" checked name="gender" value="male" <?php echo isset($employee[0]['gender']) && $employee[0]['gender'] == 'male' ? 'checked' : ''  ?>>
@@ -105,18 +105,18 @@
                                     <!-- Date DOB-->
 
                                     <div class="form-group col-sm-6">
-                                        <label for="dob">Birth date</label>
+                                        <label for="dob">Birth date <span class="text-danger">*</span></label>
                                         <div class="input-group ">
                                             <input type="text" class="form-control datepicker" name="dob" id="dob" value="<?php echo isset($employee) ? date_format(date_create($employee[0]['dob']), 'd/m/Y') : ''  ?>" placeholder="DD/MM/YYYY" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="mobile">Mobile</label>
+                                        <label for="mobile">Mobile <span class="text-danger">*</span></label>
                                         <input type="number" class="form-control check-mobile-number" name="mobile" id="mobile" placeholder="Enter mobile no: 9612345612" value="<?php echo isset($employee) ? $employee[0]['phone'] : ''  ?>" required>
                                         <small aria-details="mobile" id='mobile-error'></small>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="email">Email</label>
+                                        <label for="email">Email <span class="text-danger">*</span></label>
                                         <input type="email" class="form-control" name="email" id="email" placeholder="Enter email :email@mail.com" value="<?php echo isset($employee) ? $employee[0]['email'] : ''  ?>" required>
                                     </div>
 
@@ -126,7 +126,7 @@
                                         <textarea name="address" id="address" cols="" rows="" class="form-control"><?php echo isset($employee) ? $employee[0]['address'] : ''  ?></textarea>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="country">Country</label>
+                                        <label for="country">Country<span class="text-danger">*</span></label>
                                         <select name="country" id="country" class="form-control">
                                             <?php if (!empty($country)) {
                                                 foreach ($country as $item) {
@@ -140,7 +140,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        <label for="last-name">State</label>
+                                        <label for="last-name">State <span class="text-danger">*</span></label>
                                         <select name="state" id="state" class="form-control" data-val="<?php echo isset($employee) ? $employee[0]['state'] : ''  ?>">
                                         </select>
                                     </div>
@@ -157,14 +157,14 @@
                                     <!-- Employee details -->
                                     <!-- Join date -->
                                     <div class="form-group col-sm-6">
-                                        <label for="join-date">Joining date</label>
+                                        <label for="join-date">Joining date <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <input type="text" class="form-control datepicker" name="join-date" id="join-date" value="<?php echo isset($employee) ? date_format(date_create($employee[0]['join_date']), 'd/m/Y') : ''  ?>" placeholder="DD/MM/YYYY" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="department">Department</label>
+                                        <label for="department">Department <span class="text-danger">*</span></label>
                                         <select name="department" id="department" class="form-control select2">
                                             <?php if (!empty($department)) {
                                                 foreach ($department as $item) { ?>
@@ -176,7 +176,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="designation">Designation</label>
+                                        <label for="designation">Designation<span class="text-danger">*</span></label>
                                         <select name="designation" id="designation" class="form-control select2 " data-placeholder="Select Designation" disabled>
                                             <?php if (!empty($designation)) {
                                                 foreach ($designation as $item) { 
@@ -191,7 +191,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="manager">Manager</label>
+                                        <label for="manager">Manager<span class="text-danger">*</span></label>
                                         <select name="manager" id="manager" class="form-control" data-placeholder="select Manager">
                                             <?php if (!empty($manager)) {
                                                 foreach ($manager as $item) { ?>
@@ -207,7 +207,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="role">Role</label>
+                                        <label for="role">Role <span class="text-danger">*</span></label>
                                         <select name="role" id="role" class="select2 form-control">
                                             <?php if (!empty($role)) {
                                                 foreach ($role as $item) { ?>
@@ -219,7 +219,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-6">
-                                        <label for="skill">Skill</label>
+                                        <label for="skill">Skill <span class="text-danger">*</span></label>
                                         <select class="select2 form-control" multiple="multiple" data-placeholder="Select your skills" style="width: 100%;" id="skill" name='skill[]' required>
                                             <?php if (!empty($skill)) {
                                                 foreach ($skill as $item) { ?>
@@ -240,7 +240,7 @@
                                     </div>                -->
 
                                     <div class="form-group col-sm-12">
-                                        <button type="submit" class="btn btn-primary btn-xs float-right">Next</button>
+                                        <button type="submit" class="btn btn-primary float-right">Next</button>
                                     </div>
 
 
@@ -254,22 +254,22 @@
                                 <!-- <input type="hidden" name="costId" id="costId"> -->
                                 <div class="card-body row">
                                     <div class="form-group col-sm-4">
-                                        <label for="working-hours">Working Hours/Day</label>
-                                        <input type="text" class="form-control" id="working-hours" name="working-hours" value="<?php echo isset($employee) ? $employee[0]['working_hours'] : ''  ?>" placeholder="Enter working-hours">
+                                        <label for="working-hours">Working Hours/Day <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="working-hours" name="working-hours" value="<?php echo isset($employee) ? $employee[0]['working_hours'] : ''  ?>" placeholder="Enter working-hours" required>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                        <label for="cost-per-hours">Cost/Hour</label>
-                                        <input type="text" class="form-control" id="cost-per-hours" name="cost-per-hours" value="<?php echo isset($employee) ? $employee[0]['cost_per_hours'] : ''  ?>" placeholder="Enter cost per hours">
+                                        <label for="cost-per-hours">Cost/Hour <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="cost-per-hours" name="cost-per-hours" value="<?php echo isset($employee) ? $employee[0]['cost_per_hours'] : ''  ?>" placeholder="Enter cost per hours" required>
                                     </div>
                                     <div class="form-group col-sm-4">
-                                        <label for="rate-per-hours">Rate/Hour</label>
-                                        <input type="text" class="form-control" id="rate-per-hours" name="rate-per-hours" value="<?php echo isset($employee) ? $employee[0]['rate_per_hour'] : ''  ?>" placeholder="100">
+                                        <label for="rate-per-hours">Rate/Hour<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="rate-per-hours" name="rate-per-hours" value="<?php echo isset($employee) ? $employee[0]['rate_per_hour'] : ''  ?>" placeholder="100"  required>
                                     </div>
                                 </div>
                                 <input type="hidden" id="empid" value="<?php echo isset($employee) ? $employee[0]['people_id'] : ''  ?>">
                                 <div class="card-footer">
                                     <div class="form-group col-sm-12">
-                                        <button type="submit" class="btn btn-primary btn-xs float-right">Submit</button>
+                                        <button type="submit" class="btn btn-primary float-right">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -355,7 +355,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-group col-sm-12">
-                                        <button type="submit" class="btn btn-primary btn-xs float-right">Next</button>
+                                        <button type="submit" class="btn btn-primary float-right">Next</button>
                                     </div>
                                 </div>
                             </form>
@@ -399,7 +399,7 @@
                                 <div class="card">
                                     <div class="row m-0">
                                         <div class="col-sm-12 py-2">
-                                            <a id="addmore" class="btn btn-primary btn-xs float-right " title="Add more">
+                                            <a id="addmore" class="btn btn-primary float-right " title="Add more">
                                                 <i class="fas fa-plus-circle"></i></a>
                                         </div>
                                     </div>
@@ -408,7 +408,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="form-group col-sm-12">
-                                        <button type="submit" class="btn  btn-primary btn-xs float-right">Next</button>
+                                        <button type="submit" class="btn  btn-primary float-right">Next</button>
                                     </div>
                                 </div>
                             </form>
