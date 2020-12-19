@@ -97,12 +97,12 @@ class Manager extends CI_Controller
 		}
 	}
 
-	public function getTasklist( $var = null)
+	public function getTasklist($var = null)
 	{
 		$cdate = date('Y-m-d');
-		$projectid=$_POST['projectid'];
+		$projectid = $_POST['projectid'];
 		// $result=$this->CustomModel->CustomModel->getDailyAllocatedTasks(Manager::$userId, $cdate, $projectid);
-		$result=$this->CustomModel->taklistByProjectId($projectid);
+		$result = $this->CustomModel->taklistByProjectId($projectid);
 		echo json_encode($result);
 	}
 
@@ -148,20 +148,13 @@ class Manager extends CI_Controller
 		}
 	}
 
-
-
-
-
-
 	public function tasklist()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (isset($_POST)) {
-				$res = $this->CustomModel->getservices($_POST['id']);
-				$condition = array('category' => $_POST['id']);
-				$data = $this->MainModel->selectAllFromTableWhere('master_tasks', $condition);
-				// echo '<pre>';
-				// print_r($data);die;
+				// $res = $this->CustomModel->getservices($_POST['id']);
+				// $condition = array('category' => $_POST['id']);
+				$data = $this->CustomModel->getTaskByServicesId($_POST['id']);
 				echo json_encode($data, true);
 			}
 		}
@@ -185,12 +178,48 @@ class Manager extends CI_Controller
 			}
 		}
 	}
+
+
+	public function addnewTask()
+	{
+
+		// echo '<pre>';
+		// print_r($_POST);
+		// die;
+		// // // $tableName = $_POST['flage'];
+		// // // $descrption = validateInput($_POST['description']);
+		$activeStatus = true;
+		$rowData = array(
+			'title' => validateInput($_POST['task']),
+			'description' => 'Not available',
+			'active_status' => $activeStatus
+		);
+		$condistion= array('category' => $_POST['serviceid'], 'title' => validateInput($_POST['task']));
+		$res = $this->CustomModel->getAllfromWhere('master_tasks',$condistion);
+		if (!empty($res)) {
+			echo json_encode(array('message' => 'Task already exists', 'type' => 'error'));
+		} elseif($res =='' ) {
+			$Id = $this->MainModel->getNewIDorNo('master_tasks', 'TSK');
+			$rowData['task_id'] = $Id;
+			$rowData['category'] = validateInput($_POST['serviceid']);
+			$rowData['created_timestamp'] = timestamp();
+			$rowData['created_by'] = Manager::$userId;
+			$result = $this->MainModel->getinsertedData('master_tasks', $rowData);
+			echo messages($result);
+		}
+	}
+
+
+
+
 	// Function for Selectting services by project id
 	public function psotServicesTask($var = null)
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (isset($_POST)) {
-
+				// echo '<pre>';
+				// print_r($_POST);
+				// die;
 				$serviceTask = array(
 					'task_id' => $_POST['selected-task'],
 					'service_category_id' => $_POST['service'],
@@ -374,7 +403,7 @@ class Manager extends CI_Controller
 			if (isset($_POST)) {
 				// print_r($_POST);
 				// die;
-			
+
 				$condistion = array(
 					'task_id' => base64_decode($_POST['id']),
 					'project_id' => base64_decode($_POST['projectid']),

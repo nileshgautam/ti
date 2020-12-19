@@ -90,7 +90,9 @@
 					// console.log(el.id);
 
 					borderColor = ''
+
 					console.log(el);
+
 					if (el.status == 'submitted') {
 						borderColor = 'border-primary';
 					} else if (el.status == 'Saved') {
@@ -100,6 +102,7 @@
 					} else if (el.status == 'approved') {
 						borderColor = 'border-success';
 					}
+					
 					html += `<div class="row border-top ${borderColor} py-2" >
 						<div class="col-sm-3 row m-0">
 						<div class="col-sm-1">`;
@@ -123,6 +126,7 @@
 						<input type="text" class="show-time w-72 form-control task-et fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskedTime)}"/>
 						</div>
 						<div class="col-sm-2">`;
+
 					if (el.uploadedFiles != 'No-files') {
 						html += `	<span class="ml-2 btn btn-primary btn-xs showTaskFile fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)}>
 						<i class="fa fa-eye" aria-hidden="true"></i>
@@ -155,8 +159,6 @@
 			}
 			$('#alltasks').html(html);
 		}
-
-
 
 		loadData();
 

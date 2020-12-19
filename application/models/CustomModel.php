@@ -258,7 +258,7 @@ class CustomModel extends ci_model
     {
         $q = "SELECT  project.project_Id,project.name,employee_task_relation.employeeId, employee_task_relation.budgetedHours as assignhrs, employee_task_relation.startDate, employee_task_relation.endDate
        from employee_task_relation LEFT JOIN master_tasks ON employee_task_relation.taskId = master_tasks.task_id LEFT JOIN project on project.project_Id=employee_task_relation.project_id WHERE employee_task_relation.employeeId='$userId' AND employee_task_relation.endDate>='$date' GROUP by project_id";
-       
+
         $result = $this->db->query($q)->result_array();
         return  $result != '' ? $result : FALSE;
     }
@@ -313,11 +313,16 @@ class CustomModel extends ci_model
     // update batch
 
 
-    // function getTaskByid($id=null){
-    //     $q="SELECT * FROM employee_task_relation LEFT JOIN task on employee_task_relation.taskId=task.task_id WHERE employee_task_relation.employeeId='$id'";
-    //     $result = $this->db->query($q)->result_array();
-    //     return $this->db->affected_rows() ? $result : FALSE;
-    // }    
+    function getTaskByServicesId($id = null)
+    {
+        $q = "SELECT * FROM master_tasks WHERE master_tasks.category='$id'  
+        ORDER BY `master_tasks`.`title`  ASC";
+        $result = $this->db->query($q)->result_array();
+        // echo '<pre>';
+        // print_r($result);
+        // die;
+        return $this->db->affected_rows() ? $result : FALSE;
+    }
 
     function getTaskByid($id = null, $date = null)
     {
@@ -362,15 +367,6 @@ class CustomModel extends ci_model
     // Function for get consumed hrs by project
     public function getProjectbyUserIdConsumendhrs($id = null, $date = null)
     {
-        // $q = "SELECT project.project_Id, project.name, project.budget_hours as assignHrs,
-        // IFNULL(sum(Format(TIME_TO_SEC(timediff(dailytimesheet.end_time, dailytimesheet.start_time))/60,0)),0)
-        // as bookedTime FROM project
-        // LEFT JOIN task_project_relation on project.project_Id=task_project_relation.project_id
-        // LEFT JOIN peopl_project_relationship on peopl_project_relationship.project_id=project.project_id
-        // LEFT JOIN dailytimesheet on dailytimesheet.project_id=project.project_Id and task_project_relation.task_id=dailytimesheet.taks_id
-        // WHERE peopl_project_relationship.people_id='$id'  and dailytimesheet.submit_date='$date'
-        // GROUP by project.project_Id ORDER BY `project`.`project_Id` ASC"; 
-
         $q = "SELECT project.project_Id, project.name, project.budget_hours as assignHrs,
         IFNULL(sum(Format(TIME_TO_SEC(timediff(dailytimesheet.end_time, dailytimesheet.start_time))/60,0)),0)
         as bookedTime FROM project
@@ -382,7 +378,6 @@ class CustomModel extends ci_model
         $result = $this->db->query($q)->result_array();
         return $this->db->affected_rows() ? $result : FALSE;
     }
-
 
     // Function for get consumed hrs by project
     public function getTaskbyManagerIdAndProjectId($projectid = null, $managerid = null)

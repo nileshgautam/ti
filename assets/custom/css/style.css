@@ -119,3 +119,19 @@
 .h-200 {
     height: 100px !important;
 }
+
+.shorted-task {
+    /* border-radius: 5px; */
+    /* box-shadow: 1px 3px 5px grey; */
+    justify-content: center;
+    margin: auto;
+}
+
+.shorted-task .task-label {
+    display: flex;
+    margin: auto;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600 !important;
+    padding: 8px 15px;
+}

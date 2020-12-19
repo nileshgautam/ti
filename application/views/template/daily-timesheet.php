@@ -19,7 +19,7 @@
                         <div class="col-sm-6">
                             Booked Time: <?php echo $totalhrs ?> hrs.
                         </div>
-                        <div class="col-sm-6"> <a class="btn btn-warning btn-xs float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">Back</a></div>
+                        <div class="col-sm-6"> <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);"><i class="fas fa-arrow-left"></i></a></div>
                     </div>
                 </div>
                 <div class="card-body">

@@ -8,9 +8,9 @@
                         <h4 class="m-0"><?php echo isset($projecName) ? $projecName : '' ?></h4>
                     </div>
                     <div class="col-sm-8">
-                        <a class="btn btn-primary btn-xs float-right ml-2 add-task" href="#" title="Add Project" data-toggle="modal" data-target="#taskModal" data-id="<?php echo $projecid ?>"><i class="fas fa-plus-square"></i></a>
+                        <a class="btn btn-primary  float-right ml-2 add-task" href="#" title="Add Project" data-toggle="modal" data-target="#taskModal" data-id="<?php echo $projecid ?>"><i class="fas fa-plus-square"></i></a>
 
-                        <a class="btn btn-warning btn-xs float-right ml-2" href="javascript:window.history.back(-1);" title="Back"><i class="fas fa-arrow-left"></i></a>
+                        <a class="btn btn-warning  float-right ml-2" href="javascript:window.history.back(-1);" title="Back"><i class="fas fa-arrow-left"></i></a>
 
                     </div>
                 </div>
@@ -51,21 +51,11 @@
                                             echo date_format(date_create($item['start_date']), "d/m/Y"); ?></td>
                                         <td><?php echo date_format(date_create($item['end_date']), "d/m/Y"); ?></td>
                                         <td>
-                                            <a class="btn btn-primary  btn-xs ml-2 
-                                            assign-task" href="#" title="Assign" data-toggle="modal" data-target="#assignModal" 
-                                            data-id="<?php echo $item['task_id'] ?>" 
-                                            data-projectid="<?php echo $item['project_id'] ?>" 
-                                            data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" 
-                                            data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" 
-                                            data-hr="<?php echo $item['assigned_hrs'] ?>">Assign</a>
+                                            <a class="btn btn-primary btn-xs ml-2 
+                                            assign-task" href="#" title="Assign" data-toggle="modal" data-target="#assignModal" data-id="<?php echo $item['task_id'] ?>" data-projectid="<?php echo $item['project_id'] ?>" data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" data-hr="<?php echo $item['assigned_hrs'] ?>">Assign</a>
 
                                             <a class="btn btn-primary btn-xs m-2 
-                                            self" title="Assign self" 
-                                            data-id="<?php echo $item['task_id'] ?>" 
-                                            data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" 
-                                            data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" 
-                                            data-projectid="<?php echo $item['project_id'] ?>" 
-                                            data-hr="<?php echo $item['assigned_hrs'] ?>"> Assign self</a>
+                                            self" title="Assign self" data-id="<?php echo $item['task_id'] ?>" data-st="<?php echo date_format(date_create($item['start_date']), "d/m/Y") ?>" data-et="<?php echo date_format(date_create($item['end_date']), "d/m/Y") ?>" data-projectid="<?php echo $item['project_id'] ?>" data-hr="<?php echo $item['assigned_hrs'] ?>"> Assign self</a>
 
                                         </td>
                                     </tr>
@@ -120,7 +110,7 @@
                                     </div>
                                     <div class="form-group col-sm-12">
                                         <!-- <input type="hidden" name="mid" value="<?php echo isset($Mid) ? $Mid : '' ?>"> -->
-                                        <button type="submit" class="btn btn-primary float-right btn-xs">Save changes</button>
+                                        <button type="submit" class="btn btn-primary float-right ">Save changes</button>
                                     </div>
                                 </form>
                             </div>
@@ -134,7 +124,7 @@
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="taskModalLabel">Create Task</h5>
+                                <h5 class="modal-title" id="taskModalLabel">Add Task</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -149,103 +139,114 @@
                                 ?>
 
                                 <form id="create-task" class="row m-0">
-                                    <input type="hidden" name="project-id" id="project-id">
-
-                                    <div class="form-group col-sm-12">
-                                        <label for="manager-service">Services</label>
-                                        <select name="service" id="manager-service" class="form-control manager-service">
-                                            <option value="">Select</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-12">
-                                        <label for="manager-service">Task</label>
-                                        <div class="input-group mb-3">
-                                            <select name="selected-task" id="selected-task" class="form-control" disabled>
+                                    <div class="col-sm-12">
+                                        <!-- <input type="hidden" name="flage" value="master_tasks"> -->
+                                        <input type="hidden" name="project-id" id="project-id">
+                                        <div class="form-group col-sm-12">
+                                            <label for="manager-service">Services</label>
+                                            <select name="service" id="manager-service" class="form-control manager-service">
                                                 <option value="">Select</option>
                                             </select>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-primary addnew-task" type="button"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <label for="manager-service">Task</label>
+                                            <div class="input-group">
+
+                                                <input type="hidden" name="selected-task" id="selected-task">
+
+
+                                                <input type="text" class="form-control" id="selected-task-view">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-primary addnew-task" type="button"><i class="fas fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="shorted-task border hide">
+                                                <!-- <input type="text"> -->
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group col-sm-12">
-                                        <label for="hours">Budget Hours</label>
-                                        <input type="text" class="form-control" name="hours" value="<?php
-                                                                                                    echo $project[0]['budget_hours'] ?>" />
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="description">Start Date</label>
-                                        <input type="text" class="form-control datepicker" name="st-date" id="st-date" value="<?php
-                                                                                                                                echo date_format(date_create($project[0]['start_date']), "d/m/Y"); ?>" placeholder="DD/MM/YYYY">
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="description">End Date</label>
-                                        <input type="text" class="form-control datepicker" name="et-date" id="et-date" value="<?php
-                                                                                                                                echo date_format(date_create($project[0]['end_date']), "d/m/Y"); ?>" placeholder="DD/MM/YYYY">
-                                    </div>
-                                    <div class="form-group col-sm-12">
-                                        <input type="hidden" name="mid" value="<?php echo isset($Mid) ? $Mid : '' ?>">
-                                        <button type="submit" class="btn btn-primary float-right btn-xs ">Add Task</button>
-                                    </div>
+                                        <div class="row">
+
+
+                                            <div class="form-group col-sm-4">
+                                                <label for="hours">Budget Hours</label>
+                                                <input type="text" class="form-control" name="hours" value="<?php
+                                                                                                            echo $project[0]['budget_hours'] ?>" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="description">Start Date</label>
+                                                <input type="text" class="form-control datepicker" name="st-date" id="st-date" value="<?php
+                                                                                                                                        echo date_format(date_create($project[0]['start_date']), "d/m/Y"); ?>" placeholder="DD/MM/YYYY">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="description">End Date</label>
+                                                <input type="text" class="form-control datepicker" name="et-date" id="et-date" value="<?php
+                                                                                                                                        echo date_format(date_create($project[0]['end_date']), "d/m/Y"); ?>" placeholder="DD/MM/YYYY">
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <input type="hidden" name="mid" value="<?php echo isset($Mid) ? $Mid : '' ?>">
+                                                <button type="submit" class="btn btn-primary float-right  ">Save changes</button>
+                                            </div>
                                 </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
-
-
-                <!-- Modal Create new task -->
-                <!-- Modal -->
-                <div class="modal fade" id="newtaskModal" tabindex="-1" role="dialog" aria-labelledby="newtaskModalLable" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="newtaskModalLable">Create Task</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                <?php
-                                // echo '<pre>';
-                                // print_r($project[0]['start_date']);
-                                // print_r($project[0]['end_date']);
-                                // print_r($project[0]['budget_hours']);
-                                ?>
-
-                                <form id="create-new-task" class="row m-0">
-                                    <input type="hidden" name="project-id" id="project-id">
-
-                                    <div class="form-group col-sm-12">
-                                        <label for="manager-service">Services</label>
-                                        <select name="categories" id="ser-cgt" class="form-control manager-service">
-                                            <option value="">Select</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-sm-12">
-                                        <label for="taskTile">Task</label>
-                                        <textarea name="title" class="form-control" id="taskTile" rows="2"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-sm-12">
-                                        <label for="task-description">Description</label>
-                                        <textarea name="description" id="task-description" rows="2" class="form-control"></textarea>
-                                    </div>
-
-                                    <div class="form-group col-sm-12">    
-                                        <input type="hidden" name="flage" value="master_tasks">
-                                        <button type="submit" class="btn btn-primary  btn-xs float-right">Save changes</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
             </div>
         </div>
+
+        <!-- Modal Create new task -->
+        <!-- Modal -->
+        <div class="modal fade" id="newtaskModal" tabindex="-1" role="dialog" aria-labelledby="newtaskModalLable" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newtaskModalLable">Create Task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <?php
+                        // echo '<pre>';
+                        // print_r($project[0]['start_date']);
+                        // print_r($project[0]['end_date']);
+                        // print_r($project[0]['budget_hours']);
+                        ?>
+
+                        <form id="create-new-task" class="row m-0">
+                            <input type="hidden" name="project-id" id="project-id">
+
+                            <div class="form-group col-sm-12">
+                                <label for="manager-service">Services</label>
+                                <select name="categories" id="ser-cgt" class="form-control manager-service">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="taskTile">Task</label>
+                                <textarea name="title" class="form-control" id="taskTile" rows="2"></textarea>
+                            </div>
+
+                            <div class="form-group col-sm-12">
+                                <label for="task-description">Description</label>
+                                <textarea name="description" id="task-description" rows="2" class="form-control"></textarea>
+                            </div>
+
+                            <div class="form-group col-sm-12">
+                                <input type="hidden" name="flage" value="master_tasks">
+                                <button type="submit" class="btn btn-primary   float-right">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
+</div>
+</div>
 </div>

@@ -46,7 +46,7 @@
             <div class="card-header p-2">
               <ul class="nav nav-pills">
                 <li class="nav-item">
-                  <a class="nav-link" href="#settings" data-toggle="tab">Settings</a>
+                  <a class="nav-link disabled"  href="#settings" data-toggle="tab" >Password</a>
                 </li>
               </ul>
             </div><!-- /.card-header -->
@@ -56,26 +56,26 @@
                   <div class="tab-pane" id="settings">
                     <form class="form-horizontal" id="change-password">
                       <div class="form-group row">
-                        <label for="inputoldPassword" class="col-sm-2 col-form-label">Old Password</label>
-                        <div class="col-sm-10">
+                        <label for="inputoldPassword" class="col-sm-3 col-form-label">Old Password</label>
+                        <div class="col-sm-9">
                           <input type="password" class="form-control" id="inputoldPassword"  name="inputoldPassword" placeholder="Old Password" required>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputNewPassword" class="col-sm-2 col-form-label">New Password</label>
-                        <div class="col-sm-10">
+                        <label for="inputNewPassword" class="col-sm-3 col-form-label">New Password</label>
+                        <div class="col-sm-9">
                           <input type="password" class="form-control" id="inputNewPassword" name="inputNewPassword" placeholder="New Password" required>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="inputConfirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
-                        <div class="col-sm-10">
+                        <label for="inputConfirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+                        <div class="col-sm-9">
                           <input type="password" class="form-control" id="inputConfirmPassword" name="inputConfirmPassword" placeholder="Confirm Password" required>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="offset-sm-6 col-sm-6">
+                          <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                       </div>
                     </form>

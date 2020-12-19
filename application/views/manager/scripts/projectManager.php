@@ -71,7 +71,9 @@
         });
 
         $('.add-task').click(function() {
+            
             loadSelectedServices();
+
         });
         const loadSelectedServices = () => {
 
@@ -82,13 +84,14 @@
             }, function(data) {
                 // console.log(data);
                 let res = JSON.parse(data);
-                let option = '';
+                let option = '<option value="">Select</option>';
                 for (let i = 0; i < res.length; i++) {
                     option += `<option value="${res[i]['id']}">${res[i]['title']}</option>`;
                 }
 
                 $('#project-id').val(id);
-                $('.manager-service').append(option)
+
+                $('.manager-service').html(option);
             });
         }
 
@@ -99,15 +102,62 @@
                 id
             }, function(data) {
                 let res = JSON.parse(data);
-                let option = '';
-                for (let i = 0; i < res.length; i++) {
-                    // console.log(res[i]['id']);
-                    option += `<option value="${res[i]['task_id']}">${res[i]['title']}</option>`;
-                }
-                $('#selected-task').append(option);
-                $('#selected-task').removeAttr('disabled');
+                // let option = '';
+                // for (let i = 0; i < res.length; i++) {
+                //     // console.log(res[i]['id']);
+                //     option += `<option value="${res[i]['task_id']}">${res[i]['title']}</option>`;
+                // }
+                // $('#selected-task').append(option);
+                // $('#selected-task').removeAttr('disabled');
+
+                saveLsData('taskdata', res);
+
             });
         });
+
+        $('#selected-task-view').keyup(function() {
+            let data = $(this).val();
+            let taskData = hasLsData('taskdata');
+
+            if (taskData != false) {
+                taskData = JSON.parse(retriveLsData('taskdata'));
+                if (taskData != false) {
+                    let task = taskData.filter(e => (e.title).toLowerCase().includes(data.toLowerCase()));
+                    // console.log(task);
+                    let html = '';
+                    for (let i = 0; i < task.length; i++) {
+                        // console.log(name)
+                        html += `<label class='task-label ${i<task.length?'border':''}' id=${task[i].task_id}>${task[i].title}</label>`;
+                    }
+                    // console.log(html);
+
+                    if (data != '') {
+                        $('.shorted-task').removeClass('hide');
+                        $('.shorted-task').html(html);
+                        // removeLsData('taskdata');
+                    } else if (data == '') {
+                        $('.shorted-task').html();
+                    }
+                }
+            } else {
+                return false;
+            }
+
+
+        });
+
+        $('.shorted-task').on('click', '.task-label', function() {
+            // alert('hello');
+            let taskTitle = $(this).text();
+            let taskid = $(this).attr('id');
+            // console.log(taskid);
+            $('#selected-task-view').val(taskTitle);
+            // console.log(taskTitle)
+            $('#selected-task').val(taskid);
+            $(this).remove();
+            $('.shorted-task').addClass('hide');
+        });
+
 
         $('#create-task').submit(function(e) {
             e.preventDefault();
@@ -117,7 +167,7 @@
             if ((s != '') && (t != '')) {
                 let formData = $(this).serialize();
                 $.post(url, formData, function(data) {
-                    console.log(data);
+                    // console.log(data);
                     let res = JSON.parse(data);
                     // swal('Done!', res.msg, res.type);
                     res.type === 'success' ? successAlert(res.msg) : errorAlert(res.msg);
@@ -262,8 +312,40 @@
         });
 
         $('.addnew-task').click(function() {
-            $('#taskModal').modal('hide');
-            $('#newtaskModal').modal('show');
+
+            // $('#taskModal').modal('hide');
+            // $('#newtaskModal').modal('show');
+
+            let serviceid = $('#manager-service').children(':selected').val()
+            let task = $('#selected-task-view').val();
+
+            if (serviceid == '') {
+                errorAlert('Select service first');
+            } else if (task == '') {
+                errorAlert('Invalid task title');
+            } else {
+                // successAlert('Now you are eligible for insert data');
+                let form_data = {
+                    serviceid,
+                    task
+                };
+                let url = BASEURL + 'Manager/addnewTask';
+                $.post(url, form_data, function(data) {
+
+                    data = JSON.parse(data);
+                    console.log(data);
+                    if (data.type == 'error') {
+                        errorAlert(data.message);
+                    } else if (data.type == 'success') {
+                        $('#selected-task').val(data.data.task_id);
+                        $('#selected-task-view').val(data.data.title);
+                        successAlert(data.message);
+                    }
+                });
+            }
+
+            // alert('hi');
+
         });
 
         $('#create-new-task').submit(function(e) {
