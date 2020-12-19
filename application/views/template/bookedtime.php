@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div class="py-5 ml-2" id="alltasks">
+                    <div class="py-2 ml-2" id="alltasks">
                     </div>
                     <input type="hidden" id="doc" data-dropdown='<?php echo base64_encode(json_encode($document, true)) ?>'>
                 </div>

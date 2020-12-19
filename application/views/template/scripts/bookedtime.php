@@ -85,10 +85,11 @@
 		const loadTable = (res = null) => {
 			let html = '';
 			if (res) {
+
+				// console.log(res);
+
 				res.map((el) => {
-
 					// console.log(el.id);
-
 					borderColor = ''
 
 					console.log(el);
@@ -102,43 +103,73 @@
 					} else if (el.status == 'approved') {
 						borderColor = 'border-success';
 					}
-					
+
+
+
 					html += `<div class="row border-top ${borderColor} py-2" >
 						<div class="col-sm-3 row m-0">
 						<div class="col-sm-1">`;
+
+
 					if (el.status == 'submitted') {
-						html += `<input type="checkbox"  class="task" checked='true' value="${el.task_id}" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)}>`;
+						html += `<input 
+						type="checkbox"  
+						class="task" checked='true' 
+						value="${el.task_id}" 
+						data-et=${btoa(el.taskedTime)} 
+						data-st=${btoa(el.taskStTime)}>`;
 					} else {
-						html += `<input type="checkbox"  class="task " value="${el.task_id}" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)}>`;
+						html += `
+						<input type="checkbox" 
+						 class="task " value="${el.task_id}" 
+						data-et=${btoa(el.taskedTime)} 
+						data-st=${btoa(el.taskStTime)}>`;
 					}
+
 					html += `
 						</div>
-							<div class="col-sm-11"><p class="userDescription fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)}>${el.userDescription}</p></div>
+							<div class="col-sm-6">
+							<span class="fs-13">
+
+${el.name}->${el.title}
+</span>
+							 </div>
 						</div>
-                        <div class="col-sm-3">
-						<span class="fs-13">${el.name}->${el.title}</span>
-                        </div>
-                        <div class="col-sm-2">
+
+						
+						<div class="col-sm-2">
 						<input type="text" class="show-time w-72 form-control task-st fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskStTime)}"/>
 						</div>
 
                         <div class="col-sm-2">
 						<input type="text" class="show-time w-72 form-control task-et fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskedTime)}"/>
 						</div>
+						<div class="col-sm-1">
+						<p class="userDescription fs-13">
+						
+							 ${el.consumedTime/60} hrs</p>
+						</div>
+						<div class="col-sm-2">
+						<p class="userDescription fs-13" 
+							data-et=${btoa(el.taskedTime)} 
+							data-st=${btoa(el.taskStTime)}
+							 data-taskid=${btoa(el.task_id)} 
+							 data-projectid=${btoa(el.project_id)}>
+							 ${el.userDescription}</p>
+					
+                        </div>
 						<div class="col-sm-2">`;
-
 					if (el.uploadedFiles != 'No-files') {
+
 						html += `	<span class="ml-2 btn btn-primary btn-xs showTaskFile fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)}>
 						<i class="fa fa-eye" aria-hidden="true"></i>
 						</span>
-					
 						<span class="ml-2 btn btn-danger btn-xs deleteTask fs-13" 
 						data-et=${btoa(el.taskedTime)}
 						data-st=${btoa(el.taskStTime)} 
 						data-taskid=${btoa(el.task_id)} 
 						data-dailyts_id=${el.id}>
 						<i class="fa fa-trash " aria-hidden="true"></i></span>
-				
                         </div>
                     </div>`
 					} else {
@@ -156,6 +187,7 @@
                     </div>`;
 					}
 				});
+
 			}
 			$('#alltasks').html(html);
 		}

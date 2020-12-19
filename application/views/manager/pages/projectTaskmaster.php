@@ -157,8 +157,12 @@
 
                                                 <input type="text" class="form-control" id="selected-task-view">
                                                 <div class="input-group-append">
+                                                    <button class="btn btn-outline-primary search-task" type="button"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                                </div>
+                                                <div class="input-group-append">
                                                     <button class="btn btn-outline-primary addnew-task" type="button"><i class="fas fa-plus"></i></button>
                                                 </div>
+                                                
                                             </div>
                                             <div class="shorted-task border hide">
                                                 <!-- <input type="text"> -->

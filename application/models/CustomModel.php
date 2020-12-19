@@ -313,10 +313,12 @@ class CustomModel extends ci_model
     // update batch
 
 
-    function getTaskByServicesId($id = null)
+    function getTaskByServicesId($services = null, $title = null)
     {
-        $q = "SELECT * FROM master_tasks WHERE master_tasks.category='$id'  
-        ORDER BY `master_tasks`.`title`  ASC";
+
+        $q = "SELECT * FROM `master_tasks` WHERE category='$services' AND title LIKE '%$title%' ORDER BY `title` ASC";
+
+
         $result = $this->db->query($q)->result_array();
         // echo '<pre>';
         // print_r($result);

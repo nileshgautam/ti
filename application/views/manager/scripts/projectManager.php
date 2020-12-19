@@ -71,7 +71,7 @@
         });
 
         $('.add-task').click(function() {
-            
+
             loadSelectedServices();
 
         });
@@ -95,56 +95,55 @@
             });
         }
 
-        $('body').on('change', '#manager-service', function() {
-            let id = $(this).children(':selected').val();
-            let url = BASEURL + 'Manager/tasklist';
-            $.post(url, {
-                id
-            }, function(data) {
-                let res = JSON.parse(data);
-                // let option = '';
-                // for (let i = 0; i < res.length; i++) {
-                //     // console.log(res[i]['id']);
-                //     option += `<option value="${res[i]['task_id']}">${res[i]['title']}</option>`;
-                // }
-                // $('#selected-task').append(option);
-                // $('#selected-task').removeAttr('disabled');
 
-                saveLsData('taskdata', res);
-
-            });
-        });
 
         $('#selected-task-view').keyup(function() {
             let data = $(this).val();
-            let taskData = hasLsData('taskdata');
+            // let taskData = hasLsData('taskdata');
+            let url = BASEURL + 'Manager/tasklist';
+            let s = $('#manager-service').val();
+            let t = $('#selected-task-view').val();
 
-            if (taskData != false) {
-                taskData = JSON.parse(retriveLsData('taskdata'));
-                if (taskData != false) {
-                    let task = taskData.filter(e => (e.title).toLowerCase().includes(data.toLowerCase()));
-                    // console.log(task);
-                    let html = '';
-                    for (let i = 0; i < task.length; i++) {
-                        // console.log(name)
-                        html += `<label class='task-label ${i<task.length?'border':''}' id=${task[i].task_id}>${task[i].title}</label>`;
-                    }
-                    // console.log(html);
+            // console.log(s)
+            // console.log(t)
 
-                    if (data != '') {
-                        $('.shorted-task').removeClass('hide');
-                        $('.shorted-task').html(html);
-                        // removeLsData('taskdata');
-                    } else if (data == '') {
-                        $('.shorted-task').html();
-                    }
-                }
+            if (s == '') {
+                errorAlert('Select services');
+            } else if (t == '') {
+                $('.shorted-task').addClass('hide');
             } else {
+                $.post(url, {
+                        s,
+                        t
+                    },
+                    function(res) {
+                        res = JSON.parse(res);
+                        // console.log(res);
+                        loadTask(res);
+                    });
+
+            }
+        });
+
+        const loadTask = (res) => {
+            if (res != false) {
+                let html = '';
+                for (let i = 0; i < res.length; i++) {
+                    html += `<label class='task-label ${i<res.length?'border':''}' id=${res[i].task_id}>${res[i].title}</label>`;
+                }
+                // console.log(html);
+
+                if (res != '') {
+                    $('.shorted-task').removeClass('hide');
+                    $('.shorted-task').html(html);
+                    // removeLsData('taskdata');
+                } else if (res == '') {
+                    $('.shorted-task').html();
+                }
+            } else if (res == false) {
                 return false;
             }
-
-
-        });
+        }
 
         $('.shorted-task').on('click', '.task-label', function() {
             // alert('hello');
@@ -157,7 +156,6 @@
             $(this).remove();
             $('.shorted-task').addClass('hide');
         });
-
 
         $('#create-task').submit(function(e) {
             e.preventDefault();
@@ -322,7 +320,7 @@
             if (serviceid == '') {
                 errorAlert('Select service first');
             } else if (task == '') {
-                errorAlert('Invalid task title');
+                errorAlert('Empty Title not allowed');
             } else {
                 // successAlert('Now you are eligible for insert data');
                 let form_data = {
@@ -408,6 +406,28 @@
                 })
             }
 
+        });
+
+        // Function to search task by service id
+
+        $('.search-task').click(function() {
+            let serviceid = $('#manager-service').val();
+            if (serviceid == '') {
+                errorAlert('Select service first');
+            } else {
+                let url=BASEURL+'Manager/tasklist_by_service_id';
+                $.post(url, {
+                    serviceid
+                }, function(res) {
+                    res = JSON.parse(res);
+                    if (res == false) {
+                        return false;
+                    } else {
+                        loadTask(res);
+                    }
+                });
+            }
+            console.log(s)
         });
 
     });

@@ -147,23 +147,35 @@ class Manager extends CI_Controller
 			$this->load->view('admin/layout/footer');
 		}
 	}
-
+	// Functio to get Task list by task title
 	public function tasklist()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (isset($_POST)) {
-				// $res = $this->CustomModel->getservices($_POST['id']);
-				// $condition = array('category' => $_POST['id']);
-				$data = $this->CustomModel->getTaskByServicesId($_POST['id']);
+				$data = $this->CustomModel->getTaskByServicesId($_POST['s'], $_POST['t']);
 				echo json_encode($data, true);
 			}
 		}
 	}
-	// 
+
+	// Functio to get Task list by services id title
+	public function tasklist_by_service_id()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+			// print_r($_POST['serviceid']);die;
+			if (isset($_POST)) {
+				$data =$this->CustomModel->getAllfromWhere('master_tasks', array('category'=>$_POST['serviceid']));
+				echo json_encode($data, true);
+			}
+		}
+	}
+
 	public function allocateTaskToUser()
 	{
 		$this->common->allocateTaskToUser();
 	}
+
 	// Function for Selectting services by project id
 	public function selected_services($var = null)
 	{
@@ -178,8 +190,7 @@ class Manager extends CI_Controller
 			}
 		}
 	}
-
-
+	// Function for add new task to the master list
 	public function addnewTask()
 	{
 
@@ -194,24 +205,21 @@ class Manager extends CI_Controller
 			'description' => 'Not available',
 			'active_status' => $activeStatus
 		);
-		$condistion= array('category' => $_POST['serviceid'], 'title' => validateInput($_POST['task']));
-		$res = $this->CustomModel->getAllfromWhere('master_tasks',$condistion);
+		$condistion = array('category' => $_POST['serviceid'], 'title' => validateInput($_POST['task']));
+		$res = $this->CustomModel->getAllfromWhere('master_tasks', $condistion);
 		if (!empty($res)) {
-			echo json_encode(array('message' => 'Task already exists', 'type' => 'error'));
-		} elseif($res =='' ) {
+			echo json_encode(array('message' => $_POST['task'] . ' , already exists', 'type' => 'error'));
+		} elseif ($res == '') {
 			$Id = $this->MainModel->getNewIDorNo('master_tasks', 'TSK');
 			$rowData['task_id'] = $Id;
 			$rowData['category'] = validateInput($_POST['serviceid']);
 			$rowData['created_timestamp'] = timestamp();
 			$rowData['created_by'] = Manager::$userId;
 			$result = $this->MainModel->getinsertedData('master_tasks', $rowData);
-			echo messages($result);
+
+			echo $result != '' ? json_encode(array('message' => $_POST['task'] . ', Added to the master list', 'type' => 'success')) : json_encode(array('message' => 'Opps somthing went wrong. contact IT.', 'type' => 'error'));
 		}
 	}
-
-
-
-
 	// Function for Selectting services by project id
 	public function psotServicesTask($var = null)
 	{
@@ -237,7 +245,6 @@ class Manager extends CI_Controller
 					'project_id' => $_POST['project-id']
 				);
 
-
 				$res = $this->MainModel->selectAllFromTableWhere('task_project_relation', $condition);
 
 				// print_r($_POST);
@@ -248,7 +255,7 @@ class Manager extends CI_Controller
 				} else {
 					$res = $this->CustomModel->insert('task_project_relation', $serviceTask);
 					if (isset($res)) {
-						echo json_encode(array('msg' => 'Task Created set', 'type' => 'success'));
+						echo json_encode(array('msg' => 'Task added to this project', 'type' => 'success'));
 					} else {
 						echo json_encode(array('msg' => 'Opps! some error occored, Contact IT.', 'type' => 'error'));
 					}
@@ -360,6 +367,7 @@ class Manager extends CI_Controller
 		$this->load->view('admin/layout/footer');
 		$this->load->view('template/scripts/bookedtime');
 	}
+
 	function showTask($id = null)
 	{
 		$id = base64_decode($id);
