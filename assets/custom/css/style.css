@@ -17,7 +17,7 @@
 }
 
 .remove-btn {
-    margin: 39px 15px !important;
+    margin: 10px 9px !important;
     font-size: 28px;
 }
 
@@ -98,6 +98,10 @@
     font-size: 13px !important;
 }
 
+.fs-24 {
+    font-size: 24px !important;
+}
+
 #file-row .file {
     overflow: hidden;
 }
@@ -134,4 +138,15 @@
     font-size: 14px;
     font-weight: 600 !important;
     padding: 8px 15px;
+}
+
+.btn-custom-one {
+    padding: 4px 8px !important;
+    margin: 11px 1px;
+    font-size: 13px !important;
+}
+
+.docrid .text-align-center {
+    display: flex !important;
+    margin: auto !important;
 }

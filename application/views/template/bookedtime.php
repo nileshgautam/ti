@@ -11,9 +11,7 @@
                         <h6 class="header-text badge badge-secondary"><?php echo date('d/m/Y') ?></h6>
                         <input type="hidden" name="ssdate" id="ssdate" value="<?php echo date('Y-m-d') ?>">
                     </div>
-                    <div class="col-sm-4">
-                        <a class="btn btn-primary btn-xs float-right" id="submit-task">Submit Task</a>
-                    </div>
+
                 </div>
                 <?php
                 // echo '<pre>';
@@ -26,7 +24,7 @@
                                 <option value="">Select project</option>
                                 <?php if (!empty($projects)) {
                                     foreach ($projects as $item) { ?>
-                                        <option value="<?php echo $item['project_Id'] ?>" >
+                                        <option value="<?php echo $item['project_Id'] ?>">
                                             <?php echo $item['name'] ?></option>
                                 <?php }
                                 }
@@ -38,10 +36,7 @@
                                 <option value="">Select Task</option>
                                 <?php if (!empty($allocatedTask)) {
                                     foreach ($allocatedTask as $item) { ?>
-                                        <option value="<?php echo $item['taskId'] ?>" 
-                                        project-id="<?php echo $item['project_Id'] ?>" 
-                                        servicesId="<?php echo $item['category'] ?>" 
-                                        client-id="<?php echo $item['client_id'] ?>">
+                                        <option value="<?php echo $item['taskId'] ?>" project-id="<?php echo $item['project_Id'] ?>" servicesId="<?php echo $item['category'] ?>" client-id="<?php echo $item['client_id'] ?>">
                                             <?php echo $item['title'] ?></option>
                                 <?php }
                                 }
@@ -55,12 +50,11 @@
                             <input type="text" class="show-time col-sm-12 form-control" id="to-time" placeholder="end time">
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <div class="row">
                         <div class="col-sm-11">
-                            <textarea  placeholder="Description" class=" form-control" id="description"></textarea>
+                            <textarea placeholder="Description" class=" form-control" id="description" rows="2"></textarea>
 
-                            <!-- <input type="text" placeholder="Description" class=" form-control" id="description" /> -->
                         </div>
                         <div class="col-sm-1">
                             <input type="hidden" name="task-id" id="task-id">
@@ -71,13 +65,22 @@
                         </div>
                     </div>
 
+
+                    <div class="custom-btn-two row m-2">
+                        <div class="col-sm-2"><input type="checkbox" class="selectAll" id='selectAll'> <span for="selectAll">Select all</span></div>
+                              
+                    </div>
+
                     <div class="py-2 ml-2" id="alltasks">
                     </div>
                     <input type="hidden" id="doc" data-dropdown='<?php echo base64_encode(json_encode($document, true)) ?>'>
                 </div>
+
+
             </div>
         </div>
     </div>
+    <div class="col-sm-12"><a class="btn btn-info float-right" id="submit-task">Submit Task</a></div>    
 </div>
 </div>
 </div>
@@ -91,35 +94,61 @@
                 <div class="col-sm-10">
                     <h5>Document</h5>
                 </div>
-                <div class="col-sm-1 float-right"><i class="fas fa-edit ml-5 cursor edit-files"></i></div>
-                <div class="col-sm-1"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <!-- <div class="col-sm-1 float-right" >
+                    
+                </div> -->
+                <div class="col-sm-2">
+                    <button type="button" id='edit-files' class="btn hide">
+                        <i class="fas fa-edit ml-5 cursor edit-files"></i>
+                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button></div>
+                    </button>
+                </div>
             </div>
-
-
             <div class="files-view hide m-2">
                 <div class="row ml-2" id="rejected-res">
                 </div>
-                <div class="file-row row"></div>
+                <div class="file-row row m-2">
+
+                </div>
             </div>
             <form id='file-form'>
                 <div class="card">
-                    <div class="row m-0">
-                        <div class="col-sm-12 py-2">
-                            <a class="btn btn-primary btn-xs float-right addmore" title="Add more">
-                                <i class="fas fa-plus-circle"></i></a>
+
+                    <div id="file-row" class="card-body">
+                        <div class="row docrid" data-id="0">
+                            <div class="form-group col-sm-6">
+                                <input type="text" class="form-control docTitle br-b" id="document_ti0" name="documentti0" placeholder="Title">
+                            </div>
+                            <div class="form-group col-sm-4 actions">
+                                <input type="file" class="form-control file br-b" name="file0" id="file0" placeholder="upload">
+                                <small class="col-sm-12 text-info"> File type: png, jpeg, jpg, pdf, docx, doc</small>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <a href="#" class="btn btn-primary btn-custom-one addmore">
+                                            <i class="fas fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id="file-row" class="card-body">
-                    </div>
                 </div>
-                <div class="card-footer">
+
+
+
+                <div class="card-footer row">
                     <input type="hidden" name="task-id" id="taskid">
                     <input type="hidden" name="project-id" id="projectid">
 
-                    <div class="form-group col-sm-12">
-                        <button type="submit" class="btn  btn-primary btn-xs float-right">Save</button>
+                    <div class="form-group col-sm-11">
+                        <button type="submit" class="btn btn-primary btn-xs float-right">Save Changes</button>
+                    </div>
+
+                    <div class="form-group col-sm-1">
+                        <button type="button" class="btn btn-danger btn-xs float-right" data-dismiss="modal" aria-label="Close"> Cancel</button>
                     </div>
                 </div>
             </form>

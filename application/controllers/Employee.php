@@ -74,7 +74,7 @@ class Employee extends ci_controller
 
 
 		$data['allocatedTask'] = $this->CustomModel->getDailyAllocatedTasks(Employee::$userId, $cdate);
-		
+
 		$data['projects'] = $this->CustomModel->getProjectByAssignTask(Employee::$userId, $cdate);
 
 
@@ -101,8 +101,8 @@ class Employee extends ci_controller
 	public function getAllocatedtask()
 	{
 		$cdate = date('Y-m-d');
-		$projectid=$_POST['projectid'];
-		$result=$this->CustomModel->getDailyAllocatedTasks(Employee::$userId, $cdate, $projectid);
+		$projectid = $_POST['projectid'];
+		$result = $this->CustomModel->getDailyAllocatedTasks(Employee::$userId, $cdate, $projectid);
 		echo json_encode($result);
 	}
 
@@ -150,8 +150,13 @@ class Employee extends ci_controller
 	function uploadFile()
 	{
 		// print_r($_FILES);
-		$files = uploadData($_FILES, base64_decode($_POST['projectid']));
-		echo $files;
+		// die;
+		$filesRes = uploadData($_FILES, base64_decode($_POST['projectid']));
+
+		// $res=json_decode($filesRes,true);
+		// print_r($res);die;
+
+		echo $filesRes;
 	}
 
 	// Function To Insert data into DB dailytimesheet
@@ -192,12 +197,13 @@ class Employee extends ci_controller
 				'taks_id' => base64_decode($_POST['taskid']),
 				'save_date' => date('Y-m-d')
 			);
+
+
+			// echo '<pre>';
 			$tableName = 'dailytimesheet';
 			$getfiles = $this->MainModel->selectAllFromWhere($tableName, $condition);
 			echo json_encode($getfiles[0]);
 
-			// print_r($getbookedSlots);
-			// die;
 		}
 	}
 
@@ -216,12 +222,12 @@ class Employee extends ci_controller
 				'project_id' => base64_decode($_POST['proid']),
 				'taks_id' => base64_decode($_POST['taskid']),
 				'save_date' => date('Y-m-d'),
-				'employee_id' =>$_POST['employee_id']
-				
+				'employee_id' => $_POST['employee_id']
+
 			);
 
 			// print_r($condition);die;
-			
+
 			if ($file) {
 				$res = $this->CustomModel->update_row('dailytimesheet', $condition, array('files' => $file));
 				// print_r($res);
@@ -315,17 +321,17 @@ class Employee extends ci_controller
 			$id = base64_decode($_POST['row_id']);
 			$table = $_POST['table_name'];
 			$condition = array(
-			'taks_id' => $id, 
-			'save_date' => date('Y-m-d'),
-			'start_time' => time_in_24_hour_format(base64_decode($_POST['st'])), 
-			'end_time' => time_in_24_hour_format(base64_decode($_POST['et'])),
-			'dailyts_id'=>base64_decode($_POST['dailyts_id'])
-
-		
-		);
+				'taks_id' => $id,
+				'save_date' => date('Y-m-d'),
+				'start_time' => time_in_24_hour_format(base64_decode($_POST['st'])),
+				'end_time' => time_in_24_hour_format(base64_decode($_POST['et'])),
+				'dailyts_id' => base64_decode($_POST['dailyts_id'])
 
 
-		// print_r($condition);die;
+			);
+
+
+			// print_r($condition);die;
 
 			$res = $this->MainModel->deleteFromTable($table, $condition);
 			echo $res == true ? json_encode(array('message' => 'Task removed.', 'type' => 'success')) : json_encode(array('message' => 'Opps something wrong! Contact IT.', 'type' => 'error'));

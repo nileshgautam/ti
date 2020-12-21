@@ -92,7 +92,7 @@
 					// console.log(el.id);
 					borderColor = ''
 
-					console.log(el);
+					// console.log(el);
 
 					if (el.status == 'submitted') {
 						borderColor = 'border-primary';
@@ -103,11 +103,8 @@
 					} else if (el.status == 'approved') {
 						borderColor = 'border-success';
 					}
-
-
-
 					html += `<div class="row border-top ${borderColor} py-2" >
-						<div class="col-sm-3 row m-0">
+						<div class="col-sm-4 row m-0">
 						<div class="col-sm-1">`;
 
 
@@ -128,28 +125,23 @@
 
 					html += `
 						</div>
-							<div class="col-sm-6">
+							<div class="col-sm-11">
 							<span class="fs-13">
-
-${el.name}->${el.title}
-</span>
+								${el.name}->${el.title}
+							</span>
 							 </div>
 						</div>
-
 						
-						<div class="col-sm-2">
-						<input type="text" class="show-time w-72 form-control task-st fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskStTime)}"/>
+						<div class="col-sm-2 row">
+						<input type="text" class="col-sm-6 show-time w-72 form-control task-st fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskStTime)}"/>
+					
+						<input type="text" class="show-time col-sm-6 w-72 form-control task-et fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskedTime)}"/>
 						</div>
-
-                        <div class="col-sm-2">
-						<input type="text" class="show-time w-72 form-control task-et fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskedTime)}"/>
+						<div class="col-sm-1 text-align-center">
+						<p class="fs-13">
+							 ${ el.consumedTime/60 } hrs</p>
 						</div>
-						<div class="col-sm-1">
-						<p class="userDescription fs-13">
-						
-							 ${el.consumedTime/60} hrs</p>
-						</div>
-						<div class="col-sm-2">
+						<div class="col-sm-4">
 						<p class="userDescription fs-13" 
 							data-et=${btoa(el.taskedTime)} 
 							data-st=${btoa(el.taskStTime)}
@@ -158,7 +150,7 @@ ${el.name}->${el.title}
 							 ${el.userDescription}</p>
 					
                         </div>
-						<div class="col-sm-2">`;
+						<div class="col-sm-1">`;
 					if (el.uploadedFiles != 'No-files') {
 
 						html += `	<span class="ml-2 btn btn-primary btn-xs showTaskFile fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)}>
@@ -169,7 +161,7 @@ ${el.name}->${el.title}
 						data-st=${btoa(el.taskStTime)} 
 						data-taskid=${btoa(el.task_id)} 
 						data-dailyts_id=${el.id}>
-						<i class="fa fa-trash " aria-hidden="true"></i></span>
+						<i class="fa fa-trash" aria-hidden="true"></i></span>
                         </div>
                     </div>`
 					} else {
@@ -183,7 +175,6 @@ ${el.name}->${el.title}
 						data-dailyts_id=${el.id}>
 						<i class="fa fa-trash " aria-hidden="true"></i></span>
 						</div>
-						
                     </div>`;
 					}
 				});
@@ -270,9 +261,10 @@ ${el.name}->${el.title}
 
 		// upload task file if any
 		$('#alltasks').on('click', '.showTaskFile', function() {
-
+			$('#edit-files').removeClass('hide');
 			$('#file-form').addClass('hide');
 			$('.files-view').removeClass('hide');
+
 			// loadDocumentRow();
 			$('#dailyTimesheet-upload-file-ModalLong').modal('show');
 			let url = BASEURL + 'Employee/getfiles';
@@ -282,6 +274,9 @@ ${el.name}->${el.title}
 			let et = $(this).attr('data-et');
 
 			saveLsData('projectid', projectid);
+			saveLsData('st', st);
+			saveLsData('et', et);
+			saveLsData('taskid', taskid);
 
 			let condition = {
 				projectid: $(this).attr('data-projectid'),
@@ -291,31 +286,42 @@ ${el.name}->${el.title}
 			};
 
 			$.post(url, condition, function(res) {
+
 				res = JSON.parse(res);
+
 				console.log(res);
+
 				let files = JSON.parse(res.files);
 				let html = '';
 				if (files != 'No-files') {
-					files.map((file) => {
-						html += `<a href="<?php echo base_url() ?>${file.filePath}" target=_blank class="m-2">
-                            <img src="<?php echo base_url() ?>./assets/custom/media/docs.png" 
-							alt="${file.docTitle}" height="50">
-                            <p>${file.docTitle}</p>
-                            </a>`;
-					});
+					for (let i = 0; i < files.length; i++) {
+						// console.log(files[i]);
+						html += `<div class="border">
+                            			<div class="form-group col-sm-12">
+										<p>${i+1}: ${files[i].docTitle}
+										<a href="${BASEURL+files[i].filePath}">
+										<img src="<?php echo base_url() ?>./assets/custom/media/docs.png" 
+									alt="${files[i].docTitle}" height="40"></a>
+									</p>
+								</div>`
+					}
+					$('.file-row').html(html);
 				} else {
 					html += `${files}`;
 				}
-				$('.file-row').empty();
-				$('.file-row').html(html);
-				if (res.remark != '') {
-					$('#rejected-res').html(res.remark);
 
-				}
+				// $('.file-row').empty();
+
+
+				// if (res.remark != '') {
+				// 	$('#rejected-res').html(res.remark);
+				// }
 
 			});
 
 		});
+
+
 
 		// Delete task if any
 		$('#alltasks').on('click', '.deleteTask', function() {
@@ -384,10 +390,10 @@ ${el.name}->${el.title}
 		}
 
 		// Calling loadDocumentRow for load first row
-		loadDocumentRow();
+		// loadDocumentRow();
 		// Add More button for create multiple document rows
 
-		$('.addmore').click(function(e) {
+		$('#file-row').on('click', '.addmore', function(e) {
 			e.preventDefault();
 			counter = counter + 1;
 			loadDocumentRow();
@@ -395,61 +401,88 @@ ${el.name}->${el.title}
 
 		$('#file-row').on('click', '.remove', function() {
 			// alert('hi');
-			$(this).parent().remove();
+			let rowid = $(this).attr('data-row-id');
+			$(`[data-id="${rowid}"]`).remove();
 		});
 
 		// Function for RowDesign
-		function loadRow(option, id) {
-			let row = `<div class="row docrid" data-id="${id}">
-                            <div class="form-group col-sm-3">
-                                <label for="Document" class="fs-13">Name</label>
-                                <select id="document${id}" name="document${id}" 
-								class="select2 form-control  document-opt br-b">
-                                ${option}
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <label for="document_no${id}" class="fs-13">Document number</label>
-                                <input type="text" class="form-control docNumber br-b" id="document_no${id}" name="documentNo${id}" placeholder="Document number">
-                            </div>
-                            <div class="form-group col-sm-2 date">
-                                <label for="exp-date${id}" class="fs-13">Expiry date(if any)</label>
-                                <input type="text" class="form-control exp-date datepicker br-b" id="exp-date${id}" name="exp-date${id}" placeholder="DD/MM/YYYY">
-                            </div>
-                            <div class="form-group col-sm-3 actions">
-                                <label for="document_no" class="fs-13">Upload file</label>
-                                
-								<input type="file" class="form-control file br-b" name="file${id}" id="file${id}"placeholder="upload">
-                            </div>
-							
-                            <div class="form-group col-sm-1 remove ">
-							
-                            <i class="fas fa-minus-circle text-danger remove-btn fs-13" title="Remove row"></i>
+		// function loadRow(option, id) {
+		// 	let row = `<div class="row docrid" data-id="${id}">
+		//                     <div class="form-group col-sm-3">
+		//                         <label for="Document" class="fs-13">Name</label>
+		//                         <select id="document${id}" name="document${id}" 
+		// 						class="select2 form-control  document-opt br-b">
+		//                         ${option}
+		//                         </select>
+		//                     </div>
+		//                     <div class="form-group col-sm-3">
+		//                         <label for="document_no${id}" class="fs-13">Document number</label>
+		//                         <input type="text" class="form-control docNumber br-b" id="document_no${id}" name="documentNo${id}" placeholder="Document number">
+		//                     </div>
+		//                     <div class="form-group col-sm-2 date">
+		//                         <label for="exp-date${id}" class="fs-13">Expiry date(if any)</label>
+		//                         <input type="text" class="form-control exp-date datepicker br-b" id="exp-date${id}" name="exp-date${id}" placeholder="DD/MM/YYYY">
+		//                     </div>
+		//                     <div class="form-group col-sm-3 actions">
+		//                         <label for="document_no" class="fs-13">Upload file</label>
 
+		// 						<input type="file" class="form-control file br-b" name="file${id}" id="file${id}"placeholder="upload">
+		//                     </div>
+
+		//                     <div class="form-group col-sm-1 remove ">
+
+		//                     <i class="fas fa-minus-circle text-danger remove-btn fs-13" title="Remove row"></i>
+
+		//                     </div>
+		// 					<small class="col-sm-12 text-info"> File type: png, jpeg, jpg, pdf, docx, doc</small>
+		// 				</div>`;
+		// 	// $('#file-row').empty();
+		// 	// $('#file-row').html(row);
+		// 	$('#file-row').append(row);
+		// }
+
+		// Function for RowDesign
+		function loadRow(option, id) {
+			let row = `  <div class="row docrid" data-id="${id}">
+                            <div class="form-group col-sm-6">
+                                <input type="text" class="form-control docTitle br-b" id="document_ti${id}" name="documentti${id}" placeholder="Title">
                             </div>
-							<small class="col-sm-12 text-info"> File type: png, jpeg, jpg, pdf, docx, doc</small>
-						</div>`;
+                            <div class="form-group col-sm-4 actions">
+                                <input type="file" class="form-control file br-b" name="file${id}" id="file${id}" placeholder="upload">
+                                
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="row">
+									<div class="col-sm-12">
+										<a href="#" data-row-id="${id}" class="remove btn-custom-one btn 		btn-danger" title="Remove row">
+										<i class="fas fa-minus" ></i></a>
+                                        <a href="#" class="btn btn-primary btn-custom-one addmore">
+                                            <i class="fas fa-plus"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
 			// $('#file-row').empty();
 			// $('#file-row').html(row);
 			$('#file-row').append(row);
 		}
+
+
+
 
 		// Uploading file
 		let documentArr = [];
 
 		$('#file-row').on('change', '.file', function() {
 
-			console.log()
+			// console.log()
+
 
 			let file = $(this).prop('files')[0];
 
 			let rowid = $(this).parent().parent().attr('data-id');
 
-			let documentTile = $(this).parent().parent().find('.document-opt').val();
-
-			let documentNumber = $(this).parent().parent().find('.docNumber').val();
-
-			let documentExpDate = $(this).parent().parent().find('.exp-date').val();
+			let documentTile = $(this).parent().parent().find('.docTitle').val();
 
 			let formData = new FormData();
 
@@ -461,50 +494,67 @@ ${el.name}->${el.title}
 			let fileUpload = $(this).attr('id');
 
 			let url = BASEURL + 'Employee/uploadFile';
-			$.ajax({
-				url: url,
-				type: 'POST',
-				data: formData,
-				success: function(data) {
-					if (data) {
-						let filepath = JSON.parse(data);
-						let docArr = {
-							rowId: rowid,
-							docTitle: documentTile,
-							docNumber: documentNumber,
-							docExpDate: documentExpDate,
-							filePath: filepath
-						}
 
-						documentArr.push(docArr);
+			// console.log(rowid);
+			// console.log(documentTile);
+			// console.log(projectid);
 
-						let localData = hasLsData('docArr');
+			if (documentTile != '') {
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: formData,
+					success: function(data) {
+						if (data) {
+							let filepath = JSON.parse(data);
+							// console.log(filepath);
+							if (filepath.res == 1) {
+								let docArr = {
+									rowId: rowid,
+									docTitle: documentTile,
+									filePath: filepath.data
+								}
+								// console.log(filepath.data);
+								documentArr.push(docArr);
+								let localData = hasLsData('docArr');
+								if (localData) {
+									removeLsData('docArr');
+									saveLsData('docArr', documentArr);
+								} else {
+									saveLsData('docArr', documentArr);
+								}
+								let html = `<div class="doc row m-0">
+											<div class="col-sm-4">
+												<a href="${BASEURL+''+filepath.data}" target="_blank">
+							 					<img src="<?php echo base_url() ?>./assets/custom/media/docs.png" height="30">
+							 					</a>
+							 				</div>
+											<div class="col-sm-4">
+											<i class="fa fa-times delete" aria-hidden="true" title="remove">
+											</i>
+											<div>
+											</div>`;
 
-						if (localData) {
-							removeLsData('docArr');
-							saveLsData('docArr', documentArr);
+								$(`#${fileUpload}`).parent().append(html);
+								$(`#${fileUpload}`).remove();
+
+							} else if (filepath.res == 0) {
+								// console.log(filepath);
+								errorAlert('File type Not allowed');
+							}
 						} else {
-							saveLsData('docArr', documentArr);
+							// console.log('1');
+							errorAlert('Something went worng contact IT.');
 						}
-						let html = `<div class="doc row m-0">
-						<div class="col-sm-4">
-						<a href="${BASEURL+'/'+filepath}" target="_blank">
-						 <img src="${BASEURL+'/'+filepath}" height="30">
-						 </a>
-						 </div>
-						<div class="col-sm-4"><i class="fa fa-times delete" aria-hidden="true" title="remove"></i><div>
-					</div>`;
-
-						$(`#${fileUpload}`).parent().append(html);
-						$(`#${fileUpload}`).remove();
-
-					}
-				},
-				cache: false,
-				contentType: false,
-				processData: false
-			});
-
+					},
+					cache: false,
+					contentType: false,
+					processData: false
+				});
+			} else {
+				errorAlert('Title Required');
+				return false;
+			}
 		});
 
 		// Function for updating document
@@ -521,15 +571,17 @@ ${el.name}->${el.title}
 					taskid: JSON.parse(retriveLsData('taskid')),
 					employee_id: userId
 				};
+				removeLsData('docArr');
+				// console.log(document);
 
-				console.log(document);
 				$.post(url, document, function(res) {
 					$('#dailyTimesheet-upload-file-ModalLong').modal('hide');
 					res = JSON.parse(res);
 					res.type === 'success' ? successAlert(res.message) : errorAlert(res.message);
 					setTimeout(() => {
 						loadData();
-					}, 4000)
+						// window.location.reload();
+					}, 4000);
 				});
 
 			} else {
@@ -692,23 +744,19 @@ ${el.name}->${el.title}
 		};
 
 		$('#project-task').change(function() {
-
 			let projectid = $(this).children(':selected').val();
-
 			if (projectid == '') {
 				errorAlert('Project not found!');
 			} else {
 				let url = BASEURL + 'Employee/getAllocatedtask';
-
 				$.post(url, {
 					projectid
 				}, function(data) {
-
 					if (data) {
 						data = JSON.parse(data);
 						let html = '<option value="">Select</option>';
 						for (let i = 0; i < data.length; i++) {
-							console.log(data[i]);
+							// console.log(data[i]);
 							html += `<option 
 							value="${data[i].taskId}" 
 							project-id="${data[i].project_Id}"
@@ -724,5 +772,34 @@ ${el.name}->${el.title}
 			}
 
 		});
+
+		$('.selectAll').click(function() {
+			if ($(this).prop("checked")) {
+				$('#alltasks .task').prop('checked', true);
+			} else {
+				$('#alltasks .task').prop('checked', false);
+			}
+		});
+
+		let d = new Date();
+		let currentTime = '';
+		let endtime='';
+
+		if (d.getHours() > 12) {
+			let h = d.getHours() - 12;
+			currentTime = `${h}:${d.getMinutes()}pm`;
+			m=d.getMinutes()+15;
+			endtime=`${h}:${m}pm`;
+		} else {
+			currentTime = `${d.getHours()}:${d.getMinutes()}am`;
+			m=d.getMinutes()+15;
+			endtime=`${d.getHours()}:${m}am`;
+		}
+
+		$('#from-time').val(currentTime)
+		$('#to-time').val(endtime)
+
+		// console.log(currentTime);
+
 	});
 </script>

@@ -106,6 +106,12 @@ function uploadData($arr = null, $path = null)
 	$ext = pathinfo($filename, PATHINFO_EXTENSION);
 	// Valid image extension
 	$valid_ext = array("png", "jpeg", "jpg", "pdf", "docx", "doc");
+
+	
+	// print_r(in_array($ext, $valid_ext));
+	// // print_r($ext);
+	// die;
+
 	// Check extension
 	if (in_array($ext, $valid_ext)) {
 		$file_name = preg_replace("/\s+/", "_", $filename);
@@ -117,14 +123,14 @@ function uploadData($arr = null, $path = null)
 		// Upload file
 		if (move_uploaded_file($arr['files']['tmp_name'], $file_path)) {
 			$files_arr = $file_path;
-			return  json_encode($files_arr);
+			return  json_encode(array('res'=>1, 'data'=>$files_arr));
 		}
 	} else {
-		return false;
+		return json_encode(array('res'=>0));
 	}
 
 	// print_r($files_arr);
-	return  json_encode($files_arr);
+	// return  json_encode($files_arr);
 	// die;
 }
 
