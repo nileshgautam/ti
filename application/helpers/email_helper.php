@@ -6,25 +6,25 @@ function sentmail($to = null, $subject = null, $mail_body = null)
 
     // $email = base64_decode($email); 
 
+    // $config = array(
+    //     'protocol' => 'smtp',
+    //     'smtp_host' => 'ssl://smtp.gmail.com',
+    //     'smtp_port' => 465,
+    //     'smtp_user' => 'yya9017@gmail.com',
+    //     'smtp_pass' => 'Yatharth@1234',
+    //     'mailtype' => 'html',
+    //     'charset' => 'iso-8859-1'
+    // );
+
     $config = array(
         'protocol' => 'smtp',
-        'smtp_host' => 'ssl://smtp.gmail.com',
-        'smtp_port' => 465,
-        'smtp_user' => 'yya9017@gmail.com',
-        'smtp_pass' => 'Yatharth@1234',
+        'smtp_host' => 'ssl://mail.gennextit.com',
+        'smtp_port' => 465, //465
+        'smtp_user' => 'info@gennextit.com',
+        'smtp_pass' => '9eq0L@#F]d7-',
         'mailtype' => 'html',
-        'charset' => 'iso-8859-1'
-    );
-
-//     $config = array(
-//         'protocol' => 'mail',
-//         'smtp_host' => 'ssl://mail.gennextit.com',
-//         'smtp_port' => 25, //465
-//         'smtp_user' => 'info@gennextit.com',
-//         'smtp_pass' => '9eq0L@#F]d7-',
-//         'mailtype' => 'html',
-//         'charset' => 'iso-8859-1',
-//   );
+        'charset' => 'iso-8859-1',
+  );
 
 
     $CI->load->library('email', $config);
