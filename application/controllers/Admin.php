@@ -157,6 +157,7 @@ class Admin extends CI_Controller
 			}
 		}
 	}
+
 	public function assignProject($var = null)
 	{
 		$page['header'] =  'Managers | ' . BRAND_NAME;
@@ -218,6 +219,7 @@ class Admin extends CI_Controller
 			}
 		}
 	}
+
 	public function role()
 	{
 		$page['description'] = $this->CustomModel->getAllfromTable('master_role');
@@ -366,72 +368,72 @@ class Admin extends CI_Controller
 				// // 	echo json_encode(array('message' => 'Duplicate entry not allowed', 'type' => 'error'));
 				// } else {
 
-					switch ($tableName) {
-						case "master_skill":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'SKL');
-							$rowData['skill_id'] = $Id;
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_role":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'Rol');
-							$rowData['role_id'] = $Id;
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_designation":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'DES');
-							$rowData['desig_id'] = $Id;
-							$rowData['dept_id'] = $_POST['deg'];
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_department":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'DEP');
-							$rowData['dept_id'] = $Id;
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_services_category":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'SRC');
-							$rowData['services_id'] = $Id;
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_document_category":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'DOC');
-							$rowData['document_category_id'] = $Id;
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_confidentiality":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'CONF');
-							$rowData['confidentiality_id'] = $Id;
-							$rowData['visibility_level'] = validateInput($_POST['visibility-level']);
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_document":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'DOC');
-							$rowData['document_id'] = $Id;
-							// $rowData['visibility_level'] = validateInput($_POST['visibility-level']);
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						case "master_tasks":
-							$Id = $this->MainModel->getNewIDorNo($tableName, 'TSK');
-							$rowData['task_id'] = $Id;
-							$rowData['category'] = validateInput($_POST['categories']);
-							$rowData['created_timestamp'] = timestamp();
-							$rowData['created_by'] = Admin::$userId;
-							$result = $this->MainModel->getinsertedData($tableName, $rowData);
-							echo messages($result);
-							break;
-						default:
-							echo "Table not found!";
-					}
+				switch ($tableName) {
+					case "master_skill":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'SKL');
+						$rowData['skill_id'] = $Id;
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_role":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'Rol');
+						$rowData['role_id'] = $Id;
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_designation":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'DES');
+						$rowData['desig_id'] = $Id;
+						$rowData['dept_id'] = $_POST['deg'];
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_department":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'DEP');
+						$rowData['dept_id'] = $Id;
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_services_category":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'SRC');
+						$rowData['services_id'] = $Id;
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_document_category":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'DOC');
+						$rowData['document_category_id'] = $Id;
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_confidentiality":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'CONF');
+						$rowData['confidentiality_id'] = $Id;
+						$rowData['visibility_level'] = validateInput($_POST['visibility-level']);
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_document":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'DOC');
+						$rowData['document_id'] = $Id;
+						// $rowData['visibility_level'] = validateInput($_POST['visibility-level']);
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					case "master_tasks":
+						$Id = $this->MainModel->getNewIDorNo($tableName, 'TSK');
+						$rowData['task_id'] = $Id;
+						$rowData['category'] = validateInput($_POST['categories']);
+						$rowData['created_timestamp'] = timestamp();
+						$rowData['created_by'] = Admin::$userId;
+						$result = $this->MainModel->getinsertedData($tableName, $rowData);
+						echo messages($result);
+						break;
+					default:
+						echo "Table not found!";
 				}
 			}
+		}
 		// }
 	}
 
@@ -449,7 +451,7 @@ class Admin extends CI_Controller
 				$tableName = $_POST['flage'];
 				$title = validateInput($_POST['title']);
 				$descrption = validateInput($_POST['description']);
-				$rowData=[];
+				$rowData = [];
 				if ($tableName == 'master_tasks') {
 					$rowData = array(
 						'title' => $title,
@@ -460,7 +462,7 @@ class Admin extends CI_Controller
 					$rowData = array(
 						'title' => $title,
 						'description' => $descrption,
-						
+
 					);
 				}
 
@@ -666,7 +668,7 @@ class Admin extends CI_Controller
 		);
 
 		// creadential
-		$password=passwordGenerate(8);
+		$password = passwordGenerate(8);
 		// $password = '123';
 		$credentials = array(
 			'username' => validateInput($user['email']),
@@ -680,10 +682,10 @@ class Admin extends CI_Controller
 		// return ($res == true) ? json_encode(array('type' => true, 'id' => $id), true) : json_encode(array('type' => false), true);
 		$to = validateInput($user['email']);
 		$sub = 'Timesheet Access Credentials';
-	    $message = 'Hi ' . $user['first_name'] . ', 
-		<br/> Your username : ' . validateInput($user['email']).'
-		<br/> Password is :' . $password.'<br/> 
-		<br/> Website url is :' . base_url().'<br/>';
+		$message = 'Hi ' . $user['first_name'] . ', 
+		<br/> Your username : ' . validateInput($user['email']) . '
+		<br/> Password is :' . $password . '<br/> 
+		<br/> Website url is :' . base_url() . '<br/>';
 
 		if ($res) {
 			$docres = $this->CustomModel->insetPeopleDetails($docArr, $emergency_contact, $costData, $credentials);
@@ -1237,5 +1239,51 @@ class Admin extends CI_Controller
 		$this->load->view('admin/pages/taskmaster');
 		$this->load->view('admin/script/taskmaster');
 		$this->load->view('admin/layout/footer');
+	}
+
+
+	public function resendPassword()
+	{
+		if ($_POST['emp-id-hidden']) {
+
+			$password = passwordGenerate(8);
+			// $password = '123';
+			$credentials = array(
+				'username' => validateInput($_POST['email']),
+				'password' => hash('sha512', $password)
+			);
+			$condition = array('people_id' => validateInput($_POST['emp-id-hidden']));
+			$condition1 = array('reference_id' => validateInput($_POST['emp-id-hidden']));
+
+			// $res = $this->CustomModel->update_employee_credential($condition, $credentials);
+			$res = $this->CustomModel->update_row('login', $condition, $credentials);
+			$res = $this->CustomModel->update_row('address', $condition1, array(
+				'email' => validateInput($_POST['email']),
+
+			));
+
+
+			if ($res) {
+				$result = $this->MainModel->selectAllFromTableWhere('employees', $condition);
+				$to = validateInput($_POST['email']);
+				$sub = 'Timesheet Access Credentials';
+				$message = 'Hi ' . $result[0]['first_name'] . ', 
+				<br/> Your username : ' . validateInput($_POST['email']) . '
+				<br/> Password is :' . $password . '<br/> 
+				<br/> Website url is :' . base_url() . '<br/>';
+
+				if ($result) {
+					$res = sentmail($to, $sub, $message);
+					// print_r($res);die;
+					if ($res) {
+						echo json_encode(array('message' => 'New password sent', 'type' => 'success'));
+					} else {
+						echo json_encode(array('message' => 'Contact IT', 'type' => 'error'));
+					}
+				}
+			} else {
+				echo json_encode(array('message' => 'Contact IT', 'type' => 'error'));
+			}
+		}
 	}
 }

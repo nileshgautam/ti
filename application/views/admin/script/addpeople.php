@@ -38,7 +38,8 @@
                 });
                 $('#mobile-error').text('mobile no should be 10 digits');
                 error = true;
-            }if(status == true){
+            }
+            if (status == true) {
                 $(this).css({
                     'border': '1px solid #20c997'
                 });
@@ -103,7 +104,7 @@
                 userInfo.push(user);
                 saveLsData('userInfo', userInfo);
                 $('#nav-document-tab').click();
-            }else{
+            } else {
                 errorAlert('Kindly fill all details correctly');
                 return false;
             }
@@ -549,4 +550,34 @@
         }
 
     }
+
+
+
+    $('.reset-password').click(function() {
+        // console.log()
+        $('#empPasswordModal').modal('show');
+        $('#emp-id-hidden').val($(this).attr('data-id'));
+    });
+
+    $('#resent-password-form').submit(function(e) {
+        e.preventDefault();
+        let email = $('#email').val();
+        // console.log(email);
+        if (email != '') {
+            let form_data = $(this).serialize();
+            let url = BASEURL + 'Admin/resendPassword';
+            $.post(url, form_data, function(res) {
+                res=JSON.parse(res);
+                if(res.type==='success'){
+                    successAlert(res.message);
+                    setTimeout(()=>{
+                        $('#empPasswordModal').modal('hide'); 
+                    },3000);
+                }else{
+                    errorAlert(res.message);
+                }
+                // console.log(res);
+            });
+        }
+    });
 </script>

@@ -95,6 +95,18 @@ class CustomModel extends ci_model
         return ($this->db->trans_status() === FALSE) ? false : true;
     }
 
+
+    // function update_employee_credential($id = null, $peopleData = null, $contactData = null)
+    // {
+    //     $this->db->trans_start();
+    //     $this->db->where($id);
+    //     $this->db->update('login',  $peopleData);
+    //     $this->db->update('address', $contactData);
+    //     $this->db->trans_complete();
+    //     return ($this->db->trans_status() === FALSE) ? false : true;
+    // }
+
+
     function assignProject($projectDataArr = null, $condition = null)
     {
         $this->db->trans_start();
@@ -124,7 +136,11 @@ class CustomModel extends ci_model
     public function getemployee()
     {
         // $q = "SELECT people.people_id, login.username, people.first_name,people.last_name, internal_people_detail.department,internal_people_detail.managerId, address.phone FROM `people` LEFT JOIN internal_people_detail on people.people_id=internal_people_detail.people_id LEFT JOIN address on address.reference_id=people.people_id LEFT JOIN login on login.people_id=people.people_id";
-        $q = "SELECT people.people_id, login.username, people.first_name,people.last_name, internal_people_detail.department,internal_people_detail.managerId, address.phone FROM `people` LEFT JOIN internal_people_detail on people.people_id=internal_people_detail.people_id LEFT JOIN address on address.reference_id=people.people_id LEFT JOIN login on login.people_id=people.people_id WHERE internal_people_detail.role!='Admin'";
+        
+        // $q = "SELECT people.people_id, login.username, people.first_name,people.last_name, internal_people_detail.department,internal_people_detail.managerId, address.phone FROM `people` LEFT JOIN internal_people_detail on people.people_id=internal_people_detail.people_id LEFT JOIN address on address.reference_id=people.people_id LEFT JOIN login on login.people_id=people.people_id WHERE internal_people_detail.role!='Admin'";
+
+        $q="SELECT a.people_id, a.username, a.first_name, a.phone, a.last_name,a.department, a.managerId, CONCAT(b.first_name,' ', b.last_name) as manager_name
+        FROM `employees_tbl` a, employees_tbl b WHERE a.managerId=b.people_id";
 
         $result = $this->db->query($q)->result_array();
         return ($result != null) ? $result : false;
