@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Manager extends CI_Controller
@@ -79,13 +82,16 @@ class Manager extends CI_Controller
 	{
 		if ($id) {
 			$id = base64_decode($id);
-			// $cdate = date('Y-m-d');
-			$page['task'] = $this->CustomModel->getAllocatedTask(Manager::$userId);
-			$page['projects'] = $this->CustomModel->getAssignproject(Manager::$userId);
-			// $data['projects_task'] = $this->CustomModel->getProjectByAssignTask(Manager::$userId, $cdate);
 
-			// print_r($page['projects']); die;
-			$page['users'] = $this->CustomModel1->getemployee(Manager::$userId);
+			$cdate = date('Y-m-d');
+			$page['task'] = $this->CustomModel->getAllocatedTask($id);
+			$page['projects'] = $this->CustomModel->getAssignproject($id);
+			// $page['projects_task'] = $this->CustomModel->getProjectByAssignTask(Manager::$userId);
+			$page['projects_task'] = $this->CustomModel->getAllProjectBymanagerId(Manager::$userId);
+			// echo '<pre>';
+			// print_r($page['projects_task']);
+			// die;
+			$page['users'] = $this->CustomModel1->getemployee($id);
 
 			// $page['MasterTask'] = $this->CustomModel->getTaskByProjectAndManager(Manager::$userId);
 
@@ -129,11 +135,20 @@ class Manager extends CI_Controller
 
 			$page['task'] = $this->CustomModel->getTaskListbyprojectId(base64_decode($id));
 
+
 			$page['project'] = $this->CustomModel->getAllfromWhere('project', array('project_id' => base64_decode($id)));
+
+			$selected_services = "'" . implode("','", json_decode($page['project'][0]['services'], true)) . "'";
+
+			// $page['task'] = $this->CustomModel->getAllTaskListbyProjectId($selected_services);
 
 			// echo '<pre>';
 
-			// 	print_r($page['task']);die;
+			// print_r($page['task']);
+
+
+			// print_r($page['tasks']);
+			// die;
 
 			$page['employee'] = $this->CustomModel->getAllfromWhere('employees', array('managerId' => Manager::$userId));
 
@@ -165,7 +180,7 @@ class Manager extends CI_Controller
 
 			// print_r($_POST['serviceid']);die;
 			if (isset($_POST)) {
-				$data =$this->CustomModel->getAllfromWhere('master_tasks', array('category'=>$_POST['serviceid']));
+				$data = $this->CustomModel->getAllfromWhere('master_tasks', array('category' => $_POST['serviceid']));
 				echo json_encode($data, true);
 			}
 		}
@@ -184,7 +199,7 @@ class Manager extends CI_Controller
 				$res = $this->CustomModel->getservices($_POST['id']);
 				$res = sService($res[0]['services']);
 				// echo '<pre>';
-				// print_r($res[0]['title']);die;
+				// print_r($res);die;
 
 				echo json_encode($res, true);
 			}

@@ -55,7 +55,7 @@
                                                         <td><?php echo $item['phone']; ?></td>
                                                        
                                                         <td><?php echo $item['department']; ?></td>
-                                                        <td><?php echo 'hi' ?></td>
+                                                        <td><?php echo $item['role'] ?></td>
                                                         <td><?php echo $item['manager_name']; ?></td>
                                                         <td><?php echo $item['client_name']; ?></td>
                                                         <td>

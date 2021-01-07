@@ -71,10 +71,9 @@
         });
 
         $('.add-task').click(function() {
-
             loadSelectedServices();
-
         });
+
         const loadSelectedServices = () => {
 
             let id = $('.add-task').attr('data-id');
@@ -94,8 +93,6 @@
                 $('.manager-service').html(option);
             });
         }
-
-
 
         $('#selected-task-view').keyup(function() {
             let data = $(this).val();
@@ -329,14 +326,14 @@
                 };
                 let url = BASEURL + 'Manager/addnewTask';
                 $.post(url, form_data, function(data) {
-
                     data = JSON.parse(data);
                     console.log(data);
                     if (data.type == 'error') {
                         errorAlert(data.message);
                     } else if (data.type == 'success') {
-                        $('#selected-task').val(data.data.task_id);
-                        $('#selected-task-view').val(data.data.title);
+                        // console.log(data);
+                        // $('#selected-task').val(data.data.task_id);
+                        // $('#selected-task-view').val(data.data.title);
                         successAlert(data.message);
                     }
                 });

@@ -168,7 +168,7 @@
                         <a href="<?php echo base_url('Manager/users') ?>" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
-                                Users
+                                Team
                                 <!-- <i class="fas fa-angle-left right"></i> -->
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>
@@ -180,7 +180,7 @@
                         <a href="<?php echo base_url('Manager/dailyTimesheet/').base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
                         <i class="nav-icon fas fa-clock"></i>
                             <p>
-                            TimeSheet
+                            My TimeSheet
                                 <!-- <i class="fas fa-angle-left right"></i> -->
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>
@@ -192,7 +192,7 @@
                         <a href="<?php echo base_url('Manager/booketimes/').base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
                         <i class="nav-icon fas fa-clock"></i>
                             <p>
-                            BookTime
+                            Book My Time
                                 <!-- <i class="fas fa-angle-left right"></i> -->
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>

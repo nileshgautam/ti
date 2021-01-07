@@ -8,8 +8,8 @@
                         <h4 class="m-0"><?php echo ($users) ? $users[0]['first_name'] . ' ' . $users[0]['last_name'] : ''; ?></h4>
                     </div>
                     <div class="col-sm-8">
-                        <a class="btn btn-primary float-right ml-2 btn-xs" href="#" id="assignModel" title="Assign new task" data-toggle="modal" data-target="#assignModal"><i class="fas fa-plus-square"></i></a>
-                        <a class="btn btn-warning btn-xs float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">Back</a>
+                        <a class="btn btn-primary float-right ml-2" href="#" id="assignModel" title="Assign new task" data-toggle="modal" data-target="#assignModal"><i class="fas fa-plus-square"></i></a>
+                        <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">Back</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -17,6 +17,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+
+                                <th scope="col">Project</th>
                                 <th scope="col">Task</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Estimate Hrs</th>
@@ -34,7 +36,9 @@
                             ?>
                                     <tr>
                                         <th scope="row"><?php echo  $count++; ?></th>
+                                        <td><?php echo $item['project_name'] ?></td>
                                         <td><?php echo $item['title'] ?></td>
+
                                         <td><?php echo $item['description'] ?></td>
                                         <td><?php echo $item['budgetedHours'] ?></td>
                                         <td><?php
@@ -65,6 +69,7 @@
 
                                     <!-- <input type="hidden" name="projectid" id="projectid" > -->
 
+                                    <!-- <?php print_r($projects_task); ?> -->
                                     <div class="form-group col-sm-12">
 
                                         <label for="projectid">Project</label>

@@ -311,7 +311,6 @@ class Common
 
 		if (isset($_POST['startDate']) && isset($_POST['endDate']) && isset($_POST['users']) && isset($_POST['Hours']) && isset($_POST['taskId'])) {
 			extract($_POST);
-
 			$data = array(
 				"employeeId" => $users,
 				"startDate" => yymmdd($startDate),
