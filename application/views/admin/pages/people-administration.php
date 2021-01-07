@@ -156,19 +156,32 @@
                                     </div>
                                     <!-- Employee details -->
                                     <!-- Join date -->
+
                                     <div class="form-group col-sm-6">
                                         <label for="join-date">Joining date <span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <input type="text" class="form-control datepicker" name="join-date" id="join-date" value="<?php echo isset($employee) ? date_format(date_create($employee[0]['join_date']), 'd/m/Y') : ''  ?>" placeholder="DD/MM/YYYY" required>
                                         </div>
                                     </div>
-
+                                    <div class="form-group col-sm-6">
+                                        <label for="clinets">Clinet <span class="text-danger">*</span></label>
+                                        <select name="clinets" id="clinets" class="form-control" required>
+                                            <option value="">Select clinet</option>
+                                            <?php if (!empty($clinets)) {
+                                                foreach ($clinets as $item) { ?>
+                                                    <option value="<?php echo $item['client_id'] ?>" <?php echo (isset($employee[0]['client_id']) && $employee[0]['client_id'] == $item['client_id']) ? 'selected' : ''  ?> data-id="<?php echo base64_encode($item['client_id']) ?>">
+                                                        <?php echo $item['client_name'] ?></option>
+                                            <?php }
+                                            }  ?>
+                                        </select>
+                                    </div>
                                     <div class="form-group col-sm-6">
                                         <label for="department">Department <span class="text-danger">*</span></label>
-                                        <select name="department" id="department" class="form-control select2">
+                                        <select name="department" id="department" class="form-control select2" data-placeholder="Select client first" disabled>
+                                            <option value="">Select</option>
                                             <?php if (!empty($department)) {
                                                 foreach ($department as $item) { ?>
-                                                    <option value="<?php echo $item['title']?>" <?php echo (isset($employee[0]['department']) && $employee[0]['department'] == $item['title']) ? 'selected' : ''  ?> data-id="<?php echo base64_encode($item['dept_id'])?>">
+                                                    <option value="<?php echo $item['title'] ?>" <?php echo (isset($employee[0]['department']) && $employee[0]['department'] == $item['title']) ? 'selected' : ''  ?> data-id="<?php echo base64_encode($item['dept_id']) ?>">
                                                         <?php echo $item['title'] ?></option>
                                             <?php }
                                             }  ?>
@@ -177,13 +190,13 @@
 
                                     <div class="form-group col-sm-6">
                                         <label for="designation">Designation<span class="text-danger">*</span></label>
-                                        <select name="designation" id="designation" class="form-control select2 " data-placeholder="Select Designation" disabled>
+                                        <select name="designation" id="designation" class="form-control select2 " data-placeholder="Select department first" disabled>
+                                            <option value="">Select clinet</option>
                                             <?php if (!empty($designation)) {
-                                                foreach ($designation as $item) { 
+                                                foreach ($designation as $item) {
                                                     print_r($item);
-                                                    ?>
-                                                    <option value="<?php echo $item['title'] ?>" 
-                                                    <?php echo (isset($employee) && $employee[0]['designation'] == $item['title']) ? 'selected' : ''  ?>>
+                                            ?>
+                                                    <option value="<?php echo $item['title'] ?>" <?php echo (isset($employee) && $employee[0]['designation'] == $item['title']) ? 'selected' : ''  ?>>
                                                         <?php echo $item['title'] ?></option>
                                             <?php }
                                             }  ?>
@@ -193,22 +206,23 @@
                                     <div class="form-group col-sm-6">
                                         <label for="manager">Manager<span class="text-danger">*</span></label>
                                         <select name="manager" id="manager" class="form-control" data-placeholder="select Manager">
+                                            <option value="">Select</option>
                                             <?php if (!empty($manager)) {
                                                 foreach ($manager as $item) { ?>
-                                                    <option value="<?php echo $item['people_id'] ?>" 
-                                                    <?php echo (isset($employee[0]['managerId']) && $employee[0]['managerId']  == $item['people_id']) ? 'selected' : ''  ?>>
+                                                    <option value="<?php echo $item['people_id'] ?>" <?php echo (isset($employee[0]['managerId']) && $employee[0]['managerId']  == $item['people_id']) ? 'selected' : ''  ?>>
                                                         <?php echo $item['first_name'] . ' ' . $item['last_name'] ?></option>
-                                            <?php }
-                                            }else { ?>
-                                                <option value="<?php echo $_SESSION['logged_in']['people_id'] ?>" >
-                                                        <?php echo $_SESSION['logged_in']['Name']; ?></option>
-                                           <?php }  ?>
+                                                <?php }
+                                            } else { ?>
+                                                <option value="<?php echo $_SESSION['logged_in']['people_id'] ?>">
+                                                    <?php echo $_SESSION['logged_in']['Name']; ?></option>
+                                            <?php }  ?>
                                         </select>
                                     </div>
 
                                     <div class="form-group col-sm-6">
                                         <label for="role">Role <span class="text-danger">*</span></label>
                                         <select name="role" id="role" class="select2 form-control">
+                                            <option value="">Select</option>
                                             <?php if (!empty($role)) {
                                                 foreach ($role as $item) { ?>
                                                     <option value="<?php echo trim($item['title']) ?>" <?php echo (isset($employee[0]['role']) && $employee[0]['role'] == $item['title']) ? 'selected' : ''  ?>>
@@ -263,7 +277,7 @@
                                     </div>
                                     <div class="form-group col-sm-4">
                                         <label for="rate-per-hours">Rate/Hour<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="rate-per-hours" name="rate-per-hours" value="<?php echo isset($employee) ? $employee[0]['rate_per_hour'] : ''  ?>" placeholder="100"  required>
+                                        <input type="text" class="form-control" id="rate-per-hours" name="rate-per-hours" value="<?php echo isset($employee) ? $employee[0]['rate_per_hour'] : ''  ?>" placeholder="100" required>
                                     </div>
                                 </div>
                                 <input type="hidden" id="empid" value="<?php echo isset($employee) ? $employee[0]['people_id'] : ''  ?>">
@@ -339,27 +353,7 @@
                             </form>
                         </div>
 
-                        <!-- login in tabs -->
-                        <!-- <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
-                            <form id="user-autho-form">
-                                <input type="hidden" name="logid" id="logid">
-                                <div class="card-body row">
-                                    <div class="form-group col-sm-6">
-                                        <label for="username">Email</label>
-                                        <input type="email" class="form-control" id="username" name="username" placeholder="Enter email">
-                                    </div>
-                                    <div class="form-group col-sm-6">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password-login" name='password-login' placeholder="Enter Password">
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="form-group col-sm-12">
-                                        <button type="submit" class="btn btn-primary float-right">Next</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div> -->
+               
                         <!-- Document -->
                         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab" data-select='<?php echo json_encode($document, true) ?>'>
                             <div class="doc py-2 card">
@@ -433,3 +427,11 @@
 
 
 <!-- /.content-wrapper -->
+
+<script>
+    $(function() {
+        $('#clinets').change(function() {
+            $('#department').removeAttr('disabled');
+        });
+    });
+</script>

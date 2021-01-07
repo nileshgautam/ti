@@ -57,6 +57,7 @@ class Admin extends CI_Controller
 		$page['country'] = $this->CustomModel->getAllfromTable('countries');
 		$page['currency'] = $this->CustomModel->getAllfromTable('currency_master');
 		$page['document'] = $this->CustomModel->getAllfromTable('master_document');
+		$page['clinets'] = $this->CustomModel->getAllfromTable('clients');
 		$page['ogtype'] = $this->CustomModel->getAllfromTable('master_clienttype');
 
 		// echo '<pre>';
@@ -84,6 +85,7 @@ class Admin extends CI_Controller
 		$page['header'] =  'People - Dashboard | ' . BRAND_NAME;
 		$page['client'] = $this->CustomModel->getClients();
 		$page['employee'] = $this->CustomModel->getemployee();
+		// echo '<pre>';
 		// print_r($page['employee']);die;
 		$this->load->view('admin/layout/header', $page);
 		$this->load->view('admin/layout/sidebar');
@@ -120,7 +122,6 @@ class Admin extends CI_Controller
 		$this->load->view('admin/script/projectFormScript');
 		$this->load->view('admin/layout/footer');
 	}
-
 
 	public function projectPost($var = null)
 	{
@@ -628,6 +629,7 @@ class Admin extends CI_Controller
 			'created_by' => $_SESSION['logged_in']['people_id'],
 			'created_date' => date("Y-m-d"),
 			'people_id' => $id,
+			'client_id' => validateInput($user['clinetid'])
 		);
 
 		// Document data
@@ -899,6 +901,7 @@ class Admin extends CI_Controller
 		// print_r($_POST);
 		// die;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
 			if (isset($_POST)) {
 				$res = $this->people_post(
 					$_POST['userData'][0],
@@ -910,7 +913,6 @@ class Admin extends CI_Controller
 			}
 		}
 	}
-
 
 	public function addnewClient()
 	{
@@ -1103,9 +1105,13 @@ class Admin extends CI_Controller
 		$page['country'] = $this->CustomModel->getAllfromTable('countries');
 		$page['currency'] = $this->CustomModel->getAllfromTable('currency_master');
 		$page['document'] = $this->CustomModel->getAllfromTable('master_document');
+		$page['clinets'] = $this->CustomModel->getAllfromTable('clients');
 		$page['ogtype'] = $this->CustomModel->getAllfromTable('master_clienttype');
 
 		$page['employee'] = $this->CustomModel->getAllfromWhere('employee_details', array('people_id' => base64_decode($id)));
+		// echo '<pre>';
+		// print_r($page['employee']);
+		// die;
 
 		$this->load->view('admin/layout/header', $page);
 		$this->load->view('admin/layout/sidebar');

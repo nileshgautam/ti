@@ -75,13 +75,18 @@
             let URL = BASEURL + 'Admin/people_post';
             let gender = undefined;
             var ele = document.getElementsByName('gender');
-            // console.log(ele);
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked)
-                    gender = ele[i].value;
-            }
-            if (!error) {
-                $('#skill').val();
+            let clinetid = $('#clinets').val();
+                // console.log(ele);
+                for (i = 0; i < ele.length; i++) {
+                    if (ele[i].checked)
+                        gender = ele[i].value;
+                }
+
+            if (clinetid==='') {
+                errorAlert('Clinet is required');
+                error=true;
+                
+            } else if (!error) {
                 let user = {
                     first_name: $('#first-name').val(),
                     last_name: $('#last-name').val(),
@@ -100,6 +105,7 @@
                     manager: $('#manager').val(),
                     role: $('#role').val(),
                     skills: $('#skill').val(),
+                    clinetid: clinetid,
                 }
                 userInfo.push(user);
                 saveLsData('userInfo', userInfo);
@@ -500,7 +506,7 @@
 
         $('#department').change(function() {
             let id = $(this).children(':selected').attr('data-id');
-            console.log(id);
+            // console.log(id);
             let url = BASEURL + 'Admin/get_designation';
             $.post(url, {
                 depid: id
@@ -567,13 +573,13 @@
             let form_data = $(this).serialize();
             let url = BASEURL + 'Admin/resendPassword';
             $.post(url, form_data, function(res) {
-                res=JSON.parse(res);
-                if(res.type==='success'){
+                res = JSON.parse(res);
+                if (res.type === 'success') {
                     successAlert(res.message);
-                    setTimeout(()=>{
-                        $('#empPasswordModal').modal('hide'); 
-                    },3000);
-                }else{
+                    setTimeout(() => {
+                        $('#empPasswordModal').modal('hide');
+                    }, 3000);
+                } else {
                     errorAlert(res.message);
                 }
                 // console.log(res);

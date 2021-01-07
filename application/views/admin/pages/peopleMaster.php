@@ -37,7 +37,9 @@
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Phone</th>
                                                 <th scope="col">Department</th>
+                                                <th scope="col">Role</th>
                                                 <th scope="col">Manager</th>
+                                                <th scope="col">Client</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -51,8 +53,11 @@
                                                         <td><?php echo $item['username']; ?></td>
                                                         <td><?php echo $item['first_name'] . ' ' . $item['last_name']; ?></td>
                                                         <td><?php echo $item['phone']; ?></td>
+                                                       
                                                         <td><?php echo $item['department']; ?></td>
+                                                        <td><?php echo 'hi' ?></td>
                                                         <td><?php echo $item['manager_name']; ?></td>
+                                                        <td><?php echo $item['client_name']; ?></td>
                                                         <td>
                                                             <div class="row">
                                                                 <div class="col-sm-4">
