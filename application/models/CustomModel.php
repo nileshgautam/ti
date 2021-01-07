@@ -139,7 +139,7 @@ class CustomModel extends ci_model
         
         // $q = "SELECT people.people_id, login.username, people.first_name,people.last_name, internal_people_detail.department,internal_people_detail.managerId, address.phone FROM `people` LEFT JOIN internal_people_detail on people.people_id=internal_people_detail.people_id LEFT JOIN address on address.reference_id=people.people_id LEFT JOIN login on login.people_id=people.people_id WHERE internal_people_detail.role!='Admin'";
 
-        $q="SELECT a.people_id, a.username, a.first_name, a.phone, a.last_name,a.department, a.managerId, CONCAT(b.first_name,' ', b.last_name) as manager_name
+        $q="SELECT a.people_id, a.username, a.first_name, a.phone, a.last_name,a.department, a.role,a.client_name, a.managerId, CONCAT(b.first_name,' ', b.last_name) as manager_name
         FROM `employees_tbl` a, employees_tbl b WHERE a.managerId=b.people_id";
 
         $result = $this->db->query($q)->result_array();
@@ -188,7 +188,12 @@ class CustomModel extends ci_model
         // die;
         // $query = "SELECT *,task.title,task.description FROM employee_task_relation LEFT JOIN  task on task.task_id=employee_task_relation.taskId WHERE employee_task_relation.employeeId='$userId'";
 
-        $query = "SELECT employee_task_relation.taskId, master_tasks.title, master_tasks.description, employee_task_relation.budgetedHours, employee_task_relation.startDate, employee_task_relation.endDate, employee_task_relation.employeeId FROM `employee_task_relation` left JOIN master_tasks on master_tasks.task_id=employee_task_relation.taskId WHERE employee_task_relation.employeeId='$userId'";
+        $query = "SELECT employee_task_relation.taskId, master_tasks.title, master_tasks.description, employee_task_relation.budgetedHours, employee_task_relation.startDate, employee_task_relation.endDate, employee_task_relation.employeeId, project.project_Id,
+        project.name as project_name
+        FROM `employee_task_relation`
+        left JOIN task_project_relation ON employee_task_relation.taskId=task_project_relation.task_id
+        LEFT JOIN master_tasks on employee_task_relation.taskId=master_tasks.task_id 
+        left JOIN project on project.project_Id=employee_task_relation.project_id WHERE employee_task_relation.employeeId='$userId'";
         $q = $this->db->query($query)->result_array();
         // print_r($q);die;
         return $this->db->affected_rows() ? $q : FALSE;
@@ -370,6 +375,7 @@ class CustomModel extends ci_model
     public function getTaskListbyprojectId($id = null)
     {
         $q = "SELECT master_tasks.task_id, master_tasks.title, master_tasks.description, task_project_relation.project_id, task_project_relation.assigned_hrs, task_project_relation.start_date,task_project_relation.end_date,task_project_relation.project_id FROM `task_project_relation` LEFT JOIN master_tasks on task_project_relation.task_id=master_tasks.task_id WHERE task_project_relation.project_id='$id'";
+
         $result = $this->db->query($q)->result_array();
         return $this->db->affected_rows() ? $result : FALSE;
     }
@@ -422,4 +428,22 @@ class CustomModel extends ci_model
 
         return $this->db->affected_rows() ? $result : FALSE;
     }
+
+
+    public function getAllTaskListbyProjectId($ids = null)
+    {
+        $q = "SELECT * from master_tasks LEFT JOIN master_services_category on master_tasks.category=master_services_category.services_id WHERE in master_tasks.category in($ids)";
+        $result = $this->db->query($q)->result_array();
+        return $this->db->affected_rows() ? $result : FALSE;
+    }
+
+
+    public function getAllProjectBymanagerId($id = null)
+    {
+        
+        $q = "SELECT * FROM `peopl_project_relationship` LEFT JOIN project on peopl_project_relationship.project_id=project.project_Id WHERE peopl_project_relationship.people_id='$id'";
+        $result = $this->db->query($q)->result_array();
+        return $this->db->affected_rows() ? $result : FALSE;
+    }
+    
 }
