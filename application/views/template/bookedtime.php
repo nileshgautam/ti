@@ -8,7 +8,8 @@
                         <h4 class="text-header">Daily Timesheet</h4>
                     </div>
                     <div class="col-sm-4 text-center">
-                        <h6 class="header-text badge badge-secondary"><?php echo date('d/m/Y') ?></h6>
+                        <h3 class="header-text badge badge-secondary fs-17"><?php echo date('d/m/Y') ?></h3>
+
                         <input type="hidden" name="ssdate" id="ssdate" value="<?php echo date('Y-m-d') ?>">
                     </div>
 
@@ -49,6 +50,11 @@
                         <div class="col-sm-2">
                             <input type="text" class="show-time col-sm-12 form-control" id="to-time" placeholder="end time">
                         </div>
+
+                        <div class="col-sm-1">
+                            <button class="btn btn-primary saveTask"><i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                     <br />
                     <div class="row">
@@ -61,14 +67,14 @@
                             <input type="hidden" name="project-id" id="project-id">
                             <input type="hidden" name="client-id" id="client-id">
                             <input type="hidden" name="service-id" id="service-id">
-                            <button class="btn btn-success saveTask">save</button>
+
                         </div>
                     </div>
 
 
                     <div class="custom-btn-two row m-2">
                         <div class="col-sm-2"><input type="checkbox" class="selectAll" id='selectAll'> <span for="selectAll">Select all</span></div>
-                              
+
                     </div>
 
                     <div class="py-2 ml-2" id="alltasks">
@@ -80,7 +86,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12"><a class="btn btn-info float-right" id="submit-task">Submit Task</a></div>    
+    <div class="col-sm-12"><a class="btn btn-info float-right submit-btn" id="submit-task">Submit Task</a></div>
 </div>
 </div>
 </div>

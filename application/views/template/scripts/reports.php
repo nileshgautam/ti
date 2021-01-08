@@ -15,7 +15,7 @@
 	
 		if (result != "") {
 			for (let i = 0; i < result.length; i++) {
-				// console.log(result[i]);
+				console.log(parseFloat(convertMinToHRS(result[i].consumedTime)));
 				// categories.push(result[i].title);
 				tasks.push({
 					name: result[i].title,
