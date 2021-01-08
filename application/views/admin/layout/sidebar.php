@@ -192,7 +192,7 @@
                         <a href="<?php echo base_url('Manager/booketimes/').base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
                         <i class="nav-icon fas fa-clock"></i>
                             <p>
-                            Book My Time
+                            BookTime
                                 <!-- <i class="fas fa-angle-left right"></i> -->
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>

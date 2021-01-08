@@ -46,17 +46,12 @@
                                     ?>
                                             <tr>
                                                 <th scope="row"><?php echo  $count++; ?></th>
-                                                <td><?php echo time_in_12_hour_format($item['taskStTime']).' to '.time_in_12_hour_format($item['taskedTime'])  ?></td>
+                                                <td><?php echo time_in_12_hour_format($item['taskStTime']) . ' to ' . time_in_12_hour_format($item['taskedTime'])  ?></td>
                                                 <td><?php echo $item['title'] ?></td>
                                                 <td><?php echo $item['name'] ?></td>
-                                                <td><?php echo bcadd(0, $item['consumedTime'] / 60, 2)  .' hrs' ?></td>
+                                                <td><?php echo bcadd(0, $item['consumedTime'] / 60, 2)  . ' hrs' ?></td>
                                                 <td>
-                                                    <a class="btn btn-primary  btn-xs ml-2 showTask" href="#" title="show task" 
-                                                    dataTaskid="<?php echo base64_encode($item['task_id']) ?>"
-                                                    dataprojectid="<?php echo base64_encode($item['project_id'])?>"
-                                                    taskStTime="<?php echo base64_encode($item['taskStTime']) ?>"
-                                                    taskedTime="<?php echo base64_encode($item['taskedTime']) ?>"
-                                                    >show</a>
+                                                    <a class="btn btn-primary  btn-xs ml-2 showTask" href="#" title="show task" dataTaskid="<?php echo base64_encode($item['task_id']) ?>" dataprojectid="<?php echo base64_encode($item['project_id']) ?>" taskStTime="<?php echo base64_encode($item['taskStTime']) ?>" taskedTime="<?php echo base64_encode($item['taskedTime']) ?>">show</a>
                                                 </td>
                                             </tr>
                                     <?php }
@@ -82,9 +77,7 @@
                     <button type="button" class="close mr-1" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <button type="button" class="btn btn-xs text-danger mr-5 float-right" id="reject-task" title="Reject">
-                        <i class="fa fa-ban" aria-hidden="true"></i>
-                    </button>
+
                 </div>
                 <div class="modal-body">
                     <form id="savedailytimesheet">
@@ -101,10 +94,14 @@
                         </div>
                         <input type="hidden" name="taskid" id="taskid">
                         <div class="modal-footer">
-                            <a class="btn btn-xs btn-link float-right mr-2 hide" id="save-remark">
+                            <a class="btn btn-xs btn-link hide" id="save-remark">
                                 Save remark</a>
-                            <a class="btn btn-xs btn-link float-right mr-2" id="accept-task">
+                            <a class="btn btn-xs btn-link" id="accept-task" title="Save">
                                 Mark as complete</a>
+                            <a class="btn btn-xs text-danger" id="reject-task" title="Reject">
+                                Mark as Rejected</a>
+                            <a class="btn btn-xs text-danger close mr-1" data-dismiss="modal" aria-label="Close" title="Cancle">
+                                Cancel</a>
                         </div>
                     </form>
                 </div>
