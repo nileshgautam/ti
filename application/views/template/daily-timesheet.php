@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-sm-6 row m-0">
                         <div class="col-sm-6">
-                            Booked Time: <?php echo $totalhrs ?> hrs.
+                            Booked Time: <?php echo bcadd(0, $totalhrs, 2) ?> hrs.
                         </div>
                         <div class="col-sm-6"> <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);"><i class="fas fa-arrow-left"></i></a></div>
                     </div>
@@ -49,7 +49,7 @@
                                                 <td><?php echo time_in_12_hour_format($item['taskStTime']).' to '.time_in_12_hour_format($item['taskedTime'])  ?></td>
                                                 <td><?php echo $item['title'] ?></td>
                                                 <td><?php echo $item['name'] ?></td>
-                                                <td><?php echo $item['consumedTime'] / 60 .' hrs' ?></td>
+                                                <td><?php echo bcadd(0, $item['consumedTime'] / 60, 2)  .' hrs' ?></td>
                                                 <td>
                                                     <a class="btn btn-primary  btn-xs ml-2 showTask" href="#" title="show task" 
                                                     dataTaskid="<?php echo base64_encode($item['task_id']) ?>"

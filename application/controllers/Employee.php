@@ -197,8 +197,6 @@ class Employee extends ci_controller
 				'taks_id' => base64_decode($_POST['taskid']),
 				'save_date' => date('Y-m-d')
 			);
-
-
 			// echo '<pre>';
 			$tableName = 'dailytimesheet';
 			$getfiles = $this->MainModel->selectAllFromWhere($tableName, $condition);
@@ -513,3 +511,5 @@ class Employee extends ci_controller
 		$this->common->addUserTask(Employee::$userId);
 	}
 }
+
+

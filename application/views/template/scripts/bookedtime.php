@@ -135,19 +135,22 @@
 						<div class="col-sm-2 row">
 						<input type="text" class="col-sm-6 show-time w-72 form-control task-st fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskStTime)}"/>
 					
-						<input type="text" class="show-time col-sm-6 w-72 form-control task-et fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskedTime)}"/>
+						<input type="text" class="show-time  col-sm-6 w-72 form-control task-et fs-13" data-et=${btoa(el.taskedTime)} data-st=${btoa(el.taskStTime)} data-taskid=${btoa(el.task_id)} data-projectid=${btoa(el.project_id)} value="${timeConvert12hrs(el.taskedTime)}"/>
 						</div>
 						<div class="col-sm-1 text-align-center">
-						<p class="fs-13">
-							 ${ el.consumedTime/60 } hrs</p>
+						<p class="fs-13 prt-10">
+							 ${ (el.consumedTime/60).toFixed(2) } hrs</p>
 						</div>
 						<div class="col-sm-4">
-						<p class="userDescription fs-13" 
+						
+							 <textarea
+
+							 class="userDescription form-control fs-13" 
 							data-et=${btoa(el.taskedTime)} 
 							data-st=${btoa(el.taskStTime)}
 							 data-taskid=${btoa(el.task_id)} 
-							 data-projectid=${btoa(el.project_id)}>
-							 ${el.userDescription}</p>
+							 data-projectid=${btoa(el.project_id)}
+							 >${el.userDescription}</textarea>
 					
                         </div>
 						<div class="col-sm-1">`;
@@ -246,6 +249,8 @@
 
 			}
 		});
+
+	
 
 		// upload task file if any
 		$('#alltasks').on('click', '.uploadTaskFile', function() {
@@ -357,7 +362,7 @@
 									(response.type === 'success') ? successAlert(response.message): errorAlert(response.message);
 									setTimeout(() => {
 										loadData();
-									}, 4000);
+									}, 500);
 								});
 							}
 							break;
@@ -581,7 +586,7 @@
 					setTimeout(() => {
 						loadData();
 						// window.location.reload();
-					}, 4000);
+					}, 500);
 				});
 
 			} else {
@@ -602,24 +607,24 @@
 		});
 
 		// Edit description
-		$('#alltasks').on('mouseover', '.userDescription', function() {
-			$(this).addClass('form-control');
-			$(this).css({
-				"border": '1px solid gray'
-			});
+		// $('#alltasks').on('mouseover', '.userDescription', function() {
+		// 	$(this).addClass('form-control');
+		// 	$(this).css({
+		// 		"border": '1px solid gray'
+		// 	});
 
-		})
+		// })
 
-		$('#alltasks').on('click', '.userDescription', function() {
-			$(this).addClass('form-control');
-			$(this).attr('contenteditable', "true");
+		// $('#alltasks').on('click', '.userDescription', function() {
+		// 	$(this).addClass('form-control');
+		// 	$(this).attr('contenteditable', "true");
 
-		})
+		// })
 
-		$('#alltasks').on('mouseleave', '.userDescription', function() {
-			$(this).removeAttr("style");
-			// $(this).re('form-control');
-		});
+		// $('#alltasks').on('mouseleave', '.userDescription', function() {
+		// 	$(this).removeAttr("style");
+		// 	// $(this).re('form-control');
+		// });
 
 		$('#alltasks').on('blur', '.userDescription', function() {
 			let url = BASEURL + 'Employee/updateRow';
@@ -631,11 +636,12 @@
 					pid: $(this).attr('data-projectid')
 				},
 				data: {
-					userDescription: $(this).text()
+					userDescription: $(this).val()
 				},
 				flag: 'description'
 			};
 
+			// console.log(form_data);
 			updateRowData(form_data, url);
 
 		});
@@ -694,7 +700,7 @@
 					data.type === 'success' ? successAlert(data.message) : errorAlert(data.message);
 					setTimeout(() => {
 						window.location.reload();
-					}, 4000);
+					}, 500);
 				});
 			} else if (CheckedId.length === 0) {
 				errorAlert('You did not select the task.');
@@ -711,7 +717,7 @@
 				res.type === 'success' ? successAlert(res.message) : errorAlert(res.message);
 				setTimeout(() => {
 					loadData();
-				}, 4000);
+				}, 500);
 			});
 
 		};
@@ -783,23 +789,32 @@
 
 		let d = new Date();
 		let currentTime = '';
-		let endtime='';
+		let endtime = '';
+
+		console.log(`${d.getHours()}:${d.getMinutes()}`);
+
 
 		if (d.getHours() > 12) {
-			let h = d.getHours() - 12;
+			let h = d.getHours();
 			currentTime = `${h}:${d.getMinutes()}pm`;
-			m=d.getMinutes()+15;
-			endtime=`${h}:${m}pm`;
+			// m = d.getMinutes() + 15;
+			// endtime = `${h}:${m}pm`;
 		} else {
 			currentTime = `${d.getHours()}:${d.getMinutes()}am`;
-			m=d.getMinutes()+15;
-			endtime=`${d.getHours()}:${m}am`;
+			// m = d.getMinutes() + 15;
+			// endtime = `${d.getHours()}:${m}am`;
 		}
 
-		$('#from-time').val(currentTime)
-		$('#to-time').val(endtime)
+		$('#from-time').val(formatAMPM(new Date));
+		// $('#from-time').val(`${d.getHours()}:${d.getMinutes()}`);
+		$('#to-time').val(formatAMPM(new Date));
+		// $('#to-time').val(`${d.getHours()}:${d.getMinutes()}`);
 
-		// console.log(currentTime);
+
+
+
+
+		console.log(formatAMPM(new Date));
 
 	});
 </script>

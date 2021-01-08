@@ -23,7 +23,7 @@ function errorAlert(errorMessage = null) {
         progressBar: true,
         showMethod: 'slideDown',
         preventDuplicates: true,
-        timeOut: 4000,
+        timeOut: 500,
         positionClass: "toast-top-right"
     };
     toastr.error(errorMessage, 'Error');
@@ -35,7 +35,7 @@ function successAlert(successMessage = null) {
         progressBar: true,
         showMethod: 'slideDown',
         preventDuplicates: true,
-        timeOut: 4000,
+        timeOut: 500,
         positionClass: "toast-top-right"
     };
     toastr.success(successMessage, 'Success');
@@ -283,6 +283,17 @@ const calculateTime = (time) => {
 }
 
 const convertMinToHRS = (minutes) => {
-    let hrs = parseFloat(minutes / 60);
-    return (`${hrs}`);
+        let hrs = parseFloat(minutes / 60);
+        return (`${(hrs).toFixed(2)}`);
+    }
+    // Function to convert date time to 24 to 12
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + '' + ampm;
+    return strTime;
 }

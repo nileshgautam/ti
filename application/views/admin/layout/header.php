@@ -67,7 +67,7 @@
             <ul class="navbar-nav ml-auto">
     
                 <li class="nav-item">
-                    <a class="nav-link text-red" href="<?php echo base_url('Login/logout') ?>" role="button" title="Logout">
+                    <a class="nav-link text-red fs-23" href="<?php echo base_url('Login/logout') ?>" role="button" title="Logout">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </li>
