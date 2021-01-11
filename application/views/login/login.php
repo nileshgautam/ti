@@ -33,7 +33,7 @@
         <p class="login-box-msg" id="notification"></p>
         <form class="login-form" method="POST">
           <div class="input-group mb-3">
-            <input type="email" class="form-control" id="user-name" name="username" value="nilesh@mail.com" placeholder="Email" autocomplete="" required>
+            <input type="email" class="form-control" id="user-name" name="username" value="" placeholder="Email" autocomplete="" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="" value="789456" required>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="" value="" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>

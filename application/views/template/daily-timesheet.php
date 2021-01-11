@@ -12,14 +12,17 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header row m-0">
-                    <div class="col-sm-6">
-                        <h4 class="text-header">Daily Timesheet</h4>
+                    <div class="col-sm-5">
+                        <h5 class="text-header"><?php echo !empty($employee) ? $employee['first_name'] . ' ' . $employee['last_name'] : $_SESSION['logged_in']['Name'] ?> <span class="badge badge-primary">Daily Timesheet</span></h5>
                     </div>
-                    <div class="col-sm-6 row m-0">
+                    <div class="col-sm-6">
                         <div class="col-sm-6">
-                            Booked Time: <?php echo bcadd(0, $totalhrs, 2) ?> hrs.
+                            Booked Time: <?php echo trim(bcadd(0, $totalhrs, 2)) ?> hrs.
                         </div>
-                        <div class="col-sm-6"> <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);"><i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                    <div class="col-sm-1"> <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -69,41 +72,48 @@
 
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="dailytimeSheetData" tabindex="-1" role="dialog" aria-labelledby="dailyTimesheetLongTitle" aria-hidden="true">
+
+
+    <!-- m2 -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="dailytimeSheetData">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="card-header">
-                    <button type="button" class="close mr-1" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="task-modal-title"></h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-
                 </div>
                 <div class="modal-body">
-                    <form id="savedailytimesheet">
-                        <div id="task-widght">
-                            <div id="task-details">
+                    <div class="modal-body">
+                        <form id="savedailytimesheet">
+                            <div id="task-widght">
+                                <div id="task-details">
+                                </div>
+                                <div id='files' class="pl-5 d-flex">
+                                </div>
                             </div>
-                            <div id='files' class="pl-5 d-flex">
+                            <div id="remark-widght" class="hide">
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" name="remark" id="remarks" placeholder="Enter reason for rejection" required></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div id="remark-widght" class="hide">
-                            <div class="col-sm-12">
-                                <textarea class="form-control" name="remark" id="remarks" placeholder="Enter resion for reject" required></textarea>
-                            </div>
-                        </div>
-                        <input type="hidden" name="taskid" id="taskid">
-                        <div class="modal-footer">
-                            <a class="btn btn-xs btn-link hide" id="save-remark">
-                                Save remark</a>
-                            <a class="btn btn-xs btn-link" id="accept-task" title="Save">
-                                Mark as complete</a>
-                            <a class="btn btn-xs text-danger" id="reject-task" title="Reject">
-                                Mark as Rejected</a>
-                            <a class="btn btn-xs text-danger close mr-1" data-dismiss="modal" aria-label="Close" title="Cancle">
-                                Cancel</a>
-                        </div>
-                    </form>
+                            <input type="hidden" name="taskid" id="taskid">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-xs btn-link hide" id="save-remark">
+                        <i class="fa fa-check" aria-hidden="true"></i> Save remark</a>
+                    <a class="btn btn-xs btn-link" id="accept-task" title="Save">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Approved</a>
+                    <a class="btn btn-xs text-danger" id="reject-task" title="Reject">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                        Rejected</a>
+                    <!-- <a class="btn btn-xs text-danger close mr-1" data-dismiss="modal" aria-label="Close" title="Cancle">
+                        Cancel</a> -->
                 </div>
             </div>
         </div>
