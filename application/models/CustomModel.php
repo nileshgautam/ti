@@ -303,7 +303,8 @@ class CustomModel extends ci_model
             FROM `taskstatus`
          WHERE save_date='$date' 
          AND employeeId='$userId' 
-         AND status!='saved' 
+         AND status!='saved'
+         AND status!='rejected'
          ORDER BY `taskstatus`.`taskStTime`";
 
         //  echo '<pre>';

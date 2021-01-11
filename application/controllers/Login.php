@@ -67,9 +67,9 @@ class Login extends CI_Controller
 			} elseif ($result > 0) {
 				$sess_data = array(
 					'username' => $username,
-					'unmae' => $result[0]['username'],
+					'uname' => $result[0]['username'],
 					'role' => $result[0]['role'],
-					'Name' => $result[0]['first_name'],
+					'Name' => $result[0]['first_name'].' '.$result[0]['last_name'],
 					'people_id' => $result[0]['people_id'],
 					'login' => true,
 				);

@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header row m-0">
                     <div class="col-sm-4">
-                        <h4 class="text-header">Daily Timesheet</h4>
+                        <h4 class="text-header"><?php echo !empty($employee)? $employee['first_name'].' '.$employee['last_name']:$_SESSION['logged_in']['Name']?> Daily Timesheet</h4>
                     </div>
                     <div class="col-sm-4 text-center">
                         <h3 class="header-text badge badge-secondary fs-17"><?php echo date('d/m/Y') ?></h3>
@@ -51,10 +51,7 @@
                             <input type="text" class="show-time col-sm-12 form-control" id="to-time" placeholder="end time">
                         </div>
 
-                        <div class="col-sm-1">
-                            <button class="btn btn-primary saveTask"><i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </div>
+
                     </div>
                     <br />
                     <div class="row">
@@ -63,6 +60,10 @@
 
                         </div>
                         <div class="col-sm-1">
+                            <button class="btn btn-primary saveTask">
+                                Save
+                                <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+                            </button>
                             <input type="hidden" name="task-id" id="task-id">
                             <input type="hidden" name="project-id" id="project-id">
                             <input type="hidden" name="client-id" id="client-id">
@@ -86,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12"><a class="btn btn-info float-right submit-btn" id="submit-task">Submit Task</a></div>
+    <div class="col-sm-12"><a class="btn btn-info float-right submit-btn" id="submit-task">Submit Timesheet</a></div>
 </div>
 </div>
 </div>
