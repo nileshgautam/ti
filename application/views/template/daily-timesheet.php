@@ -38,6 +38,7 @@
                                         <th scope="col">Task</th>
                                         <th scope="col">Project</th>
                                         <th scope="col">Consumed hrs</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -55,8 +56,9 @@
                                                 <td><?php echo $item['title'] ?></td>
                                                 <td><?php echo $item['name'] ?></td>
                                                 <td><?php echo bcadd(0, $item['consumedTime'] / 60, 2)  . ' hrs' ?></td>
+                                                <td> <span class=<?php echo ($item['status']=='approved')?'text-success':'text-primary' ?>><?php echo $item['status'] ?></span>  </td>
                                                 <td>
-                                                    <a class="btn btn-primary  btn-xs ml-2 showTask" href="#" title="show task" dataTaskid="<?php echo base64_encode($item['task_id']) ?>" dataprojectid="<?php echo base64_encode($item['project_id']) ?>" taskStTime="<?php echo base64_encode($item['taskStTime']) ?>" taskedTime="<?php echo base64_encode($item['taskedTime']) ?>">show</a>
+                                                    <a class="btn btn-primary  btn-xs ml-2 showTask" href="#" title="show task" dataTaskid="<?php echo base64_encode($item['task_id']) ?>" dataprojectid="<?php echo base64_encode($item['project_id']) ?>" taskStTime="<?php echo base64_encode($item['taskStTime']) ?>" taskedTime="<?php echo base64_encode($item['taskedTime']) ?>">Show</a>
                                                 </td>
                                             </tr>
                                     <?php }
