@@ -106,12 +106,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-xs btn-link hide" id="save-remark">
+                    <a class="btn btn-link hide" id="save-remark">
                         <i class="fa fa-check" aria-hidden="true"></i> Save remark</a>
-                    <a class="btn btn-xs btn-link" id="accept-task" title="Save">
+                    <a class="btn btn-link" id="accept-task" title="Save">
                         <i class="fa fa-check" aria-hidden="true"></i>
                         Approved</a>
-                    <a class="btn btn-xs text-danger" id="reject-task" title="Reject">
+                    <a class="btn text-danger" id="reject-task" title="Reject">
                         <i class="fa fa-ban" aria-hidden="true"></i>
                         Rejected</a>
                     <!-- <a class="btn btn-xs text-danger close mr-1" data-dismiss="modal" aria-label="Close" title="Cancle">
