@@ -14,8 +14,8 @@
                 <img src="<?php echo base_url('assets/') ?>custom/media/user/user.png" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="<?php echo base_url('profile/').base64_encode($_SESSION['logged_in']['people_id'])?>" class="d-block"><?php echo  isset($_SESSION['logged_in']['Name']) ? $_SESSION['logged_in']['Name'] : '' ?></a>  
-                
+                <a href="<?php echo base_url('profile/') . base64_encode($_SESSION['logged_in']['people_id']) ?>" class="d-block"><?php echo  isset($_SESSION['logged_in']['Name']) ? $_SESSION['logged_in']['Name'] : '' ?></a>
+
                 <!-- <a href="#" class="d-block"><?php echo  isset($_SESSION['logged_in']['Name']) ? $_SESSION['logged_in']['Name'] : '' ?></a> -->
             </div>
         </div>
@@ -57,11 +57,11 @@
                         <a href="<?php echo base_url('Admin/assignProject') ?>" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                               Managers
+                                Managers
                             </p>
                         </a>
                     </li>
-                  
+
                     <li class="nav-item menu-open">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-copy"></i>
@@ -138,7 +138,7 @@
                         </ul>
                     </li>
 
-                   
+
                 </ul>
 
             <?php } ?>
@@ -148,7 +148,7 @@
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="<?php echo base_url('Reports/')?>" class="nav-link">
+                        <a href="<?php echo base_url('Reports/') ?>" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -173,34 +173,33 @@
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>
                         </a>
-                      
+
                     </li>
-                    
                     <li class="nav-item ">
-                        <a href="<?php echo base_url('Manager/dailyTimesheet/').base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
-                        <i class="nav-icon fas fa-clock"></i>
+                        <a href="<?php echo base_url('Manager/booketimes/') . base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
+                            <i class="nav-icon fas fa-clock"></i>
                             <p>
-                            My TimeSheet
+                                BookTime
                                 <!-- <i class="fas fa-angle-left right"></i> -->
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>
                         </a>
-                      
-                    </li>   
-                    
+                    </li>
                     <li class="nav-item ">
-                        <a href="<?php echo base_url('Manager/booketimes/').base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
-                        <i class="nav-icon fas fa-clock"></i>
+                        <a href="<?php echo base_url('Manager/dailyTimesheet/') . base64_encode($_SESSION['logged_in']['people_id']) ?>" class="nav-link">
+                            <i class="nav-icon fas fa-clock"></i>
                             <p>
-                            BookTime
+                                My TimeSheet
                                 <!-- <i class="fas fa-angle-left right"></i> -->
                                 <!-- <span class="badge badge-info right"></span> -->
                             </p>
                         </a>
-                      
+
                     </li>
 
-                   
+
+
+
                 </ul>
             <?php } ?>
 
@@ -210,7 +209,7 @@
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="<?php echo base_url('Reports/user')?>" class="nav-link">
+                        <a href="<?php echo base_url('Reports/user') ?>" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
@@ -222,7 +221,7 @@
                         <a href="<?php echo base_url('Employee/dailytimesheet') ?>" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
-                               Daily Timesheet
+                                Daily Timesheet
                             </p>
                         </a>
                     </li>
@@ -235,7 +234,7 @@
                             </p>
                         </a>
                     </li> -->
-               
+
 
                     <!-- <li class="nav-item">
                         <a href="<?php echo base_url('Employee/allocatedTask') ?>" class="nav-link">

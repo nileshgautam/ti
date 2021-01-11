@@ -298,12 +298,14 @@ class Manager extends CI_Controller
 		$id = base64_decode($userId);
 
 		// print_r($id);
+		// die;
 		$currentDate = date('Y-m-d');
 		$page['header'] =  'Daily Timesheet | ' . BRAND_NAME;
 		$taskArr = $this->CustomModel->getDailyTask($id, $currentDate);
-		// // echo '<pre>';
-		// // print_r($taskArr);
-		// // die;
+		$user = $this->CustomModel->getAllfromWhere('employees_tbl',array('people_id'=>$id));
+		// echo '<pre>';
+		// print_r($taskArr);
+		// die;
 		$hrs = 0;
 		$minute = 0;
 
@@ -356,6 +358,7 @@ class Manager extends CI_Controller
 		// }
 
 		$page['dailytimesheet'] = $taskArr;
+		$page['employee'] = $user[0];
 		$page['totalhrs'] = $hrs;
 		// my_print($timeArraySlt);die;
 		$this->load->view('admin/layout/header', $page);

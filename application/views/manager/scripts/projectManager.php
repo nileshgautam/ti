@@ -22,6 +22,7 @@
             let projectid = $(this).attr('dataprojectid');
             let taskStTime = $(this).attr('taskStTime');
             let taskedTime = $(this).attr('taskedTime');
+            $('#task-modal-title').text('Task Details');
 
             $.post(url, {
                 id,
@@ -30,12 +31,14 @@
                 taskedTime
             }, function(data) {
                 let res = JSON.parse(data);
-                // console.log(res);
+                console.log(res);
                 data = `<div class="pl-5">
-                        <strong id="task_title">${res.title}</strong>
+                        <strong id="task_title">${res.title}</strong><span>
                         <p id="time">
-                        <span>${timeConvert12hrs(res.taskStTime)} - </span>${timeConvert12hrs(res.taskedTime)}</p>
+                        <span>${timeConvert12hrs(res.taskStTime)} - </span>${timeConvert12hrs(res.taskedTime)} <span>(${addTimes(res.taskStTime,res.taskedTime)} hrs)</span></p>
                         <p>
+                
+                        </p>
                         <strong>Remark</strong>    
                         <p>${res.userDescription}</p>
                         </p>
@@ -54,7 +57,7 @@
                             </a>`;
                     });
                 } else if (res.uploadedFiles == 'No-files') {
-                    files += 'No file.';
+                    files += '';
                 }
                 $('#task-details').html(data);
                 $('#taskid').val(res.task_id);
@@ -208,7 +211,7 @@
             let et = $(this).attr('data-et');
             let url = BASEURL + 'Manager/rejectTask';
             $('#dailytimeSheetData').modal('hide');
-            swal("Are you sure!", " Wants to reject this task?", "warning", {
+            swal("Are you sure!", " Do you want to reject this task?", "warning", {
                     buttons: {
                         Yes: true,
                         No: true,
@@ -223,6 +226,7 @@
                             $('#reject-task').addClass('hide');
                             $('#save-remark').removeClass('hide');
                             $('#accept-task').addClass('hide');
+                            $('#task-modal-title').text('Reason for reject');
                             $('#dailytimeSheetData').modal('show');
                             let form_data = {
                                 taskid: taskid,
@@ -412,7 +416,7 @@
             if (serviceid == '') {
                 errorAlert('Select service first');
             } else {
-                let url=BASEURL+'Manager/tasklist_by_service_id';
+                let url = BASEURL + 'Manager/tasklist_by_service_id';
                 $.post(url, {
                     serviceid
                 }, function(res) {
