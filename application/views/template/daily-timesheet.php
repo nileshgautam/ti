@@ -15,14 +15,16 @@
                     <div class="col-sm-5">
                         <h5 class="text-header"><?php echo !empty($employee) ? $employee['first_name'] . ' ' . $employee['last_name'] : $_SESSION['logged_in']['Name'] ?> <span class="badge badge-primary">Daily Timesheet</span></h5>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <div class="col-sm-6">
                             Booked Time: <?php echo trim(bcadd(0, $totalhrs, 2)) ?> hrs.
                         </div>
-                    </div>
-                    <div class="col-sm-1"> <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">
+                    </div> -->
+                    <div class="col-sm-6 ">
+                    Booked Time: <?php echo trim(bcadd(0, $totalhrs, 2)) ?> hrs.
+                     <!-- <a class="btn btn-warning float-right mr-2" id="submit-task" href="javascript:window.history.back(-1);">
                             <i class="fas fa-arrow-left"></i>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
                 <div class="card-body">
