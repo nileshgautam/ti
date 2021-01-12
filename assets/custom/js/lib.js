@@ -303,13 +303,5 @@ function addTimes(startTime, endTime) {
     var b = (endTime || '').split(':')
     let st = (parseInt(a[0]) * 60) + parseInt(a[1]);
     let et = (parseInt(b[0]) * 60) + parseInt(b[1]);
-
-    console.log(startTime);
-    console.log(endTime);
-
-
-    console.log(st);
-    console.log(et);
-    console.log(((et - st) / 60).toFixed(2));
     return ((et - st) / 60).toFixed(2);
 }

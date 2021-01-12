@@ -156,6 +156,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="<?php echo base_url('Estimate/') ?>" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Estimation
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="<?php echo base_url('Manager/project') ?>" class="nav-link" id="dashboard">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
