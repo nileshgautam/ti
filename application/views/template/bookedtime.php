@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-header row m-0">
                     <div class="col-sm-4">
-                        <h4 class="text-header"><?php echo !empty($employee)? $employee['first_name'].' '.$employee['last_name']:$_SESSION['logged_in']['Name']?> Daily Timesheet</h4>
+                    <h5 class="text-header"><?php echo !empty($employee) ? $employee['first_name'] . ' ' . $employee['last_name'] : $_SESSION['logged_in']['Name'] ?> <span class="badge badge-primary">BookTime</span></h5>
                     </div>
                     <div class="col-sm-4 text-center">
                         <h3 class="header-text badge badge-secondary fs-17"><?php echo date('d/m/Y') ?></h3>

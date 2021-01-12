@@ -50,6 +50,7 @@ class Manager extends CI_Controller
 		$this->load->view('admin/pages/index');
 		$this->load->view('admin/layout/footer');
 	}
+
 	public function project($var = null)
 	{
 		$page['header'] =  'Projects | ' . BRAND_NAME;
@@ -65,6 +66,7 @@ class Manager extends CI_Controller
 		$this->load->view('manager/scripts/projectManager');
 		$this->load->view('admin/layout/footer');
 	}
+
 	public function users()
 	{
 		$page['header'] =  'Projects | ' . BRAND_NAME;
@@ -78,6 +80,7 @@ class Manager extends CI_Controller
 		$this->load->view('manager/scripts/projectManager');
 		$this->load->view('admin/layout/footer');
 	}
+
 	public function userTask($id = null)
 	{
 		if ($id) {
@@ -127,6 +130,7 @@ class Manager extends CI_Controller
 		$this->load->view('manager/scripts/projectManager');
 		$this->load->view('admin/layout/footer');
 	}
+
 	public function projectTask($id = null, $projectName = null)
 	{
 		if ($id) {
@@ -162,6 +166,7 @@ class Manager extends CI_Controller
 			$this->load->view('admin/layout/footer');
 		}
 	}
+	
 	// Functio to get Task list by task title
 	public function tasklist()
 	{
