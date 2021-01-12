@@ -305,3 +305,14 @@ function addTimes(startTime, endTime) {
     let et = (parseInt(b[0]) * 60) + parseInt(b[1]);
     return ((et - st) / 60).toFixed(2);
 }
+
+
+const radioVal = (ele) => {
+    let val = '';
+    for (i = 0; i < ele.length; i++) {
+        if (ele[i].checked)
+            console.log(ele[i].value);
+        // val = ele[i].value;
+    }
+    // return val;
+}

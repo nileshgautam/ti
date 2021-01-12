@@ -121,7 +121,10 @@
        });
      });
 
+    
+     
    });
+   $('#estimate-list-table').dataTable()
    
  </script>
  </body>

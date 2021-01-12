@@ -16,7 +16,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <table id="masterTempDataTable" class="table table-bordered table-striped" data='<?php print_r(base64_encode(json_encode($description))) ?>'>
+                  <table id="estimate-list-table" class="table table-bordered table-striped" data='<?php print_r(base64_encode(json_encode($description))) ?>'>
                       <thead>
                           <tr>
                               <th>Sr. No.</th>
@@ -27,13 +27,7 @@
                           </tr>
                       </thead>
                       <tbody id="tableData">
-                          <tr>
-                              <th>Sr. No.</th>
-                              <th>Clinet</th>
-                              <th>Estimate date</th>
-                              <th>Service</th>
-                              <th>Action</th>
-                          </tr>
+                     
                       </tbody>
                   </table>
               </div>
@@ -42,6 +36,8 @@
   </section>
 
 
-
   </div>
   <!-- /.content-wrapper -->
+  <script>
+    
+  </script>

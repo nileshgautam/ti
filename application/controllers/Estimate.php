@@ -45,15 +45,24 @@ class Estimate extends CI_Controller
 	public function insert()
 	{
 
-		echo '<pre>';
-		print_r($_POST);
-		die;
+		// echo '<pre>';
+		// print_r($_POST);
+		// die;
+		$page['title'] =  '';
+		$page['header'] =  'Estimate';
+		$condition=array('parent_id'=>$_POST['quotation']);
+		// $page['question'] = $this->CustomModel->getAllfromTable('estimate_question_master');
+		$page['question'] = $this->CustomModel->getAllfromWhere( 'estimate_question_master', $condition,  'title');
+		$page['roles'] = $this->CustomModel->getAllfromWhere( 'estimate_role_master', $condition,  'name');
 
-		$page['header'] =  'Dashoard | ' . BRAND_NAME;
-		$page['question'] = $this->CustomModel->getAllfromTable('estimate_question_master');
+		// print_r($page['question']);
+		// die;
 		$this->load->view('admin/layout/header',);
 		$this->load->view('admin/layout/sidebar');
-		$this->load->view('estimate/create-new');
+		$this->load->view('estimate/estimate-page',$page);
 		$this->load->view('admin/layout/footer');
+		$this->load->view('estimate/script/custom-estimate');
+
+		
 	}
 }

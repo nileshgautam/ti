@@ -19,23 +19,23 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <form id="clinet-form" method="post" action="<?php echo base_url('Estimate/insert') ?>">
+              <form id="clinet-form" method="post" action="<?php echo base_url('Estimate/insert') ?>">
                       <div class="card-body row">
                           <div class="form-group col-sm-6">
                               <label for="org-name">Orgnization name <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="org-name" name="org-name" placeholder="Enter Orgnization name" value="<?php echo isset($client) ? $client[0]['client_name'] : '' ?>" required>
+                              <input type="text" class="form-control" id="org-name" name="org-name" placeholder="Enter Orgnization name" value="<?php echo isset($client) ? $client[0]['client_name'] : 'ABC' ?>" required>
                           </div>
                           <div class="form-group col-sm-6">
                               <label for="gst-vat">GST/VAT No. <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="gst-vat" name="gst-vat" placeholder="Enter GST/VAT number" value="<?php echo isset($client) ? $client[0]['gst_vat_number'] : '' ?>" required>
+                              <input type="text" class="form-control" id="gst-vat" name="gst-vat" placeholder="Enter GST/VAT number" value="<?php echo isset($client) ? $client[0]['gst_vat_number'] : '123' ?>" required>
                           </div>
                           <div class="form-group col-sm-3">
-                              <label for="gst-vat">Quotation<span class="text-danger">*</span></label>
-                              <select name="og-type" id="og-type" class="form-control" required>
+                              <label for="quotation">Quotation for<span class="text-danger">*</span></label>
+                              <select name="quotation" id="quotation" class="form-control" required>
                                   <option value="">Select</option>
                                   <?php if (!empty($quotation_Type)) {
                                         foreach ($quotation_Type as $item) { ?>
-                                          <option value="<?php echo $item['title'] ?>" id="<?php echo $item['id'] ?>" <?php echo (isset($client[0]['orgnaization_type']) == $item['title']) ? 'selected' : '' ?>>
+                                          <option value="<?php echo $item['id'] ?>" id="<?php echo $item['id'] ?>" <?php echo (isset($client[0]['title']) == $item['title']) ? 'selected' : '' ?>>
                                               <?php echo $item['title'] ?></option>
                                   <?php }
                                     }
@@ -55,18 +55,18 @@
                                     ?>
                               </select>
                           </div>
-                          <div class="form-group col-sm-3">
+                          <!-- <div class="form-group col-sm-3">
                               <label for="c-phone">Phone <span class="text-danger">*</span></label>
-                              <input type="phone" max="10" class="form-control" name="c-phone" id="c-phone" value="<?php echo isset($client) ? $client[0]['phone'] : '' ?>" placeholder="Enter phone" required>
-                          </div>
+                              <input type="phone" max="10" class="form-control" name="c-phone" id="c-phone" value="<?php echo isset($client) ? $client[0]['phone'] : '123' ?>" placeholder="Enter phone" required>
+                          </div> -->
                           <div class="form-group col-sm-3">
                               <label for="c-mobile">Mobile <span class="text-danger">*</span></label>
-                              <input type="phone" max="10" class="form-control" name="c-mobile" id="c-mobile" value="<?php echo isset($client) ? $client[0]['phone'] : '' ?>" placeholder="Enter mobile" required>
+                              <input type="phone" max="10" class="form-control" name="c-mobile" id="c-mobile" value="<?php echo isset($client) ? $client[0]['phone'] : '91234567890' ?>" placeholder="Enter mobile" required>
                           </div>
 
                           <div class="form-group col-sm-3">
                               <label for="c-email">Email <span class="text-danger">*</span></label>
-                              <input type="email" class="form-control" name="c-email" id="c-email" placeholder="Enter email" value="<?php echo isset($client) ? $client[0]['email'] : '' ?>" required>
+                              <input type="email" class="form-control" name="c-email" id="c-email" placeholder="Enter email" value="<?php echo isset($client) ? $client[0]['email'] : 'test@test.tst' ?>" required>
                           </div>
 
                           <div class="form-group col-sm-3">
@@ -87,11 +87,11 @@
                           </div>
                           <div class="form-group col-sm-3 ">
                               <label for="c-pin-zip">Pin/Zip code</label>
-                              <input type="text" class="form-control" id="c-pin-zip" name="c-pin-zip" placeholder="Enter pin/zip" value="<?php echo isset($client) ? $client[0]['pin'] : '' ?>">
+                              <input type="text" class="form-control" id="c-pin-zip" name="c-pin-zip" placeholder="Enter pin/zip" value="<?php echo isset($client) ? $client[0]['pin'] : '201301' ?>">
                           </div>
                           <div class="form-group col-sm-12">
                               <label for="c-address">Address</label>
-                              <textarea name="c-address" id="c-address" cols="" rows="" class="form-control"><?php echo isset($client) ? $client[0]['address'] : '' ?></textarea>
+                              <textarea name="c-address" id="c-address" cols="" rows="" class="form-control"><?php echo isset($client) ? $client[0]['address'] : 'Noida' ?></textarea>
                           </div>
 
                           <div class="form-group col-sm-12">
