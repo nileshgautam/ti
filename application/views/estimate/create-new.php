@@ -9,6 +9,17 @@
               <div class="card-header row m-0">
                   <div class="col-sm-10">
                       <h5 class="title"><?php echo $title ?></h5>
+                      <?php
+
+                        if ($this->session->flashdata('error')) {
+                            $message = $this->session->flashdata('error');
+                        ?>
+                          <div class="text-danger"><?php echo $message['message']; ?>
+                          </div>
+                      <?php
+                        }
+
+                        ?>
                   </div>
                   <div class="col-sm-2">
                       <!-- <button type="button" class="btn btn-primary btn-xs float-right" data-toggle="modal" data-target="#modal-master" title="Add New">
@@ -19,7 +30,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form id="clinet-form" method="post" action="<?php echo base_url('Estimate/insert') ?>">
+                  <form id="clinet-form" method="post" action="<?php echo base_url('Estimate/insert') ?>">
                       <div class="card-body row">
                           <div class="form-group col-sm-6">
                               <label for="org-name">Orgnization name <span class="text-danger">*</span></label>
@@ -55,13 +66,13 @@
                                     ?>
                               </select>
                           </div>
-                          <!-- <div class="form-group col-sm-3">
+                          <div class="form-group col-sm-3">
                               <label for="c-phone">Phone <span class="text-danger">*</span></label>
-                              <input type="phone" max="10" class="form-control" name="c-phone" id="c-phone" value="<?php echo isset($client) ? $client[0]['phone'] : '123' ?>" placeholder="Enter phone" required>
-                          </div> -->
+                              <input type="phone" max="10" class="form-control" name="c-phone" id="c-phone" value="<?php echo isset($client) ? $client[0]['phone'] : '91234567890' ?>" placeholder="Enter phone" required>
+                          </div>
                           <div class="form-group col-sm-3">
                               <label for="c-mobile">Mobile <span class="text-danger">*</span></label>
-                              <input type="phone" max="10" class="form-control" name="c-mobile" id="c-mobile" value="<?php echo isset($client) ? $client[0]['phone'] : '91234567890' ?>" placeholder="Enter mobile" required>
+                              <input type="phone" max="10" class="form-control" name="c-mobile" id="c-mobile" value="<?php echo isset($client) ? $client[0]['mobile'] : '91234567890' ?>" placeholder="Enter mobile" required>
                           </div>
 
                           <div class="form-group col-sm-3">
@@ -95,7 +106,7 @@
                           </div>
 
                           <div class="form-group col-sm-12">
-                              <a class="btn btn-warning float-right ml-2" href="javascript:window.history.back(-1);" title="Back">Cancel</a>
+                              <a class="btn btn-warning float-right ml-2" href="<?php echo base_url('Estimate/')?>" title="Back">Cancel</a>
                               <button type="submit" class="btn btn-primary float-right">Next</button>
                           </div>
 

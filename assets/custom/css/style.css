@@ -170,3 +170,17 @@
 .fs-23 {
     font-size: 23px !important;
 }
+
+@media print {
+    #print,
+    #cancel,
+    .main-footer {
+        display: none;
+    }
+    #estimate-report-view {
+        border: none !important;
+    }
+    #report-data-Table {
+        border: none !important;
+    }
+}

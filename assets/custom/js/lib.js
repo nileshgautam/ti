@@ -308,11 +308,81 @@ function addTimes(startTime, endTime) {
 
 
 const radioVal = (ele) => {
-    let val = '';
-    for (i = 0; i < ele.length; i++) {
-        if (ele[i].checked)
-            console.log(ele[i].value);
-        // val = ele[i].value;
+        let val = '';
+        for (i = 0; i < ele.length; i++) {
+            if (ele[i].checked)
+                console.log(ele[i].value);
+            // val = ele[i].value;
+        }
+
+
+        // return val;
     }
-    // return val;
+    // Function to show estimate reports
+function showReport(obj) {
+
+    // Definding variables
+    let tableData = obj.tableData,
+        grandTotal = obj.grdTotal,
+        clientDetails = obj.clientDetails,
+        quotation_Type = obj.quationType,
+        selectedServices = [];
+
+    // Setting tops header details
+    $('#current-date').text(obj.estimateDate);
+    let est = obj.estIn == 'hrs' ? '(Hrs)' : '(Days)';
+    $('#est-cost').text(obj.totalAmount);
+
+    // Filtering data which is selected by user
+    for (let index = 1; index < tableData.length - 5; index++) {
+        if (tableData[index].totalAmount != 0) {
+            selectedServices.push(tableData[index]);
+        }
+    }
+    // Apending Grandtotal data list table view
+    let selectedServicesDom = ``;
+    selectedServices.forEach((e, i) => {
+        selectedServicesDom += ` <tr>
+                        <td>${(i+1)}</td>
+                        <td>${e.question}</td>
+                        <td>${e.resourcesRole}</td>
+                        <td class="text-center">${e.rate}</td>
+                        <td class="text-center">${e.time}</td>
+                        <td class="text-right">${e.totalAmount}</td>
+                    </tr>`;
+    });
+    $('#estimate-report-tbody').html(selectedServicesDom);
+    $('#rates').text(est); //Total estimated Rates
+    $('#times').text(est); //Total estimated time
+    $('#est-time').text(obj.totalTime); //Total time estimate times
+    // console.log(obj.quationType);
+    $('#est-for').text(quotation_Type['title']); // For printing selected services
+    let grdTotalRow = ``;
+    grandTotal.forEach((e) => {
+        grdTotalRow += `<tr class="border-top">
+                              <th colspan="4" class="text-right">${e.title}</th>
+                              <td class="text-center">${e.rate}</td>
+                              <td class=" text-right" id="totalAmt">${e.total}.00</td>
+                          </tr>`;
+    });
+    $('#est-tfoot').html(grdTotalRow);
+    clientDetails = JSON.parse(clientDetails);
+    // console.log(clientDetails);
+    let address = `${clientDetails['c-address']}, ${clientDetails['c-country']}, 
+    ${clientDetails['c-pin-zip']}`;
+    // Adding client details dynamic
+    let clinetViewTemplate = `<div class="card">
+                      <div class="card-header">
+                          <h6>CUSTOMER</h6>
+                      </div>
+                      <div class="card-body card-p-0">
+                          <p class="card-text" id="cname">${clientDetails['org-name']}</p>
+                          <p class="card-text"><span> Address:</span> <span id="address">${address}</span></p>
+                          <p class="card-text"><span> Phone:</span> <span id="phone">
+                          ${clientDetails['c-phone']}</span></p>
+                          <p class="card-text"><span> Mobile:</span> <span id="mobile">${clientDetails['c-mobile']}</span></p>
+                          <p class="card-text"><span> Email:</span> <span id="email">${clientDetails['c-email']}</span></p>
+                      </div>
+                  </div>`;
+    $('#client-box').html(clinetViewTemplate);
 }
