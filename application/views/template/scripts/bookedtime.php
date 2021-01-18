@@ -13,14 +13,14 @@
 		$('body').on('focus', ".show-time", function() {
 			$(this).timepicker({
 				'step': 15,
-				minTime: '7:00:00',
+				minTime: '9:00:00',
 				maxTime: '23:00:00',
 			})
 		});
 
 		$('.show-end-time').timepicker({
 			'step': 15,
-			minTime: '7:00:00',
+			minTime: '10:00:00',
 			maxTime: '24:00:00',
 		});
 
@@ -43,6 +43,25 @@
 				});
 			}
 		});
+		// Function to check if Sloat avaible
+		$('#from-time').change(function() {
+			stTime = $('#from-time').val()
+			endTime = $('#to-time').val()
+			let url = BASEURL + 'Employee/getBookedTime';
+			if (stTime) {
+				$.post(url, (data) => {
+					let res = JSON.parse(data);
+					// console.log(res);
+					if (res === false) {
+						timeIsAvailble == true;
+					} else {
+						saveLsData('BookedSlots', res);
+						timeIsAvailble == false;
+					}
+				});
+			}
+		});
+
 
 
 		$('.task-list').change(function() {
@@ -71,6 +90,7 @@
 				res = JSON.parse(res)
 				// console.log(res);
 				loadData();
+				window.location.reload();
 			});
 		}
 
@@ -80,6 +100,7 @@
 				res = JSON.parse(res)
 				saveLsData('allTask', res);
 				loadTable(res);
+
 			});
 		}
 		const loadTable = (res = null) => {
@@ -188,28 +209,31 @@
 
 		loadData();
 
-		const inValid = (bookedSlot, fromTime, toTime) => {
+		const inValid = (bookedSlot, st, et) => {
 			bookedSlot = JSON.parse(bookedSlot);
 			let invalid = false;
+			console.log(bookedSlot)
+			// console.log(toTime)
+			// console.log(fromTime)
+
+
 			// fromTime = convertT24hrs(fromTime);
 			// toTime = convertT24hrs(toTime);
+
 			for (let i = 0; i < bookedSlot.length; i++) {
-				let stTime = setDate(bookedSlot[i].start_time);
-				let edTime = setDate(bookedSlot[i].end_time);
-				if (fromTime < stTime) {
-					if (toTime <= stTime) {
-						invalid = false;
-						break;
-					} else if (toTime > stTime) {
-						invalid = true;
-						break;
-					}
-				} else if (fromTime === stTime) {
+				let Booked_stTime = setDate(bookedSlot[i].start_time);
+				let Booked_edTime = setDate(bookedSlot[i].end_time);
+
+				if (st >= Booked_edTime) {
+					// console.log('not-found');
+					invalid = false;
+					// break;
+				} else {
 					invalid = true;
-					break;
+					// break;
+					// console.log('found');
 				}
 			}
-
 			return invalid;
 		};
 
@@ -228,12 +252,14 @@
 					} else {
 						let bookedSlot = retriveLsData('BookedSlots');
 						let invalid = inValid(bookedSlot, stTime, edTime);
+
+						console.log(invalid);
 						if (invalid) {
-							// console.log(`if: ${invalid}`);
+							console.log(`if: ${invalid}`);
 							errorAlert('Invalid time slot');
 							return false;
 						} else {
-							// console.log(`else: ${invalid}`);
+							console.log(`else: ${invalid}`);
 							insertTaskData();
 							timeIsAvailble = false;
 						}
@@ -250,7 +276,7 @@
 			}
 		});
 
-	
+
 
 		// upload task file if any
 		$('#alltasks').on('click', '.uploadTaskFile', function() {
@@ -791,7 +817,7 @@
 		let currentTime = '';
 		let endtime = '';
 
-		console.log(`${d.getHours()}:${d.getMinutes()}`);
+		// console.log(`${d.getHours()}:${d.getMinutes()}`);
 
 
 		if (d.getHours() > 12) {
@@ -808,13 +834,6 @@
 		$('#from-time').val(formatAMPM(new Date));
 		// $('#from-time').val(`${d.getHours()}:${d.getMinutes()}`);
 		$('#to-time').val(formatAMPM(new Date));
-		// $('#to-time').val(`${d.getHours()}:${d.getMinutes()}`);
-
-
-
-
-
-		console.log(formatAMPM(new Date));
 
 	});
 </script>

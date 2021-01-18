@@ -10,11 +10,15 @@
             $('#client-tbl').addClass('hide');
             showReport(quotaion);
         });
-        
+        // Function for back button
         $('.btn-back').click((e) => {
             e.preventDefault();
             $('#estimate-view').addClass('hide');
             $('#client-tbl').removeClass('hide');
+        });
+        // Function for Print button
+        $('#print').click(function() {
+            window.print();
         });
 
     });

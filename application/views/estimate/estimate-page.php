@@ -149,7 +149,7 @@
                           </div>
                       </div>
                       <div class="col-sm-6" id="client-box">
-                         
+
                       </div>
                   </div>
               </div>
@@ -187,7 +187,7 @@
 
                   </div>
               </div>
-
+          </div>
       </section>
   </div>
 

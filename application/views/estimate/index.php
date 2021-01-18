@@ -16,13 +16,13 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <table id="estimate-list-table table-responsive" class="table table-bordered table-striped" data='<?php print_r(base64_encode(json_encode($description))) ?>'>
+                  <table id="estimate-list-table" class="table table-striped" data='<?php print_r(base64_encode(json_encode($description))) ?>'>
                       <thead>
                           <tr>
                               <th>Sr. No.</th>
-                              <th>Client</th>
-                              <th>Service</th>
                               <th>Estimate date</th>
+                              <th>Estimate For</th>
+                              <th>Client Name</th>
                               <th>Action</th>
                           </tr>
                       </thead>
@@ -35,9 +35,10 @@
                             ?>
                                   <tr>
                                       <td><?php echo $count++ ?></td>
-                                      <td><?php echo $clinet['name'] ?></td>
-                                      <td><?php echo $clinet['title'] ?></td>
                                       <td><?php echo $clinet['created_date'] ?></td>
+                                      <td><?php echo $clinet['title'] ?></td>
+                                      <td><?php echo $clinet['name'] ?></td>
+                                    
                                       <td><a href="#" class="btn btn-xs btn-primary show-estimate" q-data='<?php echo json_encode($clinet['data'], true) ?>'>Show Estimate</a></td>
                                   </tr>
 

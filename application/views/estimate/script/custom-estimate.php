@@ -56,13 +56,13 @@
         }
 
         const calculateDiscount = (p, r) => {
-            return (p - (p * r / 100));
+            return `${(p - (p * r / 100))}`;
         }
         const calculateMargin = (p, r) => {
-            return ((p * r / 100));
+            return `${((p * r / 100))}`;
         }
         const calculateGST = (p, r) => {
-            return (p + (p * r / 100));
+            return `${(p + (p * r / 100))}`;
         }
 
 
@@ -71,7 +71,7 @@
             let margin = $('#margin').text();
             let discount = $('#discount').text();
             let gstTax = $('#gst-tax').text();
-            let taxableAmt = (parseFloat(total) + parseFloat(margin) + parseFloat(gstTax)) - parseFloat(discount);
+            let taxableAmt = `${(parseFloat(total) + parseFloat(margin) + parseFloat(gstTax)) - parseFloat(discount)}`;
             return taxableAmt;
         }
 
@@ -80,16 +80,19 @@
             let total = getSumofCol('.totalAmt');
             let rate = parseFloat($(this).text());
             $('#margin').text(calculateMargin(total, rate));
+            $('#grandTotal').text(getGrand());
         })
         $('#dis').on('keyup', function() {
             let total = getSumofCol('.totalAmt');
             let rate = parseFloat($(this).text());
             $('#discount').text(calculateMargin(total, rate));
+            $('#grandTotal').text(getGrand());
         })
         $('#gst').on('keyup', function() {
             let total = getSumofCol('.totalAmt');
             let rate = parseFloat($(this).text());
             $('#gst-tax').text(calculateMargin(total, rate));
+            $('#grandTotal').text(getGrand());
         })
         // Calculating by role
         $('.selected-role').change(function() {
@@ -232,15 +235,13 @@
             showReport(form_data);
         });
 
-
-
-        // print
-
+        //Function for print 
         $('#print').click(function() {
             window.print();
         });
 
-        $('#cancel').click((e)=>{
+        //Function Go back
+        $('#cancel').click((e) => {
             e.preventDefault();
             $('#estimate-cal').css('display', 'block');
             $('#estimate-view').css('display', 'none');

@@ -322,27 +322,28 @@ const radioVal = (ele) => {
 function showReport(obj) {
 
     // Definding variables
-    let tableData = obj.tableData,
-        grandTotal = obj.grdTotal,
-        clientDetails = obj.clientDetails,
-        quotation_Type = obj.quationType,
-        selectedServices = [];
+    if (obj) {
+        let tableData = obj.tableData,
+            grandTotal = obj.grdTotal,
+            clientDetails = obj.clientDetails,
+            quotation_Type = obj.quationType,
+            selectedServices = [];
 
-    // Setting tops header details
-    $('#current-date').text(obj.estimateDate);
-    let est = obj.estIn == 'hrs' ? '(Hrs)' : '(Days)';
-    $('#est-cost').text(obj.totalAmount);
+        // Setting tops header details
+        $('#current-date').text(obj.estimateDate);
+        let est = obj.estIn == 'hrs' ? '(Hrs)' : '(Days)';
+        $('#est-cost').text(obj.totalAmount);
 
-    // Filtering data which is selected by user
-    for (let index = 1; index < tableData.length - 5; index++) {
-        if (tableData[index].totalAmount != 0) {
-            selectedServices.push(tableData[index]);
+        // Filtering data which is selected by user
+        for (let index = 1; index < tableData.length - 5; index++) {
+            if (tableData[index].totalAmount != 0) {
+                selectedServices.push(tableData[index]);
+            }
         }
-    }
-    // Apending Grandtotal data list table view
-    let selectedServicesDom = ``;
-    selectedServices.forEach((e, i) => {
-        selectedServicesDom += ` <tr>
+        // Apending Grandtotal data list table view
+        let selectedServicesDom = ``;
+        selectedServices.forEach((e, i) => {
+            selectedServicesDom += ` <tr>
                         <td>${(i+1)}</td>
                         <td>${e.question}</td>
                         <td>${e.resourcesRole}</td>
@@ -350,28 +351,28 @@ function showReport(obj) {
                         <td class="text-center">${e.time}</td>
                         <td class="text-right">${e.totalAmount}</td>
                     </tr>`;
-    });
-    $('#estimate-report-tbody').html(selectedServicesDom);
-    $('#rates').text(est); //Total estimated Rates
-    $('#times').text(est); //Total estimated time
-    $('#est-time').text(obj.totalTime); //Total time estimate times
-    // console.log(obj.quationType);
-    $('#est-for').text(quotation_Type['title']); // For printing selected services
-    let grdTotalRow = ``;
-    grandTotal.forEach((e) => {
-        grdTotalRow += `<tr class="border-top">
+        });
+        $('#estimate-report-tbody').html(selectedServicesDom);
+        $('#rates').text(est); //Total estimated Rates
+        $('#times').text(est); //Total estimated time
+        $('#est-time').text(obj.totalTime); //Total time estimate times
+        // console.log(obj.quationType);
+        $('#est-for').text(quotation_Type['title']); // For printing selected services
+        let grdTotalRow = ``;
+        grandTotal.forEach((e) => {
+            grdTotalRow += `<tr class="border-top">
                               <th colspan="4" class="text-right">${e.title}</th>
                               <td class="text-center">${e.rate}</td>
                               <td class=" text-right" id="totalAmt">${e.total}.00</td>
                           </tr>`;
-    });
-    $('#est-tfoot').html(grdTotalRow);
-    clientDetails = JSON.parse(clientDetails);
-    // console.log(clientDetails);
-    let address = `${clientDetails['c-address']}, ${clientDetails['c-country']}, 
+        });
+        $('#est-tfoot').html(grdTotalRow);
+        clientDetails = JSON.parse(clientDetails);
+        // console.log(clientDetails);
+        let address = `${clientDetails['c-address']}, ${clientDetails['c-country']}, 
     ${clientDetails['c-pin-zip']}`;
-    // Adding client details dynamic
-    let clinetViewTemplate = `<div class="card">
+        // Adding client details dynamic
+        let clinetViewTemplate = `<div class="card">
                       <div class="card-header">
                           <h6>CUSTOMER</h6>
                       </div>
@@ -384,5 +385,6 @@ function showReport(obj) {
                           <p class="card-text"><span> Email:</span> <span id="email">${clientDetails['c-email']}</span></p>
                       </div>
                   </div>`;
-    $('#client-box').html(clinetViewTemplate);
+        $('#client-box').html(clinetViewTemplate);
+    }
 }

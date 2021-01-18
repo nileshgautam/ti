@@ -15,7 +15,7 @@ class Employee extends ci_controller
 		$this->load->helper('common');
 		$this->load->library("common");
 
-		if (!$_SESSION['logged_in']) {
+		if (!isset($_SESSION['logged_in'])) {
 			redirect('Login');
 		}
 		Employee::$userId = $_SESSION['logged_in']['people_id'];
@@ -41,10 +41,7 @@ class Employee extends ci_controller
 		$date = base64_decode($date);
 		// echo "<pre>";
 		$data['dateDetails'] = $this->common->getWeeklyTimesheetDetails(Employee::$userId, $day, $date);
-		// $data['class'] = __class__;
-		// 	echo "<pre>";
-		// 	print_r($data['dateDetails']);
-		// die;
+
 		$this->load->view('admin/layout/header');
 		$this->load->view('admin/layout/sidebar');
 		$this->load->view('template/Timesheet', $data);
