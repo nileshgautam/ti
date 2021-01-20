@@ -58,12 +58,10 @@ class Employee extends ci_controller
 			echo json_encode(array("error" => "Unable to save hours, Please contact service provider"));
 		}
 	}
-
 	public function submitUserTimesheetData($userId = null)
 	{
 		$this->common->submitTimesheetData(Employee::$userId);
 	}
-
 	// Function to show daily task
 	function dailytimesheet()
 	{
@@ -93,8 +91,6 @@ class Employee extends ci_controller
 		$this->load->view('admin/layout/footer');
 		$this->load->view('template/scripts/bookedtime');
 	}
-
-
 	public function getAllocatedtask()
 	{
 		$cdate = date('Y-m-d');
@@ -102,8 +98,6 @@ class Employee extends ci_controller
 		$result = $this->CustomModel->getDailyAllocatedTasks(Employee::$userId, $cdate, $projectid);
 		echo json_encode($result);
 	}
-
-
 	function getBookedTime()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -113,8 +107,6 @@ class Employee extends ci_controller
 			echo json_encode('error contact IT');
 		}
 	}
-
-
 	function getTask()
 	{
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -230,8 +222,6 @@ class Employee extends ci_controller
 			}
 		}
 	}
-
-
 	function updateRow()
 	{
 		if ($_POST) {
@@ -265,9 +255,6 @@ class Employee extends ci_controller
 			echo json_encode(array('message' => 'No Data available', 'type' => 'error'));
 		}
 	}
-
-
-
 	// Update task status saved to submit
 	public function submitDailyTask($var = null)
 	{
@@ -306,7 +293,6 @@ class Employee extends ci_controller
 			echo ($status == true) ? json_encode(array('message' => 'Task Submitted', 'type' => 'success')) : json_encode(array('message' => 'Task Submitted', 'type' => 'error'));
 		}
 	}
-
 	// Function to delete data
 	public function deleteTask()
 	{

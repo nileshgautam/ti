@@ -190,8 +190,4 @@
           </div>
       </section>
   </div>
-
-
-  <!-- /.modal -->
-
   <!-- /.content-wrapper -->
