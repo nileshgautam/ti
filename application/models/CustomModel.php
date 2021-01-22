@@ -26,7 +26,9 @@ class CustomModel extends ci_model
     public function insert($table = null, $data = null)
     {
         $this->db->insert($table, $data);
-        return $this->db->insert_id();
+        $id = $this->db->insert_id();
+        $q = $this->db->get_where($table, array('id' => $id));
+        return $q->result_array();
     }
 
     public function getUser($id)
@@ -136,10 +138,10 @@ class CustomModel extends ci_model
     public function getemployee()
     {
         // $q = "SELECT people.people_id, login.username, people.first_name,people.last_name, internal_people_detail.department,internal_people_detail.managerId, address.phone FROM `people` LEFT JOIN internal_people_detail on people.people_id=internal_people_detail.people_id LEFT JOIN address on address.reference_id=people.people_id LEFT JOIN login on login.people_id=people.people_id";
-        
+
         // $q = "SELECT people.people_id, login.username, people.first_name,people.last_name, internal_people_detail.department,internal_people_detail.managerId, address.phone FROM `people` LEFT JOIN internal_people_detail on people.people_id=internal_people_detail.people_id LEFT JOIN address on address.reference_id=people.people_id LEFT JOIN login on login.people_id=people.people_id WHERE internal_people_detail.role!='Admin'";
 
-        $q="SELECT a.people_id, a.username, a.first_name, a.phone, a.last_name,a.department, a.role,a.client_name, a.managerId, CONCAT(b.first_name,' ', b.last_name) as manager_name
+        $q = "SELECT a.people_id, a.username, a.first_name, a.phone, a.last_name,a.department, a.role,a.client_name, a.managerId, CONCAT(b.first_name,' ', b.last_name) as manager_name
         FROM `employees_tbl` a, employees_tbl b WHERE a.managerId=b.people_id";
 
         $result = $this->db->query($q)->result_array();
@@ -441,10 +443,9 @@ class CustomModel extends ci_model
 
     public function getAllProjectBymanagerId($id = null)
     {
-        
+
         $q = "SELECT * FROM `peopl_project_relationship` LEFT JOIN project on peopl_project_relationship.project_id=project.project_Id WHERE peopl_project_relationship.people_id='$id'";
         $result = $this->db->query($q)->result_array();
         return $this->db->affected_rows() ? $result : FALSE;
     }
-    
 }

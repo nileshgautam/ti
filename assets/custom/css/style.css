@@ -171,11 +171,46 @@
     font-size: 23px !important;
 }
 
+
+/* For estimate page */
+
+.bgColor {
+    background-color: #c1c1c1;
+}
+
+.f-13 {
+    font-size: 13px;
+}
+
+.card-p-0 p {
+    /* padding: 2px !important; */
+    margin-bottom: 0 !important;
+}
+
+#estimate-view {
+    display: none;
+}
+
+.inner-block {
+    display: flex;
+    background: #f5f5f0;
+    width: 50%;
+    align-items: center;
+    margin: 10rem auto !important;
+    justify-content: center;
+    padding: 5rem;
+    margin-top: 2rem;
+}
+
+
+/* end estimate page */
+
 @media print {
     #print,
     #cancel,
+    .btn-back,
     .main-footer {
-        display: none;
+        display: none !important;
     }
     #estimate-report-view {
         border: none !important;

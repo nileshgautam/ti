@@ -12,5 +12,18 @@ class EstimateModel extends ci_model
 
         $q = $this->db->query($query)->result_array();
         return $result = $this->db->affected_rows() ? $q : FALSE;
+    } 
+    
+    public function getQuotationByClinets($clientid=null, $quotationid=null)
+    {
+       
+        $query = "SELECT * FROM `client_quotation_relation`
+        LEFT JOIN estimate_clients on client_quotation_relation.client_id=estimate_clients.client_id WHERE client_quotation_relation.client_id='$clientid' and client_quotation_relation.quation_id=$quotationid";
+
+        $q = $this->db->query($query)->result_array();
+        return $result = $this->db->affected_rows() ? $q : FALSE;
     }
+
+
+
 }

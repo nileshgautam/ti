@@ -26,10 +26,11 @@
                                 <div class="card-header row m-0">
                                     <div class="col-sm-2">Employees</div>
                                     <div class="col-sm-10">
-                                        <a class="btn btn-primary float-right btn-xs d-btn" id='employees' href="<?php echo base_url('Admin/people') ?>" title="Add more"><i class="fas fa-plus-square"></i></a></div>
+                                        <a class="btn btn-primary float-right btn-xs d-btn" id='employees' href="<?php echo base_url('Admin/people') ?>" title="Add more"><i class="fas fa-plus-square"></i></a>
+                                    </div>
                                 </div>
                                 <div class="card-body ">
-                                    <table class="table dataTable table-bordered table-striped">
+                                    <table class="table dataTable table-striped table-responsive">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -53,7 +54,7 @@
                                                         <td><?php echo $item['username']; ?></td>
                                                         <td><?php echo $item['first_name'] . ' ' . $item['last_name']; ?></td>
                                                         <td><?php echo $item['phone']; ?></td>
-                                                       
+
                                                         <td><?php echo $item['department']; ?></td>
                                                         <td><?php echo $item['role'] ?></td>
                                                         <td><?php echo $item['manager_name']; ?></td>
@@ -167,9 +168,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 <div class="modal fade" id="empPasswordModal" tabindex="-1" role="dialog" aria-labelledby="empPasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

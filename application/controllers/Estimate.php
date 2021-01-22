@@ -21,7 +21,7 @@ class Estimate extends CI_Controller
 
 	public function index()
 	{
-		$page['clients'] = $this->EstimateModel->getAllClinets();
+		$page['clients'] = $this->CustomModel->getAllfromTable('client_quotation_relation');
 		$page['header'] =  'Dashoard | ' . BRAND_NAME;
 		$page['title'] =  'Estimate | ' . BRAND_NAME;
 		$this->load->view('admin/layout/header', $page);
@@ -40,8 +40,35 @@ class Estimate extends CI_Controller
 		$page['quotation_Type'] = $this->CustomModel->getAllfromTable('estimate_quotation_type');
 		$this->load->view('admin/layout/header', $page);
 		$this->load->view('admin/layout/sidebar');
-		$this->load->view('estimate/create-new');
+		// $this->load->view('estimate/create-new');
+		$this->load->view('estimate/create-estimate');
 		$this->load->view('admin/layout/footer');
+	}
+
+	public function generateQuotation()
+	{
+
+		$page['header'] =  'Estimate';
+		$page['qtype'] = $this->CustomModel->getAllfromWhere('estimate_quotation_type', array('id' => $_POST['quotation']),  'title');
+
+		$condition = array('parent_id' => $_POST['quotation']);
+
+		$page['question'] = $this->CustomModel->getAllfromWhere('estimate_question_master', $condition,  'title');
+
+		$page['qtype'] = $this->CustomModel->getAllfromWhere('estimate_quotation_type', array('id' => $_POST['quotation']),  'title');
+
+		$page['roles'] = $this->CustomModel->getAllfromWhere('estimate_role_master', $condition,  'name');
+
+		$page['country'] = $this->CustomModel->getAllfromTable('countries');
+		$page['ogtype'] = $this->CustomModel->getAllfromTable('master_clienttype');
+
+		// $page['clinetDetails'] = $_POST;
+
+		$this->load->view('admin/layout/header');
+		$this->load->view('admin/layout/sidebar');
+		$this->load->view('estimate/estimate-page', $page);
+		$this->load->view('admin/layout/footer');
+		$this->load->view('estimate/script/custom-estimate');
 	}
 
 	public function insert()
@@ -96,28 +123,35 @@ class Estimate extends CI_Controller
 			// echo '<pre>';
 			// print_r($_POST);
 			// die;
+			$id = $this->MainModel->getNewIDorNo('client_quotation_relation', 'TIRQ');
 			$arrData = array(
-				'quation_type_id' => $_POST['qttype'],
-				'client_id' => $_POST['client'],
-				'data' => json_encode($_POST),
-				'created_date' => timestamp(),
+				'q_id' => $id,
+				'quation_type_id' => $_POST['client_data']['qtype'],
+				'client_data' => json_encode($_POST['client_data']),
+				'data' => json_encode($_POST['quotation']),
+				'created_date' => timestamp()
 			);
-			// $condition = array('client_id' => $_POST['clinet'], 'quation_type_id' => $_POST['qttype']);
-			// $isAvaible = $this->CustomModel->getAllfromWhere('client_quotation_relation', $condition,  'client_id');
-
 			$res = $this->CustomModel->insert('client_quotation_relation', $arrData);
-			// print_r($res);
-			// die;
-			echo $res === 1 ? json_encode(array('message' => 'Save into the databse', 'type' => 'success')) : json_encode(array('message' => 'Something went wrong Contact IT', 'type' => 'error'));
-
-
-			// if ($isAvaible > 0) {
-			// 	$res = $this->CustomModel->insert('client_quotation_relation', $arrData);
-			// 	echo $res === 1 ? json_encode(array('message' => 'Save into the databse', 'type' => 'success')) : json_encode(array('message' => 'Something went wrong Contact IT', 'type' => 'error'));
-			// } else {
-			// 	$res = $this->CustomModel->insert('client_quotation_relation', $arrData);
-			// 	echo $res === 1 ? json_encode(array('message' => 'Save into the databse', 'type' => 'success')) : json_encode(array('message' => 'Something went wrong Contact IT', 'type' => 'error'));
-			// }
+			// json_encode($res);
+			echo $res != '' ? json_encode($res[0],true) : json_encode(array('message' => 'Something went wrong Contact IT', 'type' => 'error'));
 		}
+	}
+
+	public function editquotation($qid = null, $quotationid = null)
+	{
+		$res=$this->CustomModel->getAllfromWhere('client_quotation_relation', array('id' => base64_decode($qid)),  'created_date');
+
+		// echo '<pre>';
+		// print_r($res);die;
+
+		$page['header'] =  'Dashoard | ' . BRAND_NAME;
+		$page['title'] =  ' Edit|Estimate' . BRAND_NAME;
+		$page['quotation'] = json_encode($res[0]);
+		$this->load->view('admin/layout/header', $page);
+		$this->load->view('admin/layout/sidebar');
+		$this->load->view('estimate/estimate-page');
+		// $this->load->view('estimate/edit-est');
+		$this->load->view('estimate/script/edit-est');
+		$this->load->view('admin/layout/footer');
 	}
 }

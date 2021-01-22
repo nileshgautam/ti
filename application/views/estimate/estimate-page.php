@@ -114,6 +114,102 @@
               </div>
           </div>
       </section>
+      <!-- Report client  section -->
+      <section class="content hide" id="client-view">
+          <div class="card">
+              <form id="clinet-form" method="post" action="<?php echo base_url('Estimate/insert') ?>">
+                  <div class="card-body row">
+                      <div class="form-group col-sm-6">
+                          <label for="org-name">Orgnization name <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="org-name" name="org-name" placeholder="Enter Orgnization name" value="<?php echo isset($client) ? $client[0]['client_name'] : 'ABC' ?>" required>
+                      </div>
+                      <div class="form-group col-sm-6">
+                          <label for="gst-vat">GST/VAT No. <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="gst-vat" name="gst-vat" placeholder="Enter GST/VAT number" value="<?php echo isset($client) ? $client[0]['gst_vat_number'] : '123' ?>" required>
+                      </div>
+                      <!-- <div class="form-group col-sm-3">
+                          <label for="quotation">Quotation for<span class="text-danger">*</span></label>
+                          <select name="quotation" id="quotation" class="form-control" required>
+                              <option value="">Select</option>
+                              <?php if (!empty($quotation_Type)) {
+                                    foreach ($quotation_Type as $item) { ?>
+                                      <option value="<?php echo $item['id'] ?>" id="<?php echo $item['id'] ?>" <?php echo (isset($client[0]['title']) == $item['title']) ? 'selected' : '' ?>>
+                                          <?php echo $item['title'] ?></option>
+                              <?php }
+                                }
+                                ?>
+                          </select>
+                      </div> -->
+                      <div class="form-group col-sm-3">
+                          <label for="gst-vat">Orgnization Type <span class="text-danger">*</span></label>
+                          <select name="og-type" id="og-type" class="form-control" required>
+                              <option value="">Select</option>
+                              <?php if (!empty($ogtype)) {
+                                    foreach ($ogtype as $item) { ?>
+                                      <option value="<?php echo $item['title'] ?>" id="<?php echo $item['id'] ?>" <?php echo (isset($client[0]['orgnaization_type']) == $item['title']) ? 'selected' : '' ?>>
+                                          <?php echo $item['title'] ?></option>
+                              <?php }
+                                }
+                                ?>
+                          </select>
+                      </div>
+                      <div class="form-group col-sm-3">
+                          <label for="c-phone">Phone <span class="text-danger">*</span></label>
+                          <input type="phone" max="10" class="form-control" name="c-phone" id="c-phone" value="<?php echo isset($client) ? $client[0]['phone'] : '91234567890' ?>" placeholder="Enter phone" required>
+                      </div>
+                      <div class="form-group col-sm-3">
+                          <label for="c-mobile">Mobile <span class="text-danger">*</span></label>
+                          <input type="phone" max="10" class="form-control" name="c-mobile" id="c-mobile" value="<?php echo isset($client) ? $client[0]['mobile'] : '91234567890' ?>" placeholder="Enter mobile" required>
+                      </div>
+
+                      <div class="form-group col-sm-3">
+                          <label for="c-email">Email <span class="text-danger">*</span></label>
+                          <input type="email" class="form-control" name="c-email" id="c-email" placeholder="Enter email" value="<?php echo isset($client) ? $client[0]['email'] : 'test@test.tst' ?>" required>
+                      </div>
+
+                      <div class="form-group col-sm-3">
+                          <label for="c-country">Country <span class="text-danger">*</span></label>
+                          <select name="c-country" id="c-country" class="form-control">
+                              <option value="">Select</option>
+                              <?php if (!empty($country)) {
+                                    foreach ($country as $item) {
+                                        $ss = (isset($client[0]['country'])) ? $client[0]['country'] : 'India';
+                                ?>
+                                      <option value="<?php echo $item['name'] ?>" id="<?php echo $item['id'] ?>" <?php echo ($item['name'] == $ss) ? 'selected' : '' ?>>
+
+                                          <?php echo $item['name'] ?></option>
+                              <?php }
+                                }  ?>
+
+                          </select>
+                      </div>
+                      <div class="form-group col-sm-3 ">
+                          <label for="c-pin-zip">Pin/Zip code</label>
+                          <input type="text" class="form-control" id="c-pin-zip" name="c-pin-zip" placeholder="Enter pin/zip" value="<?php echo isset($client) ? $client[0]['pin'] : '201301' ?>">
+                      </div>
+                      <div class="form-group col-sm-12">
+                          <label for="c-address">Address</label>
+                          <textarea name="c-address" id="c-address" cols="" rows="" class="form-control"><?php echo isset($client) ? $client[0]['address'] : 'Noida' ?></textarea>
+                      </div>
+                      <input type="hidden" id="qtype" name="qtype" value="<?php echo isset($qtype) ? $qtype[0]['id'] : ''  ?>">
+                      <div class="form-group col-sm-12">
+                          <a class="btn btn-warning float-right ml-2" href="<?php echo base_url('Estimate/') ?>" title="Back">Cancel</a>
+                          <button type="submit" class="btn btn-primary float-right">Next</button>
+                      </div>
+
+                  </div>
+
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+
+                      <!-- <input type="hidden" id="client-id" name="client-id" value="<?php echo isset($client) ? $client[0]['client_id'] : ''  ?>"> -->
+
+
+
+                  </div>
+              </form>
+          </div>
+      </section>
       <!-- Report print section -->
       <section class="content" id="estimate-view">
           <div class="card">
@@ -187,7 +283,9 @@
 
                   </div>
               </div>
+
           </div>
       </section>
+
   </div>
   <!-- /.content-wrapper -->

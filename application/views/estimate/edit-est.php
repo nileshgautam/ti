@@ -2,68 +2,13 @@
 
   <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      <!-- Main content -->
-      <section class="content my-2" id="client-tbl">
-          <div class="card ">
-              <!--  Card for Table -->
-              <div class="card-header row ">
-                  <div class="col-sm-10">
-                      <h5 class="title"><?php echo $title ?></h5>
-                  </div>
-                  <div class="col-sm-2">
-                      <a href="<?php echo base_url('Estimate/create') ?>" class="btn btn-primary">Create new</a>
-                  </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                  <table id="estimate-list-table" class="table table-striped" data='<?php print_r(base64_encode(json_encode($description))) ?>'>
-                      <thead>
-                          <tr>
-                              <th>Sr. No.</th>
-                              <th>Estimate date</th>
-                              <th>Estimate For</th>
-                              <th>Client Name</th>
-                              <th>Action</th>
-                          </tr>
-                      </thead>
-                      <tbody id="tableData">
-                          <?php if (!empty($clients)) {
-                                $count = 1;
-                                foreach ($clients as $clinet) {
-
-                                   $name= json_decode($clinet['client_data'],true);
-                                    // echo '<pre>';
-                                    // print_r($clinet);
-                            ?>
-                                  <tr>
-                                      <td><?php echo $count++ ?></td>
-                                      <td><?php echo $clinet['created_date'] ?></td>
-                                      <td><?php echo $clinet['quation_type_id'] ?></td>
-                                      <td>
-                                      <?php echo  $name['orgName']?>
-                                    </td>
-                                    
-                                      <td>
-                                          <a href="<?php echo base_url('Estimate/editquotation/').base64_encode($clinet['id'])?>" class="btn btn-xs btn-primary" >Show Estimate</a>
-                                        </td>
-                                  </tr>
-
-                          <?php }
-                            }
-
-                            ?>
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </section>
       <!-- Report print section -->
-      <section class="content hide" id="estimate-view">
+      <section class="content" id="estimate-view">
           <div class="card">
               <div class="card-header">
                   <div class="row">
                       <div class="col-sm-6">
-                          <img src="../assets/custom/media/logo/troiscon-logo.png" alt="logo" class="">
+                          <img src="<?php echo base_url()?>assets/custom/media/logo/troiscon-logo.png" alt="logo" class="">
                       </div>
                       <div class="col-sm-6">
                           <h1 class="text-right">WORK ESTIMATE</h1>

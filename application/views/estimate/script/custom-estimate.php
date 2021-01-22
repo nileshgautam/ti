@@ -1,29 +1,6 @@
 <script>
-    $(document).ready(function() {
+    // console.log('i am in');
 
-        // $('#report-data-Table').dataTable({
-
-        //     columnDefs: [{
-        //             width: "5%",
-        //             targets: 0
-        //         },
-        //         {
-        //             width: "20%",
-        //             targets: [1]
-        //         },
-        //         {
-        //             width: "10%",
-        //             targets: [2, 3, 4, 5]
-        //         }
-        //     ],
-        //     fixedColumns: true,
-        //     fixedHeader: {
-        //         header: false,
-        //         footer: false
-        //     },
-
-        // });
-    });
     $(document).ready(function() {
 
         let pricePerUnitTime = 2; //2AED
@@ -65,7 +42,6 @@
             return `${(p + (p * r / 100))}`;
         }
 
-
         const getGrand = () => {
             let total = getSumofCol('.totalAmt');
             let margin = $('#margin').text();
@@ -74,26 +50,25 @@
             let taxableAmt = `${(parseFloat(total) + parseFloat(margin) + parseFloat(gstTax)) - parseFloat(discount)}`;
             return taxableAmt;
         }
-
-
+        
         $('#mrg').on('keyup', function() {
             let total = getSumofCol('.totalAmt');
             let rate = parseFloat($(this).text());
             $('#margin').text(calculateMargin(total, rate));
             $('#grandTotal').text(getGrand());
-        })
+        });
         $('#dis').on('keyup', function() {
             let total = getSumofCol('.totalAmt');
             let rate = parseFloat($(this).text());
             $('#discount').text(calculateMargin(total, rate));
             $('#grandTotal').text(getGrand());
-        })
+        });
         $('#gst').on('keyup', function() {
             let total = getSumofCol('.totalAmt');
             let rate = parseFloat($(this).text());
             $('#gst-tax').text(calculateMargin(total, rate));
             $('#grandTotal').text(getGrand());
-        })
+        });
         // Calculating by role
         $('.selected-role').change(function() {
             let rate = $(this).children(":selected").attr('data-rate');
@@ -165,7 +140,8 @@
 
         // Generate final estimate reports
         $('#generate-reports').on('click', function() {
-            let tableData = [];
+
+            let tableRow = [];;
 
             $('#report-data-Table').find('tr').each(function(i, el) {
                 var $tds = $(this).find('td'),
@@ -181,15 +157,14 @@
                     time,
                     totalAmount
                 }
-                tableData.push(obj);
+                if (totalAmount != 0) {
+                    tableRow.push(obj);
+                }
+
                 // do something with productId, product, Quantity
             });
 
-
-            $('#estimate-cal').css('display', 'none');
-            $('#estimate-view').css('display', 'block');
-
-            let grdTotal = [];
+            let grdTotalRow = [];
             $('#grd-tfoot').find('tr').each(function(i, el) {
                 let $tds = $(this).find('td'),
                     $ths = $(this).find('th'),
@@ -202,44 +177,181 @@
                         total
 
                     }
-                grdTotal.push(obj1);
+                grdTotalRow.push(obj1);
 
                 // do something with productId, product, Quantity
             });
 
-            let cid = '<?php echo $id ?>';
-            let qttype = '<?php echo json_encode($qtype[0]) ?>';
-            qttype = JSON.parse(qttype);
-            let clientDetails = '<?php echo json_encode($clinetDetails) ?>';
-            let estIn = pickCheckedVal('estimatedTime') == 1 ? 'hrs' : 'Days';
-            let estDate = new Date();
-            let totalTime = $('#time').text();
 
-            let form_data = {
-                client: cid,
-                clientDetails,
-                qttype: qttype.id,
-                quationType: qttype,
-                tableData,
-                grdTotal,
-                estIn,
-                totalTime,
-                estimateDate: estDate.toLocaleDateString(),
-                totalAmount: getGrand()
+            let tableData = {
+                tableRow,
+                grdTotalRow
             }
-            let url = BASEURL + 'Estimate/insertNewQuatation';
-            $.post(url, form_data, function(data) {
-                // console.log(data);
-            });
 
-            showReport(form_data);
+            saveLsData('quotation', tableData);
+
+            $('#estimate-cal').css('display', 'none');
+            $('#client-view').removeClass('hide');
+
+            // console.log(tableRow);
+
+            // let cid = '<?php //echo $id 
+                            ?>';
+            // let qttype = '<?php //echo json_encode($qtype[0]) 
+                                ?>';
+            // qttype = JSON.parse(qttype);
+            // let clientDetails = '<?php //echo json_encode($clinetDetails) 
+                                    ?>';
+            // let estIn = pickCheckedVal('estimatedTime') == 1 ? 'hrs' : 'Days';
+            // let estDate = new Date();
+            // let totalTime = $('#time').text();
+
+            // let form_data = {
+            //     client: cid,
+            //     clientDetails,
+            //     qttype: qttype.id,
+            //     quationType: qttype,
+            //     tableData,
+            //     grdTotal,
+            //     estIn,
+            //     totalTime,
+            //     estimateDate: estDate.toLocaleDateString(),
+            //     totalAmount: getGrand()
+            // }
+
+            // let url = BASEURL + 'Estimate/insertNewQuatation';
+            // $.post(url, form_data, function(data) {
+            //     // console.log(data);
+            // });
+
+            // showReport(form_data);
+        });
+
+
+        function showReport1(obj) {
+
+            // Definding variables
+            if (obj) {
+                // console.log(obj.client_data);
+                let client = JSON.parse(obj.client_data),
+                    data = JSON.parse(obj.data),
+                    tableData = data.tableRow,
+                    grandTotal = data.grdTotalRow;
+
+                console.log(tableData);
+
+
+                // let 
+                //     client = JSON.parse(obj.client_Details),
+                //     tableData = data.tableRow,
+                //     grandTotal = data.grdTotalRow,
+                //     clientDetails = client,
+                //     quotation_Type = obj.quationType,
+                let selectedServices = [];
+
+                // // Setting tops header details
+                // $('#current-date').text(obj.estimateDate);
+                // let est = obj.estIn == 'hrs' ? '(Hrs)' : '(Days)';
+                // $('#est-cost').text(obj.totalAmount);
+
+                // Filtering data which is selected by user
+                for (let index = 0; index < tableData.length; index++) {
+                    if (tableData[index].totalAmount != 0) {
+                        selectedServices.push(tableData[index]);
+                    }
+                }
+                // Apending Grandtotal data list table view
+                let selectedServicesDom = ``;
+                selectedServices.forEach((e, i) => {
+                    selectedServicesDom += ` <tr>
+                    <td>${(i+1)}</td>
+                    <td>${e.question}</td>
+                    <td>${e.resourcesRole}</td>
+                    <td class="text-center">${e.rate}</td>
+                    <td class="text-center">${e.time}</td>
+                    <td class="text-right">${e.totalAmount}</td>
+                    </tr>`;
+                });
+
+                console.log(selectedServicesDom);
+
+                $('#estimate-report-tbody').html(selectedServicesDom);
+
+                // $('#rates').text(est); //Total estimated Rates
+                // $('#times').text(est); //Total estimated time
+                // $('#est-time').text(obj.totalTime); //Total time estimate times
+                // // console.log(obj.quationType);
+                // $('#est-for').text(quotation_Type['title']); // For printing selected services
+
+                let grdTotalRow = ``;
+                grandTotal.forEach((e) => {
+                    grdTotalRow += `<tr class="border-top">
+                          <th colspan="4" class="text-right">${e.title}</th>
+                          <td class="text-center">${e.rate}</td>
+                          <td class=" text-right" id="totalAmt">${e.total}.00</td>
+                      </tr>`;
+                });
+                $('#est-tfoot').html(grdTotalRow);
+
+                // clientDetails = JSON.parse(clientDetails);
+                // console.log(clientDetails);
+
+                let address = `${client['address']}, ${client['country']}, 
+                ${client['pin']}`;
+                // Adding client details dynamic
+                let clinetViewTemplate = `<div class="card">
+                  <div class="card-header">
+                      <h6>CUSTOMER</h6>
+                  </div>
+                  <div class="card-body card-p-0">
+                      <p class="card-text" id="cname">${client['orgName']}</p>
+                      <p class="card-text"><span> Address:</span> <span id="address">${address}</span></p>
+                      <p class="card-text"><span> Phone:</span> <span id="phone">
+                      ${client['phone']}</span></p>
+                      <p class="card-text"><span> Mobile:</span> <span id="mobile">${client['mobile']}</span></p>
+                      <p class="card-text"><span> Email:</span> <span id="email">${client['email']}</span></p>
+                  </div>
+                    </div>`;
+                $('#client-box').html(clinetViewTemplate);
+            }
+        };
+
+
+
+        $('#clinet-form').submit(function(e) {
+            e.preventDefault();
+            let client_data = {
+                orgName: $('#org-name').val(),
+                gstVat: $('#gst-vat').val(),
+                ogtype: $('#og-type').val(),
+                phone: $('#c-phone').val(),
+                mobile: $('#c-mobile').val(),
+                email: $('#c-email').val(),
+                address: $('#c-address').val(),
+                country: $('#c-country').val(),
+                pin: $('#c-pin-zip').val(),
+                qtype: $('#qtype').val(),
+            };
+
+            let quotation = JSON.parse(retriveLsData('quotation'));
+            let url = BASEURL + 'Estimate/insertNewQuatation';
+            if (quotation != '') {
+                $.post(url, {
+                    client_data,
+                    quotation,
+                }, function(data) {
+                    data = JSON.parse(data);
+                    showReport1(data)
+                    // console.log(data);
+
+                });
+                $('#client-view').css('display', 'none');
+                $('#estimate-view').css('display', 'block');
+            }
         });
 
         //Function for print 
-        $('#print').click(function() {
-            window.print();
-        });
-
+        $('#print').click(print);
         //Function Go back
         $('#cancel').click((e) => {
             e.preventDefault();
